@@ -58,9 +58,9 @@ const CreateEntry = () => {
                 onChange={onInputCategory}
               >
                 <option>choose category</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option value="eco-news">eco-news</option>
+                <option value="sorting">sorting</option>
+                <option value="events">events</option>
               </Form.Select>
             </FloatingLabel>
             <Button variant="primary">Reset</Button>{" "}
