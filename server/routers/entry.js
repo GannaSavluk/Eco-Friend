@@ -2,10 +2,11 @@ const express = require("express");
 
 const router = express.Router();
 
-const { createEntry } = require("../controllers/entryController");
-// const { isValidPassword } = require('../middleware/authMiddleware');
+const { createEntry, getAllEntries, likeEntry } = require("../controllers/entryController");
 
-router.post("/", createEntry);
-router.get("/", checkUserAndCreateSession);
+router.post("/new", createEntry);
+router.get("/", getAllEntries);
+router.put("/:id/like", likeEntry);
+
 
 module.exports = router;

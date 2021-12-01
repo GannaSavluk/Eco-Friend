@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import { logoutFetch } from '../../store/auth/actions'
+import { logoutThunk } from '../../store/auth/actions'
 
 function Logout() {
     const navigate = useNavigate()
@@ -10,7 +10,7 @@ function Logout() {
     useEffect(() => {
         console.log('quit')
 
-        dispatch(logoutFetch());
+        dispatch(logoutThunk());
         navigate('/')
     }, [navigate])
 
