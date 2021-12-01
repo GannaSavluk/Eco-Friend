@@ -1,10 +1,10 @@
-import './App.css';
+import "./App.css";
+import Leaderbord from "./components/Leaderboard/Leaderboard";
 
 function App() {
   return (
     <div className="App">
-      {/* <Header/> */}
-      <p>App component</p>
+      <Leaderbord />
     </div>
   );
 }
