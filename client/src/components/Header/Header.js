@@ -46,14 +46,6 @@ const Header = () => {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-    // <div className="Header">
-    //   <Link to="/"> map</Link>
-    //   <Link to="/blog"> blog</Link>
-    //   {!userId && <Link to="/signup"> signup</Link>}
-    //   {!userId && <Link to="/signin"> signin</Link>}
-    //   {userId && <Link to="/logout"> logout</Link>}
-    //   {userId && <Link to="/account"> profile</Link>}
-    // </div>
   );
 };
 
