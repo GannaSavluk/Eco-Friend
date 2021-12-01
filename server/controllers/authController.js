@@ -1,52 +1,32 @@
-// const bcrypt = require('bcrypt');
 const bcrypt = require('bcryptjs');
 const User = require('../db/models/user');
 
-/**
- * Завершает запрос с ошибкой аутентификации
- * @param {object} res Ответ express
- */
 function failAuth(res) {
-    res.redirect('/'); //!!!!!!!!!!!!!!!!!!!!!! 
+    res.json(null) 
 }
 
-/**
- * Подготавливает пользователя для записи в сессию
- * Мы не хотим хранить пароль в сессии, поэтому извлекаем только нужные данные
- * @param {object} user Объект пользователя из БД
- */
 function serializeUser(user) {
     return {
         id: user.id,
-        name: user.first_name,
+        name: user.name,
+        email: user.email,
         role: user.role,
     };
 }
 
-// exports.signupRender = (req, res) => {
-//     res.render('signup');
-// };
-
-// exports.signinRender = (req, res) => {
-//     res.render('signin');
-// };
-
 exports.createUserAndSession = async (req, res, next) => {
-    // console.log('req.body----------------------------', req.body)
-    const { username, password, email } = req.body;
+    const { name, password, email } = req.body;
     try {
-        // Мы не храним пароль в БД, только его хэш
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
         const user = await User.create({
-            first_name: username,
+            name: name,
             password: hashedPassword,
             email: email
         });
 
-        // записываем в req.session.user данные (id & name) (создаем сессию)
-        req.session.user = serializeUser(user); // req.session.user -> id, name
+        req.session.user = serializeUser(user); 
 
     } catch (err) {
         console.error('Err message:', err.message);
@@ -59,6 +39,7 @@ exports.createUserAndSession = async (req, res, next) => {
 
 exports.checkUserAndCreateSession = async (req, res, next) => {
     const { email, password } = req.body;
+    console.log(email, password)
     try {
         // Пытаемся сначала найти пользователя в БД
         const user = await User.findOne({ email: email });
