@@ -21,6 +21,8 @@ const pgSessionStore = require('connect-pg-simple')(session);
 
 // Импортируем routers
 const authRouter = require('./routers/auth');
+const entryRouter = require('./routers/entry');
+
 
 app.use(
   session({
@@ -50,6 +52,8 @@ app.use(express.json());
 app.use(methodOverride('_method'));
 
 app.use('/auth', authRouter);
+app.use('/entry', entryRouter);
+
 
 // Отлавливаем ошибки:
 app.use((req, res, next) => {

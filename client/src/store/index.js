@@ -4,12 +4,15 @@ import thunk from "redux-thunk"
 
 // import { user } from "./user/reducers";
 import { auth } from "./auth/reducers";
+import { entry } from "./entry/reducers";
+
 
 
 
 const reducers = combineReducers({
   // user,
   auth,
+  entry,
 });
 
 const composeEnhancer =

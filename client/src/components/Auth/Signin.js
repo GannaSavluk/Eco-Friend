@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { signinFetch } from "../../store/auth/actions";
+import { signinThunk } from "../../store/auth/actions";
 
 const Signin = () => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const Signin = () => {
     // TODO
     event.preventDefault();
     console.log(value);
-    dispatch(signinFetch(value));
+    dispatch(signinThunk(value));
   };
 
   return (

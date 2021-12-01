@@ -1,13 +1,18 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import { Button, FloatingLabel, Form, CloseButton } from "react-bootstrap";
 
+import { createEntryThunk } from "../../store/entry/actions";
+
 const CreateEntry = () => {
+  const dispatch = useDispatch();
+
   const [isOpen, setIsOpen] = useState(false);
   const [value, setValue] = useState({ text: "", category: "" });
 
   const onInputText = ({ target: { value } }) => {
-    setValue((prev) => ({ ...prev,text: value }));
+    setValue((prev) => ({ ...prev, text: value }));
   };
   const onInputCategory = ({ target: { value } }) => {
     setValue((prev) => ({ ...prev, category: value }));
@@ -16,8 +21,10 @@ const CreateEntry = () => {
     setIsOpen(!isOpen);
   };
 
-  const createNewPost = (event) => { // TODO
+  const createNewPost = (event) => {
     event.preventDefault();
+    dispatch(createEntryThunk(value));
+
     console.log(value);
   };
 

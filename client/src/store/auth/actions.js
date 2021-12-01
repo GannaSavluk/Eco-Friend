@@ -9,7 +9,7 @@ export const checkUserRole = (id, role, name) => ({
   payload: { id: id, role: role, name: name },
 });
 
-export const logoutFetch = () => async (dispatch) => {
+export const logoutThunk = () => async (dispatch) => {
   console.log("quit");
   await fetch("/auth/logout", {
     method: "post",
@@ -18,7 +18,7 @@ export const logoutFetch = () => async (dispatch) => {
   dispatch(isAuthCheck(null));
 };
 
-export const signinFetch = (values) => async (dispatch, navigate) => {
+export const signinThunk = (values) => async (dispatch, navigate) => {
   console.log({ values });
   const response = await fetch("/auth/signin", {
     method: "post",
@@ -33,7 +33,7 @@ export const signinFetch = (values) => async (dispatch, navigate) => {
   navigate("/");
 };
 
-export const signupFetch = (values) => async (dispatch, navigate) => {
+export const signupThunk = (values) => async (dispatch, navigate) => {
   const response = await fetch("/auth/signup", {
     method: "post",
     headers: { "Content-Type": "application/json" },
@@ -45,7 +45,7 @@ export const signupFetch = (values) => async (dispatch, navigate) => {
   navigate("/");
 };
 
-export const checkUserAuthFetch = () => async (dispatch) => {
+export const checkUserAuthThunk = () => async (dispatch) => {
   const response = await fetch("/auth/check", {
     method: "get",
     headers: { "Content-Type": "application/json" },
