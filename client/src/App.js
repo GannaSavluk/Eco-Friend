@@ -11,6 +11,7 @@ import Map from "./components/Map/Map";
 import Signin from "./components/Auth/Signin";
 import Signup from "./components/Auth/Signup";
 import Logout from "./components/Auth/Logout";
+import UserProfile from "./components/Account/UserProfile";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ function App() {
         <Route path="/signup" element={!userId && <Signup />} />
         <Route path="/signin" element={!userId && <Signin />} />
         <Route path="/logout" element={userId && <Logout />} />
+        <Route path="/account" element={userId && <UserProfile />} />
       </Routes>
     </div>
   );
