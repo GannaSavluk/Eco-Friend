@@ -35,6 +35,7 @@ const Signin = () => {
         <input
           type="email"
           name="email"
+          placeholder="email"
           rules={[
             {
               required: true,
@@ -46,6 +47,7 @@ const Signin = () => {
         <input
           name="password"
           type="password"
+          placeholder="password"
           rules={[
             {
               required: true,

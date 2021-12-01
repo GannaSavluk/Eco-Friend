@@ -37,6 +37,7 @@ const Signup = () => {
         <input
           type="text"
           name="name"
+          placeholder="name"
           rules={[
             {
               required: true,
@@ -46,8 +47,9 @@ const Signup = () => {
           onChange={onInputName}
         ></input>
         <input
-          type="name"
-          name="name"
+          type="email"
+          name="email"
+          placeholder="email"
           rules={[
             {
               required: true,
@@ -59,6 +61,7 @@ const Signup = () => {
         <input
           name="password"
           type="password"
+          placeholder="password"
           rules={[
             {
               required: true,
@@ -68,10 +71,8 @@ const Signup = () => {
           onChange={onInputPassword}
         />
         <button type="primary" htmlType="submit" className="login-form-button">
-          Log in
+          Signup
         </button>
-        Or
-        <Link to="/signup"> register now!</Link>
       </form>
     </div>
   );
