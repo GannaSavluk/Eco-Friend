@@ -63,6 +63,7 @@ exports.likeEntry = async (req, res) => {
       : entry.likes.splice(likeIndex, 1);
 
     await Entry.updateOne({ _id: entryId }, { likes: entry.likes });
+
     res.json({ message: "ok" });
   } catch (err) {
     console.error("Err message:", err.message);

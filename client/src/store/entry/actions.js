@@ -16,6 +16,11 @@ export const editEntry = (id, author) => ({
   payload: { id, author },
 });
 
+export const likeEntry = (id) => ({
+  type: ACTypes.LIKE_ENTRY,
+  payload: { id },
+});
+
 export const getAllEntriesThunk = () => async (dispatch) => {
   const response = await fetch("/entry", {
     method: "get",
@@ -44,8 +49,7 @@ export const likeEntryThunk = (id, author) => async (dispatch) => {
     headers: { "Content-Type": "application/json" },
   });
   const entry = await response.json();
-
-  dispatch(editEntry(id, author));
+  dispatch(editEntry(id, author))
 };
 
 // export const deleteNoteThunk = (id) => async (dispatch) => {
