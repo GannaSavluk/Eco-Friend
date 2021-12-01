@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import "./App.css";
 import Header from "./components/Header/Header";
 import Blog from "./components/Blog/Blog";
+import Leaderboard from "./components/Leaderboard/Leaderboard";
 import Map from "./components/Map/Map";
 import Signin from "./components/Auth/Signin";
 import Signup from "./components/Auth/Signup";
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Map />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/signup" element={!userId && <Signup />} />
         <Route path="/signin" element={!userId && <Signin />} />
         <Route path="/logout" element={userId && <Logout />} />

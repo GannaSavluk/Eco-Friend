@@ -3,9 +3,9 @@ import { Button, Form, FormControl, ListGroup } from "react-bootstrap";
 import style from "./Leaderboard.module.css";
 import {  useSelector } from "react-redux";
 
-const Leaderbord = () => {
+const Leaderboard = () => {
 
-  const todo = useSelector((store) => (store.user.todo))
+  // const todo = useSelector((store) => (store.user.todo))
   
 
    const [massive, setMassive] = useState() 
@@ -22,7 +22,7 @@ const Leaderbord = () => {
 
    const searchHandler = async () => {
     try {
-      let res = await fetch("http://localhost:5000");
+      let res = await fetch("http://localhost:3700/auth");
       
       if (!res.ok) {
         console.log(res);
@@ -78,7 +78,7 @@ const Leaderbord = () => {
         </Form>
 
         <ListGroup className="d-flex mt-1 w-100  ">
-          {todo.map((item) => (
+          {/* {todo.map((item) => (
 
           <ListGroup.Item key={item.id} action variant="success">
             <div className="d-flex justify-content-between mt-1">
@@ -87,7 +87,7 @@ const Leaderbord = () => {
             </div>
           </ListGroup.Item>
           
-          ) )}
+          ) )} */}
           <ListGroup.Item action variant="success">
             <div className="d-flex justify-content-between mt-1">
               <div>{massive}</div>
@@ -104,4 +104,4 @@ const Leaderbord = () => {
   );
 };
 
-export default Leaderbord;
+export default Leaderboard;
