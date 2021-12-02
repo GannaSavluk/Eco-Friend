@@ -1,4 +1,4 @@
-.markerbtn{
+.markerbtn {
   background: none;
   border: none;
   cursor: pointer;
@@ -10,4 +10,14 @@
 .imgs {
   width: 20px;
   height: 20px;
+}
+
+.cluster {
+  color: #fff;
+  background: #1978c8;
+  border-radius: 50%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
