@@ -9,7 +9,7 @@ import Header from "./components/Header/Header";
 import Blog from "./components/Blog/Blog";
 import Leaderboard from "./components/Leaderboard/Leaderboard";
 
-import Map from "./components/Map/Map";
+import Map from "./components/Map/MapLeha/MapLeha";
 import MapGanna from "./components/Map/MapGanna";
 
 import Signin from "./components/Auth/Signin";
@@ -29,8 +29,8 @@ function App() {
       <Header />
 
       <Routes>
-        {/* <Route path="/" element={<Map />} /> */}
-        <Route path="/" element={<MapGanna />} />
+        <Route path="/" element={<Map />} />
+        {/* <Route path="/" element={<MapGanna />} /> */}
 
         <Route path="/blog" element={<Blog />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
