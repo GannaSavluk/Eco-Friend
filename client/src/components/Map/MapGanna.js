@@ -3,12 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import classes from "./Map.module.css";
 import ReactMapGl, { Marker, Popup } from "react-map-gl";
 
-// import { mapFetchThunk } from "../../store/map/actions";
-
-// import * as mapData from "./data/skateboard-parks.json";
-
 const MapGanna = () => {
-
   const [viewport, setViewport] = useState({
     latitude: 45.4211, //!!
     longitude: -75.6903, //!!
@@ -23,18 +18,25 @@ const MapGanna = () => {
   console.log("mapData---->", mapData);
 
   useEffect(() => {
-
     const listener = (e) => {
       if (e.key === "Escape") {
         setSelectedMapPoint(null);
       }
     };
     window.addEventListener("keydown", listener);
-
     return () => {
       window.removeEventListener("keydown", listener);
     };
   }, []);
+
+  const getRightCategoryIcon = (category) => {
+    console.log({category})
+    if (category === "plastic") return "/img/categories/bottle.png";
+    if (category === "paper") return "/img/categories/paper.png";
+    if (category === "electronics") return "/img/categories/electronics.png";
+    if (category === "event") return "/img/categories/event.png";
+    if (!category) return "/img/categories/unknown.png";
+  };
 
   return (
     <div className="Map">
@@ -61,7 +63,7 @@ const MapGanna = () => {
             >
               <img
                 className={classes.imgs}
-                src="http://s1.iconbird.com/ico/2013/9/452/w448h5121380477116trash.png"
+                src={getRightCategoryIcon(mark.category)}
                 alt="icon"
               />
             </button>
@@ -78,7 +80,12 @@ const MapGanna = () => {
             }}
           >
             <h2>{selectedMapPoint?.category}</h2>
-            <img src={selectedMapPoint?.imgs[0]} alt="photo" width={100} height={100}/>
+            <img
+              src={selectedMapPoint?.imgs[0]}
+              alt="item"
+              width={100}
+              height={100}
+            />
             <p>{selectedMapPoint?.adress}</p>
           </Popup>
         )}
