@@ -1,12 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import useSupercluster from "use-supercluster";
 import classes from "./Map.module.css";
-import ReactMapGl, { Marker, Popup, FlyToInterpolator } from "react-map-gl";
+import ReactMapGl, {
+  Marker,
+  Popup,
+  FlyToInterpolator,
+  GeolocateControl,
+} from "react-map-gl";
 
-// import { mapFetchThunk } from "../../store/map/actions";
-
-// import * as mapData from "./data/skateboard-parks.json";
+const geolocateControlStyle = {
+  right: 10,
+  top: 10,
+};
 
 const MapStepa = () => {
   const [viewport, setViewport] = useState({
@@ -77,29 +83,12 @@ const MapStepa = () => {
         }}
         ref={mapRef}
       >
-        {/* {mapData?.map((mark) => (
-          <Marker
-            key={mark?._id}
-            latitude={mark.coordinates[1]}
-            longitude={mark.coordinates[0]}
-          >
-            <button
-              className={classes.markerbt}
-              onClick={(e) => {
-                e.preventDefault();
-                setSelectedMapPoint(mark);
-              }}
-            >
-              <img
-                className={classes.imgs}
-                src="http://s1.iconbird.com/ico/2013/9/452/w448h5121380477116trash.png"
-                alt="icon"
-              />
-            </button>
-            <p>{mark?.category}</p>
-          </Marker>
-        ))} */}
-
+        <GeolocateControl
+          style={geolocateControlStyle}
+          positionOptions={{ enableHighAccuracy: true }}
+          trackUserLocation={true}
+          auto
+        />
         {clusters.map((cluster) => {
           // every cluster point has coordinates
           const [longitude, latitude] = cluster.geometry.coordinates;
