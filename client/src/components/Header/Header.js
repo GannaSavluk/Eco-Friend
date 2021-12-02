@@ -19,6 +19,9 @@ const Header = () => {
             <Nav.Link>
               <Link to="/blog">Blog</Link>
             </Nav.Link>
+            <Nav.Link>
+              <Link to="/leaderboard">Leaderboard</Link>
+            </Nav.Link>
           </Nav>
           <Nav>
             {!userId && (

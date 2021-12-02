@@ -3,7 +3,11 @@ const multer = require('multer'); // библиотека для загрузк�
 
 const router = express.Router();
 
-const { createEntry, getAllEntries, likeEntry } = require("../controllers/entryController");
+const {
+  createEntry,
+  getAllEntries,
+  likeEntry,
+} = require("../controllers/entryController");
 
 const storage = multer.diskStorage({
     destination(req, file, cb) {
@@ -21,6 +25,5 @@ router.post("/new",
  createEntry);
 router.get("/", getAllEntries);
 router.put("/:id/like", likeEntry);
-
 
 module.exports = router;
