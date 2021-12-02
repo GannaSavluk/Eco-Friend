@@ -26,6 +26,9 @@ const pgSessionStore = require("connect-pg-simple")(session);
 const authRouter = require("./routers/auth");
 const entryRouter = require("./routers/entry");
 const allUsersRouter = require("./routers/allUsers");
+const mapRouter = require('./routers/map');
+
+
 
 app.use(
   session({
@@ -53,10 +56,12 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride("_method"));
+app.use(methodOverride('_method'));
 
-app.use("/auth", authRouter);
-app.use("/entry", entryRouter);
+app.use('/auth', authRouter);
+app.use('/entry', entryRouter);
 app.use("/users", allUsersRouter);
+app.use('/map', mapRouter);
 
 // Отлавливаем ошибки:
 app.use((req, res, next) => {

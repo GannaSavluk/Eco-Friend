@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import classes from "./Map.module.css";
 import ReactMapGl, { Marker, Popup } from "react-map-gl";
-import * as mapData from "./data/skateboard-parks.json";
+
+// import { mapFetchThunk } from "../../store/map/actions";
+
+// import * as mapData from "./data/skateboard-parks.json";
 
 const MapGanna = () => {
-  // TODO подставить координаты нахождения юзера
+
   const [viewport, setViewport] = useState({
     latitude: 45.4211, //!!
     longitude: -75.6903, //!!
@@ -14,21 +18,39 @@ const MapGanna = () => {
   });
   const [selectedMapPoint, setSelectedMapPoint] = useState(null);
 
+  const mapData = useSelector((store) => store?.map?.map);
+
+  console.log("mapData---->", mapData);
+
+  useEffect(() => {
+
+    const listener = (e) => {
+      if (e.key === "Escape") {
+        setSelectedMapPoint(null);
+      }
+    };
+    window.addEventListener("keydown", listener);
+
+    return () => {
+      window.removeEventListener("keydown", listener);
+    };
+  }, []);
+
   return (
     <div className="Map">
       <ReactMapGl
         {...viewport}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-        mapStyle="mapbox://styles/gannasav/ckwomtvzu27wl14s9rbiu105y"
+        mapStyle={process.env.REACT_APP_MAPBOX_STYLE}
         onViewportChange={(viewport) => {
           setViewport(viewport);
         }}
       >
-        {mapData.features.map((mark) => (
+        {mapData?.map((mark) => (
           <Marker
-            key={mark.prorerties.BIN_ID}
-            latitude={mark.geometry.coordinates[1]}
-            longitude={mark.geometry.coordinates[0]}
+            key={mark?._id}
+            latitude={mark.coordinates[1]}
+            longitude={mark.coordinates[0]}
           >
             <button
               className={classes.markerbt}
@@ -40,18 +62,24 @@ const MapGanna = () => {
               <img
                 className={classes.imgs}
                 src="http://s1.iconbird.com/ico/2013/9/452/w448h5121380477116trash.png"
-                alt="bin icon"
+                alt="icon"
               />
             </button>
-            <h1>{mark.type}</h1>
+            <p>{mark?.category}</p>
           </Marker>
         ))}
+
         {selectedMapPoint && (
           <Popup
-          latitude={selectedMapPoint.geometry.coordinates[1]}
-          longitude={selectedMapPoint.geometry.coordinates[0]}>
-            <h2>{selectedMapPoint.type}</h2>
-            <p>{selectedMapPoint.adress}</p>
+            latitude={selectedMapPoint?.coordinates[1]}
+            longitude={selectedMapPoint?.coordinates[0]}
+            onClose={() => {
+              setSelectedMapPoint(null);
+            }}
+          >
+            <h2>{selectedMapPoint?.category}</h2>
+            <img src={selectedMapPoint?.imgs[0]} alt="photo" width={100} height={100}/>
+            <p>{selectedMapPoint?.adress}</p>
           </Popup>
         )}
       </ReactMapGl>
