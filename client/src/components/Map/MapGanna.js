@@ -8,8 +8,7 @@ import ReactMapGl, { Marker, Popup } from "react-map-gl";
 // import * as mapData from "./data/skateboard-parks.json";
 
 const MapGanna = () => {
-  // const dispatch = useDispatch();
-  // TODO подставить координаты нахождения юзера
+
   const [viewport, setViewport] = useState({
     latitude: 45.4211, //!!
     longitude: -75.6903, //!!
@@ -18,16 +17,13 @@ const MapGanna = () => {
     zoom: 10,
   });
   const [selectedMapPoint, setSelectedMapPoint] = useState(null);
-  // const [isMapData, setIsMapData] = useState(null);
 
   const mapData = useSelector((store) => store?.map?.map);
 
   console.log("mapData---->", mapData);
 
   useEffect(() => {
-    // if (mapData.length<=0){
-    //   setIsMapData(mapData)
-    // }
+
     const listener = (e) => {
       if (e.key === "Escape") {
         setSelectedMapPoint(null);
@@ -42,7 +38,6 @@ const MapGanna = () => {
 
   return (
     <div className="Map">
-
       <ReactMapGl
         {...viewport}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
@@ -51,29 +46,28 @@ const MapGanna = () => {
           setViewport(viewport);
         }}
       >
-        { mapData?.map((mark) => (
-              <Marker
-                key={mark?._id}
-                latitude={mark.coordinates[1]}
-                longitude={mark.coordinates[0]}
-              >
-                <button
-                  className={classes.markerbt}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setSelectedMapPoint(mark);
-                  }}
-                >
-                  <img
-                    className={classes.imgs}
-                    src="http://s1.iconbird.com/ico/2013/9/452/w448h5121380477116trash.png"
-                    alt="icon"
-                  />
-                </button>
-                <p>{mark?.category}</p>
-              </Marker>
-            ))
-          }
+        {mapData?.map((mark) => (
+          <Marker
+            key={mark?._id}
+            latitude={mark.coordinates[1]}
+            longitude={mark.coordinates[0]}
+          >
+            <button
+              className={classes.markerbt}
+              onClick={(e) => {
+                e.preventDefault();
+                setSelectedMapPoint(mark);
+              }}
+            >
+              <img
+                className={classes.imgs}
+                src="http://s1.iconbird.com/ico/2013/9/452/w448h5121380477116trash.png"
+                alt="icon"
+              />
+            </button>
+            <p>{mark?.category}</p>
+          </Marker>
+        ))}
 
         {selectedMapPoint && (
           <Popup
@@ -84,11 +78,11 @@ const MapGanna = () => {
             }}
           >
             <h2>{selectedMapPoint?.category}</h2>
+            <img src={selectedMapPoint?.imgs[0]} alt="photo" width={100} height={100}/>
             <p>{selectedMapPoint?.adress}</p>
           </Popup>
         )}
       </ReactMapGl>
-
     </div>
   );
 };
