@@ -3,11 +3,12 @@ import { Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { checkUserAuthThunk } from "./store/auth/actions";
+import { mapFetchThunk } from "./store/map/actions";
 
 import "./App.css";
 import Header from "./components/Header/Header";
 import Blog from "./components/Blog/Blog";
-import Map from "./components/Map/Map";
+// import Map from "./components/Map/Map";
 import MapGanna from "./components/Map/MapGanna";
 
 import Signin from "./components/Auth/Signin";
@@ -20,6 +21,7 @@ function App() {
   const userId = useSelector((store) => store.auth.user?.id);
 
   useEffect(() => {
+    dispatch(mapFetchThunk());
     dispatch(checkUserAuthThunk());
   });
   return (
