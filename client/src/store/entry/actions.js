@@ -36,10 +36,10 @@ export const createEntryThunk = (values) => async (dispatch) => {
   const response = await fetch("/entry/new", {
     method: "post",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ values }),
+    body: JSON.stringify({ values}),
   });
   const entry = await response.json();
-
+  console.log("entry---->", entry);
   dispatch(createEntry(entry));
 };
 
@@ -49,7 +49,7 @@ export const likeEntryThunk = (id, author) => async (dispatch) => {
     headers: { "Content-Type": "application/json" },
   });
   const entry = await response.json();
-  dispatch(editEntry(id, author))
+  dispatch(editEntry(id, author));
 };
 
 // export const deleteNoteThunk = (id) => async (dispatch) => {
