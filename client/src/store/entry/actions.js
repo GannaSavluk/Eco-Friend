@@ -16,6 +16,11 @@ export const editEntry = (id, author) => ({
   payload: { id, author },
 });
 
+export const likeEntry = (id) => ({
+  type: ACTypes.LIKE_ENTRY,
+  payload: { id },
+});
+
 export const getAllEntriesThunk = () => async (dispatch) => {
   const response = await fetch("/entry", {
     method: "get",
@@ -31,10 +36,10 @@ export const createEntryThunk = (values) => async (dispatch) => {
   const response = await fetch("/entry/new", {
     method: "post",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ values }),
+    body: JSON.stringify({ values}),
   });
   const entry = await response.json();
-
+  console.log("entry---->", entry);
   dispatch(createEntry(entry));
 };
 
@@ -44,7 +49,6 @@ export const likeEntryThunk = (id, author) => async (dispatch) => {
     headers: { "Content-Type": "application/json" },
   });
   const entry = await response.json();
-
   dispatch(editEntry(id, author));
 };
 

@@ -9,6 +9,10 @@ const connectDB = require("./db/dbConnect");
 const MongoStore = require("connect-mongo");
 connectDB();
 
+// Для фото и док-ов
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' }); 
+
 // Для обработки ошибок:
 const createError = require("http-errors");
 

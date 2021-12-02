@@ -2,7 +2,7 @@ import ACTypes from "../types";
 
 const initialState = {
   entries: [],
-  // currentNoteId: '',
+  currentEntryId: "",
 };
 
 export const entry = (state = initialState, action) => {
@@ -15,7 +15,9 @@ export const entry = (state = initialState, action) => {
       state.entries = [action.payload.entry, ...state.entries];
       console.log("entr", state.entries);
       return { ...state, entries: state.entries };
+
     case ACTypes.EDIT_ENTRY:
+      // state.currentEntryId= action.payload.id;
       state.entries = state.entries.map((post) => {
         if (post?._id === action.payload.id) {
           console.log("action.payload.author", action.payload.author);
@@ -30,8 +32,18 @@ export const entry = (state = initialState, action) => {
         }
         return post;
       });
+      state.currentEntryId = "";
+      return state;
     // console.log("EDIT_NOTE--->", 2, state.notes);
     // return { ...state, notes: state.notes };
+
+    case ACTypes.LIKE_ENTRY:
+      console.log("action.payload.id!!!!!!!", action.payload.id);
+      return {
+        ...state,
+        currentEntryId: action.payload.id,
+      };
+
     default:
       return state;
   }
