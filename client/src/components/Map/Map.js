@@ -1,5 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+
 
 const Map = () => {
   return (

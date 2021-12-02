@@ -5,6 +5,7 @@ import { signinThunk } from "../../store/auth/actions";
 
 const Signin = () => {
   const dispatch = useDispatch();
+
   const [value, setValue] = useState({ email: "", password: "" });
 
   const onInputPassword = ({ target: { value } }) => {
