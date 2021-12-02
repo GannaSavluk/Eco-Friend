@@ -4,11 +4,14 @@ const cors = require('cors')
 const app = express();
 const port = process.env.PORT;
 
-
 // DB:
 const connectDB = require('./db/dbConnect')
 const MongoStore = require('connect-mongo') 
 connectDB()
+
+// Для фото и док-ов
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' }); 
 
 // Для обработки ошибок:
 const createError = require('http-errors');

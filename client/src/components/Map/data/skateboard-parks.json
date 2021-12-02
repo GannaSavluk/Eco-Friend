@@ -1,0 +1,38 @@
+{
+  "type": "EcoCollection",
+  "features": [
+    {
+      "type": "garbigeBins",
+      "adress": "some information (adress)",
+      "prorerties": {
+        "BIN_ID": 300
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-75.716142, 45.38764]
+      }
+    },
+    {
+      "type": "garbigeBins",
+      "adress": "some information (adress)",
+      "prorerties": {
+        "BIN_ID": 301
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-75.716143, 45.38765]
+      }
+    },
+    {
+      "type": "EcoMarket",
+      "adress": "some information (adress)",
+      "prorerties": {
+        "BIN_ID": 301
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-75.71333, 45.38765]
+      }
+    }
+  ]
+}

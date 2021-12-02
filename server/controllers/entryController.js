@@ -2,11 +2,15 @@ const Entry = require("../db/models/entry");
 
 exports.createEntry = async (req, res, next) => {
   try {
-    const { values } = req.body;
+    // const { filename } = req.file
+    const { values} = req.body;
+    // console.log('filename', filename)
+    console.log('values', values)
+
     const newEntry = await Entry.create({
       text: values.text,
       category: values.category,
-      img: values?.img,
+      // img: filename,
       author: req.session.user.id,
       date: new Date(),
     });

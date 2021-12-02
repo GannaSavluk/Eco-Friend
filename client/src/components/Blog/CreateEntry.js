@@ -10,6 +10,7 @@ const CreateEntry = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [value, setValue] = useState({ text: "", category: "" });
+  const [isUploud, setIsUploud] = useState({});
 
   const onInputText = ({ target: { value } }) => {
     setValue((prev) => ({ ...prev, text: value }));
@@ -20,14 +21,19 @@ const CreateEntry = () => {
   const changeState = () => {
     setIsOpen(!isOpen);
   };
-
   const createNewPost = (event) => {
     event.preventDefault();
+    // const data = new FormData();
+    // data.append("file", event.target.files[0]);
     dispatch(createEntryThunk(value));
-
-    console.log(value);
   };
 
+  // const uploadHandler = async (event) => {
+  //   const data = new FormData();
+  //   data.append("file", event.target.files[0]);
+  //   console.log('data-->',data);
+  //   setIsUploud(data)
+  // };
   return (
     <div className="CreateEntry">
       {!isOpen && (
@@ -41,6 +47,12 @@ const CreateEntry = () => {
         <div>
           <CloseButton onClick={changeState} />
           <form onSubmit={createNewPost}>
+            {/* <input
+              className="upload-imgs"
+              type="file"
+              name="file"
+              // onChange={uploadHandler}
+            /> */}
             <FloatingLabel label="Text here">
               <Form.Control
                 as="textarea"
