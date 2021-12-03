@@ -1,5 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { Card } from "react-bootstrap";
+import { useSelector, useDispatch } from "react-redux";
+import { createMarkerAndFetchMapThunk } from "../../store/map/actions";
 import useSupercluster from "use-supercluster";
 import classes from "./Map.module.css";
 import ReactMapGl, {
@@ -7,7 +9,9 @@ import ReactMapGl, {
   Popup,
   FlyToInterpolator,
   GeolocateControl,
+  NavigationControl,
 } from "react-map-gl";
+import Geocoder from "react-map-gl-geocoder";
 
 const geolocateControlStyle = {
   right: 10,
@@ -24,7 +28,21 @@ const MapStepa = () => {
   });
   const [selectedMapPoint, setSelectedMapPoint] = useState(null);
 
+  const user = useSelector((store) => store.auth.user);
+
+  const [newMarker, setNewMarker] = useState(null);
+
+  const dispatch = useDispatch();
+
+  const handleViewportChange = useCallback(
+    (newViewport) => setViewport(newViewport),
+    []
+  );
+
   const mapRef = useRef();
+  const geoRef = useRef();
+  const categoryRef = useRef();
+  const descRef = useRef();
 
   const mapData = useSelector((store) => store?.map?.map);
 
@@ -59,6 +77,27 @@ const MapStepa = () => {
     options: { radius: 75, maxZoom: 20 },
   });
 
+  const handleGeocoderViewportChange = useCallback(
+    (newViewport) => {
+      const geocoderDefaultOverrides = { transitionDuration: 1000 };
+
+      return handleViewportChange({
+        ...newViewport,
+        ...geocoderDefaultOverrides,
+      });
+    },
+    [handleViewportChange]
+  );
+
+  const handleGeocoderResult = async (e) => {
+    console.log(e.result);
+    await setNewMarker([
+      ...e.result.center,
+      e.result.place_name,
+      e.result.properties.address,
+    ]);
+  };
+
   useEffect(() => {
     const listener = (e) => {
       if (e.key === "Escape") {
@@ -72,6 +111,20 @@ const MapStepa = () => {
     };
   }, []);
 
+  function onSaveMarker() {
+    console.log(user, newMarker);
+    const marker = {
+      category: categoryRef.current.value,
+      description: descRef.current.value,
+      author: user.id, // take author from session
+      coordinates: [newMarker[0], newMarker[1]],
+      adress: newMarker[3],
+    };
+    console.log(marker);
+    dispatch(createMarkerAndFetchMapThunk(marker));
+    setNewMarker(null);
+  }
+
   return (
     <div className="Map">
       <ReactMapGl
@@ -83,12 +136,22 @@ const MapStepa = () => {
         }}
         ref={mapRef}
       >
+        <Geocoder
+          className={classes.geocoder}
+          mapRef={mapRef}
+          onViewportChange={handleGeocoderViewportChange}
+          onResult={handleGeocoderResult}
+          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+          position="top-left"
+          ref={geoRef}
+        />
         <GeolocateControl
           style={geolocateControlStyle}
           positionOptions={{ enableHighAccuracy: true }}
           trackUserLocation={true}
-          auto
+          //auto
         />
+        <NavigationControl className={classes.navigation} showCompass={false} />
         {clusters.map((cluster) => {
           // every cluster point has coordinates
           const [longitude, latitude] = cluster.geometry.coordinates;
@@ -172,6 +235,29 @@ const MapStepa = () => {
               height={100}
             />
             <p>{selectedMapPoint?.properties.adress}</p>
+          </Popup>
+        )}
+        {newMarker && (
+          <Popup
+            latitude={newMarker[1]}
+            longitude={newMarker[0]}
+            onClose={() => {
+              setNewMarker(null);
+            }}
+          >
+            <h2>{newMarker[2]}</h2>
+            <form>
+              <input type="text" placeholder="category" ref={categoryRef} />
+              <input type="text" placeholder="description" ref={descRef} />
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  onSaveMarker();
+                }}
+              >
+                Save
+              </button>
+            </form>
           </Popup>
         )}
       </ReactMapGl>
