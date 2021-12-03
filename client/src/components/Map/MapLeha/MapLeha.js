@@ -1,125 +1,109 @@
-// import React, { useState } from "react";
-// import ReactMapGL from "react-map-gl";
 
-// const Map = () => {
-//   const [viewport, setViewport] = useState({
-//     width: 400,
-//     height: 400,
-//     latitude: 37.7577,
-//     longlatitude: -122.4376,
-//     zoom: 8,
-//     // width: window.innerWidth,
-//     // heigth: window.innerHeight,
-//   });
 
-//   return (
-//     <ReactMapGL
-//       mapboxApiAccessToken={
-//         "pk.eyJ1IjoiZ2FubmFzYXYiLCJhIjoiY2t3b2dweWRoMDJvYTJ2cG1samw0bGhhNCJ9.zFlq-4XRaeQQ9NvOn0_gsQ"
-//       }
-//       {...viewport}
-//       onViewportChange={(nextViewport) => setViewport(nextViewport)}
-//       ></ReactMapGL>
-//   );
-// };
-
-// export default Map;
-
-// import * as React from 'react';
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import classes from "../Map.module.css";
-import ReactMapGL, {GeolocateControl, Marker, Popup} from "react-map-gl";
-// import ReactMapGl, { Marker, Popup } from "react-map-gl";
-// import * as mapData from "../data/skateboard-parks.json";
+import ReactMapGL, {
+  GeolocateControl,
+  Layer,
+  Marker,
+  NavigationControl,
+  Popup,
+  Source,
+} from "react-map-gl";
+import { pointAC } from "../../../store/map/actions";
 
-const geolocateControlStyle= {
+
+const geolocateControlStyle = {
   right: 10,
-  top: 10
+  top: 10,
+};
+const navControlStyle = {
+  right: 10,
+  top: 10,
+};
+
+const geojson = {
+  type: 'FeatureCollection',
+  features: [
+    {type: 'Feature', geometry: {type: 'Point', coordinates: [-122.4, 37.8]}}
+  ]
+};
+
+const layerStyle = {
+  id: 'point',
+  type: 'circle',
+  paint: {
+    'circle-radius': 10,
+    'circle-color': '#007cbf'
+  }
 };
 
 
 const Map = () => {
-
   const [viewport, setViewport] = useState({
-    latitude: 45.4211, //!!
-    longitude: -75.6903, //!!
+    latitude: 55.7702, //!!
+    longitude: 37.5533, //!!
     width: "100vw",
     height: "100vh",
-    zoom: 10,
+    zoom: 8,
   });
 
-  const [selectedMapPoint, setSelectedMapPoint] = useState(null);
-
-  const mapData = useSelector((store) => store?.map?.map);
-
-  console.log("mapData---->", mapData);
-
-  useEffect(() => {
-
-    const listener = (e) => {
-      if (e.key === "Escape") {
-        setSelectedMapPoint(null);
-      }
-    };
-    window.addEventListener("keydown", listener);
-
-    return () => {
-      window.removeEventListener("keydown", listener);
-    };
-  }, []);
-
+  
+  const coords = useSelector((store) => store.map.point);
+  console.log("123", coords);
+  const dispatch = useDispatch();
+  const pointHandler = (target) => {
+    dispatch(pointAC(target.lngLat));
+  };
+  
+  
   return (
-
-    <ReactMapGL 
-    mapboxApiAccessToken={
-              "pk.eyJ1IjoiZ2FubmFzYXYiLCJhIjoiY2t3b2dweWRoMDJvYTJ2cG1samw0bGhhNCJ9.zFlq-4XRaeQQ9NvOn0_gsQ"
-            }
-    {...viewport} width="100vw" height="100vh" onViewportChange={setViewport}>
+    <ReactMapGL
+      onClick={pointHandler}
+      mapboxApiAccessToken={
+        "pk.eyJ1IjoiZ2FubmFzYXYiLCJhIjoiY2t3b2dweWRoMDJvYTJ2cG1samw0bGhhNCJ9.zFlq-4XRaeQQ9NvOn0_gsQ"
+      }
+      {...viewport}
+      width="100vw"
+      height="100vh"
+      onViewportChange={setViewport}
+      captureDoubleClick={false}
+    >
+      <NavigationControl style={navControlStyle} />
       <GeolocateControl
         style={geolocateControlStyle}
-        positionOptions={{enableHighAccuracy: true}}
+        positionOptions={{ enableHighAccuracy: true }}
         trackUserLocation={true}
-        auto
+        auto={false}
+        
       />
-      {mapData?.map((mark) => (
-          <Marker
-            key={mark?._id}
-            latitude={mark.coordinates[1]}
-            longitude={mark.coordinates[0]}
-          >
-            <button
-              className={classes.markerbt}
-              onClick={(e) => {
-                e.preventDefault();
-                setSelectedMapPoint(mark);
-              }}
-            >
-              <img
-                className={classes.imgs}
-                src="http://s1.iconbird.com/ico/2013/9/452/w448h5121380477116trash.png"
-                alt="icon"
-              />
-            </button>
-            <p>{mark?.category}</p>
-          </Marker>
-        ))}
+      {coords.map((item) => (
+      <Marker
+        latitude={item[1]}
+        longitude={item[0]}
+        offsetLeft={-20}
+        offsetTop={-10}
+      >
+        <div>
+          <img
+            alt="photo"
+            src="https://icon-library.com/images/map-pinpoint-icon/map-pinpoint-icon-14.jpg"
+            width={50}
+            height={50}
+          />
+        </div>
+      </Marker>
+      ))}
+      <Source id="my-data" type="geojson" data={geojson}>
+        <Layer {...layerStyle} />
+      </Source>
 
-        {selectedMapPoint && (
-          <Popup
-            latitude={selectedMapPoint?.coordinates[1]}
-            longitude={selectedMapPoint?.coordinates[0]}
-            onClose={() => {
-              setSelectedMapPoint(null);
-            }}
-          >
-            <h2>{selectedMapPoint?.category}</h2>
-            <img src={selectedMapPoint?.imgs[0]} width={100} height={100} alt="photo"/>
-            <p>{selectedMapPoint?.adress}</p>
-          </Popup>
-        )}
+
+
+      
     </ReactMapGL>
   );
-}
+};
 
 export default Map;

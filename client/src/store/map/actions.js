@@ -5,6 +5,8 @@ export const getMap = (map) => ({
   payload: { map },
 });
 
+export const pointAC = (point) => ({type: ACTypes.POINT, payload: {point}})// позиция по клику
+
 export const mapFetchThunk = () => async (dispatch) => {
 
     const response = await fetch("/map", {
