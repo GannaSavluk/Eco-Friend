@@ -7,6 +7,7 @@ const AСTypes = {
   LIKE_ENTRY: "LIKE_ENTRY",
   SHOW_USERS_LIST: "SHOW_USERS_LIST",
   MAP: "MAP",
+  POINT: "POINT",// позиция по клику
 
   CURRENT_IMG: "CURRENT_IMG",
   ALL_COMMENTS: "ALL_COMMENTS",
