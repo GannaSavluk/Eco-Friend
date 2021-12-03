@@ -4,6 +4,7 @@ import { Image } from "cloudinary-react";
 import { Link } from "react-router-dom";
 
 import { Form, CloseButton } from "react-bootstrap";
+import { CaretDownOutlined,CaretUpOutlined } from "@ant-design/icons";
 
 import { createEntryThunk, uploadImgThunk } from "../../store/entry/actions";
 
@@ -41,13 +42,14 @@ const CreateEntry = () => {
           <div className="d-grid gap-2">
             <button variant="secondary" size="lg" onClick={changeState}>
               Create new post
+              <CaretDownOutlined />
             </button>
           </div>
         )}
         <div>
           {isOpen && user && (
             <div>
-              <CloseButton onClick={changeState} />
+              <CaretUpOutlined onClick={changeState} />
               {currentImg && (
                 <Image
                   style={{ width: 200 }}
@@ -59,7 +61,6 @@ const CreateEntry = () => {
                 <input
                   type="file"
                   name="file"
-                  // value={value?.file}
                   onChange={(e) => {
                     dispatch(uploadImgThunk(e.target.files[0]));
                   }}

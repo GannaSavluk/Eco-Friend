@@ -1,0 +1,22 @@
+.card {
+  padding: 1rem;
+  display: flex;
+}
+.cardDescription p{
+margin-bottom: 6px;
+}
+/* .button_comment{
+  margin-top: 10px;
+} */
+.like_btn{
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+}
+
+.ant-card-cover{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
