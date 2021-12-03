@@ -19,6 +19,9 @@ export const auth = (state = initialState, action) => {
         },
       };
 
+    case ACTypes.AUTH_LOGOUT:
+      return { ...state, user: null};
+
     default:
       return state;
   }

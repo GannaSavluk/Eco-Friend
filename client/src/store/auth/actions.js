@@ -8,6 +8,7 @@ export const checkUserRole = (id, role, name) => ({
   type: ACTypes.USER_ROLE,
   payload: { id: id, role: role, name: name },
 });
+export const isLogout = (id) => ({ type: ACTypes.AUTH_LOGOUT });
 
 export const logoutThunk = () => async (dispatch) => {
   console.log("quit");
@@ -16,6 +17,7 @@ export const logoutThunk = () => async (dispatch) => {
     headers: { "Content-Type": "application/json" },
   });
   dispatch(isAuthCheck(null));
+  dispatch(isLogout())
 };
 
 export const signinThunk = (values) => async (dispatch, navigate) => {

@@ -55,18 +55,17 @@ exports.likeEntry = async (req, res) => {
     await Entry.updateOne({ _id: entryId }, { likes: entry.likes });
 
     const like = await Like.findOne({ entry: entryId, user: userId });
-    console.log('LIKEEEEEEE', like)
+    console.log("LIKEEEEEEE", like);
     if (like) {
       await Like.findOne({ entry: entryId, user: userId }).remove().exec();
-      console.log('<<<<<deletedLike>>>>>>')
-
+      console.log("<<<<<deletedLike>>>>>>");
     } else {
       const addedLike = await Like.create({
         user: userId,
         entry: entryId,
         date: new Date(),
       });
-      console.log('<<<<<addedLike>>>>>>', addedLike)
+      console.log("<<<<<addedLike>>>>>>", addedLike);
     }
     res.json({ message: "ok" });
   } catch (err) {
@@ -76,29 +75,29 @@ exports.likeEntry = async (req, res) => {
   res.status(200).end();
 };
 
-exports.getAllComments = async (req, res) => {
-  try {
-    const entries = await Entry.find().populate("author");
+// exports.getAllComments = async (req, res) => {
+//   try {
+//     const entries = await Entry.find().populate("author");
 
-    const sortedEntries = entries.sort(
-      (a, b) => Date.parse(b.date) - Date.parse(a.date)
-    );
-    console.log(sortedEntries);
-    res.json(sortedEntries);
-  } catch (err) {
-    console.error("Err message:", err.message);
-    console.error("Err code", err);
-  }
+//     const sortedEntries = entries.sort(
+//       (a, b) => Date.parse(b.date) - Date.parse(a.date)
+//     );
+//     console.log(sortedEntries);
+//     res.json(sortedEntries);
+//   } catch (err) {
+//     console.error("Err message:", err.message);
+//     console.error("Err code", err);
+//   }
 
-  res.status(200).end();
-};
+//   res.status(200).end();
+// };
 exports.getAllComments = async (req, res) => {
   const entryId = req.params.id;
   try {
     const comments = await Comment.find({ entry: entryId }).populate("author");
 
     const sortedComments = comments.sort(
-      (a, b) => Date.parse(b.date) - Date.parse(a.date)
+      (a, b) => Date.parse(a.date) - Date.parse(b.date)
     );
     console.log("sortedComments>>>>>>>>>", sortedComments);
     res.json(sortedComments);
@@ -106,5 +105,25 @@ exports.getAllComments = async (req, res) => {
     console.error("Err message:", err.message);
     console.error("Err code", err);
   }
+  res.status(200).end();
+};
+exports.createComment = async (req, res, next) => {
+  try {
+    const { values, entryId } = req.body;
+    console.log("values", values, entryId);
+
+    const newComment = await Comment.create({
+      text: values.text,
+      entry: entryId,
+      author: req.session.user.id,
+      date: new Date(),
+    });
+    console.log("created Comment---->", newComment);
+    res.json(newComment);
+  } catch (err) {
+    console.error("Err message:", err.message);
+    console.error("Err code", err);
+  }
+
   res.status(200).end();
 };

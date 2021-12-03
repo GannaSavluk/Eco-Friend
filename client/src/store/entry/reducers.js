@@ -5,6 +5,7 @@ const initialState = {
   currentEntryId: "",
   currentImg: null,
   comments: [],
+  loadingCommentStatus: true,
 };
 
 export const entry = (state = initialState, action) => {
@@ -43,6 +44,13 @@ export const entry = (state = initialState, action) => {
 
     case ACTypes.ALL_COMMENTS:
       return { ...state, comments: action.payload.comments };
+
+    case ACTypes.ADD_COMMENT:
+      state.comments = [...state.comments, action.payload.comment];
+      return { ...state, comments: state.comments };
+
+    case ACTypes.LOADING_COMMENTS:
+      return { ...state, loadingCommentStatus: action.payload.status };
 
     default:
       return state;

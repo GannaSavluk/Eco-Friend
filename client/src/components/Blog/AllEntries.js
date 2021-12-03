@@ -13,7 +13,8 @@ import Comment from "./Comment";
 const AllEntries = () => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(true);
-  const [isOpenComments, setIsOpenComments] = useState(false);
+  const [isOpenComments, setIsOpenComments] = useState({ id: "" });
+  const [isEmptyPrevComment, setIsEmptyPrevComment] = useState(false);
 
   const entries = useSelector((store) => store.entry.entries);
   const user = useSelector((store) => store.auth.user);
@@ -23,6 +24,13 @@ const AllEntries = () => {
     dispatch(likeEntry(entryid));
   };
 
+  const clickOpenComments = (id) => {//TODO
+    setIsOpenComments("");
+    console.log("1 isOpenComments---->", isOpenComments);
+    setIsOpenComments({ [id]: true });
+    console.log("2 isOpenComments---->", isOpenComments);
+    setIsEmptyPrevComment(true)
+  };
   useEffect(() => {
     dispatch(getAllEntriesThunk());
   }, []);
@@ -71,11 +79,13 @@ const AllEntries = () => {
                 </div>
                 <button
                   variant="primary"
-                  onClick={() => setIsOpenComments(!isOpenComments)}
+                  onClick={() => clickOpenComments(entry._id)}
                 >
                   Comments
                 </button>
-                {isOpenComments && <Comment entryId={entry._id} />}
+                {isEmptyPrevComment && isOpenComments[entry._id] && (
+                  <Comment key={`comment-${entry._id}`} entryId={entry._id} />
+                )}
               </div>
             </div>
           ))}

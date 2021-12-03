@@ -24,6 +24,14 @@ export const getAllComments = (comments) => ({
   type: ACTypes.ALL_COMMENTS,
   payload: { comments },
 });
+export const createComment = (comment) => ({
+  type: ACTypes.ADD_COMMENT,
+  payload: { comment },
+});
+export const isLoadingComments = (status) => ({
+  type: ACTypes.LOADING_COMMENTS,
+  payload: { status },
+});
 
 export const getAllEntriesThunk = () => async (dispatch) => {
   const response = await fetch("/entry", {
@@ -45,7 +53,7 @@ export const createEntryThunk = (values, link) => async (dispatch) => {
   const entry = await response.json();
 
   console.log("createEntryThunk entry---->", entry);
-  
+
   dispatch(createEntry(entry));
 };
 
@@ -72,11 +80,12 @@ export const uploadImgThunk = (imgSelected) => async (dispatch) => {
   );
   const img = await sendImg.json();
   dispatch(saveCurrentImg(img));
-  console.log('uploadImgThunk',img);
+  console.log("uploadImgThunk", img);
 };
 
 export const getAllCommentsThunk = (id) => async (dispatch) => {
-  console.log({id})
+  console.log({ id });
+  dispatch(isLoadingComments(true))
   const response = await fetch(`/entry/${id}`, {
     method: "get",
     headers: { "Content-Type": "application/json" },
@@ -85,4 +94,18 @@ export const getAllCommentsThunk = (id) => async (dispatch) => {
   console.log("comments--->", comments);
 
   if (comments) dispatch(getAllComments(comments));
+  dispatch(isLoadingComments(false))
+};
+
+export const createCommentThunk = (values, entryId) => async (dispatch) => {
+  const response = await fetch("/entry/comment/new", {
+    method: "post",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ values, entryId }),
+  });
+  const comment = await response.json();
+
+  console.log("createcommentThunk comment---->", comment);
+
+  dispatch(createComment(comment));
 };
