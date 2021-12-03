@@ -149,7 +149,9 @@ const MapStepa = () => {
           mapRef={mapRef}
           onViewportChange={handleGeocoderViewportChange}
           onResult={handleGeocoderResult}
-          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+          mapboxApiAccessToken={
+            "pk.eyJ1IjoiZ2FubmFzYXYiLCJhIjoiY2t3b2dweWRoMDJvYTJ2cG1samw0bGhhNCJ9.zFlq-4XRaeQQ9NvOn0_gsQ"
+          }
           position="top-left"
           ref={geoRef}
         />
