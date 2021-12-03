@@ -7,6 +7,7 @@ const MapSchema = new mongoose.Schema({
   imgs: { type: Array },
   coordinates: { type: Array, unique: true },
   date: { type: Date, default: new Date() },
+  adress: { type: String },
 });
 
 module.exports = mongoose.model("Map", MapSchema);
