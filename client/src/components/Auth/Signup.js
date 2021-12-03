@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { signupThunk } from "../../store/auth/actions";
 
 const Signup = () => {
-  const dispatch = useDispatch();
+    const navigate = useNavigate()
+    const dispatch = useDispatch();
+
   const [value, setValue] = useState({ name: "", email: "", password: "" });
   const onInputName = ({ target: { value } }) => {
     setValue((prev) => ({ ...prev, name: value }));
@@ -18,6 +21,7 @@ const Signup = () => {
   const loginFunction = (event) => {
     event.preventDefault();
     dispatch(signupThunk(value));
+    navigate('/')
   };
 
   return (

@@ -10,6 +10,4 @@ router.get("/", getAllEntries);
 router.get("/:id", getAllComments);
 router.put("/:id/like", likeEntry);
 
-
-
 module.exports = router;
