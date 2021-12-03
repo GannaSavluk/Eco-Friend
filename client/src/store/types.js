@@ -7,6 +7,9 @@ const AСTypes = {
   LIKE_ENTRY: "LIKE_ENTRY",
 
   MAP: "MAP",
+
+  CURRENT_IMG: "CURRENT_IMG",
+  ALL_COMMENTS: "ALL_COMMENTS",
 };
 
 export default AСTypes;

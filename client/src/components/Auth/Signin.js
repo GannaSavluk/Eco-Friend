@@ -14,10 +14,8 @@ const Signin = () => {
     setValue((prev) => ({ ...prev, email: value }));
   };
 
-  const createNewPost = (event) => {
-    // TODO
+  const loginFunction = (event) => {
     event.preventDefault();
-    console.log(value);
     dispatch(signinThunk(value));
   };
 
@@ -30,7 +28,7 @@ const Signin = () => {
         initialValues={{
           remember: true,
         }}
-        onSubmit={createNewPost}
+        onSubmit={loginFunction}
       >
         <input
           type="email"

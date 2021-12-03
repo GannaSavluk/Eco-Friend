@@ -1,9 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-const Comment = () => {
+import { getAllCommentsThunk } from "../../store/entry/actions";
+import CreateComment from "./CreateComment";
+
+const Comment = ({ entryId }) => {
+  const dispatch = useDispatch();
+  const comments = useSelector((store) => store.entry.comments);
+
+  useEffect(() => {
+    if (entryId) dispatch(getAllCommentsThunk(entryId));
+  }, []);
+
   return (
     <div className="Comment">
-      <p>show all comments</p>
+      {comments && (
+        <div>
+          {comments.map((oneComment) => (
+            <div>
+              <p>{oneComment?.author?.name}</p>
+            </div>
+          ))}
+        </div>
+      )}
+      <CreateComment entryId={entryId} />
     </div>
   );
 };

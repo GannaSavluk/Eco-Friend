@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import { signupThunk } from "../../store/auth/actions";
 
 const Signup = () => {
@@ -16,10 +15,8 @@ const Signup = () => {
     setValue((prev) => ({ ...prev, email: value }));
   };
 
-  const createNewPost = (event) => {
-    // TODO
+  const loginFunction = (event) => {
     event.preventDefault();
-    console.log(value);
     dispatch(signupThunk(value));
   };
 
@@ -32,7 +29,7 @@ const Signup = () => {
         initialValues={{
           remember: true,
         }}
-        onSubmit={createNewPost}
+        onSubmit={loginFunction}
       >
         <input
           type="text"
