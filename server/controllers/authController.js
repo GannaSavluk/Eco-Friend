@@ -39,7 +39,7 @@ exports.createUserAndSession = async (req, res, next) => {
 
 exports.checkUserAndCreateSession = async (req, res, next) => {
     const { email, password } = req.body;
-    console.log(email, password)
+    // console.log(email, password)
     try {
         // Пытаемся сначала найти пользователя в БД
         const user = await User.findOne({ email: email });
@@ -59,7 +59,7 @@ exports.checkUserAndCreateSession = async (req, res, next) => {
         console.error('Err code', err.code);
         return failAuth(res);
     }
-    console.log(req.session)
+    // console.log(req.session)
     res.json(req.session.user.id)
     res.status(200).end(); // ответ 200 + отправка cookies в заголовке на сервер
 };

@@ -8,8 +8,6 @@ function Logout() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log('quit')
-
         dispatch(logoutThunk());
         navigate('/')
     }, [navigate])
