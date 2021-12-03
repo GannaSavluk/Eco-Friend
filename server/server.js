@@ -1,6 +1,7 @@
 const express = require("express");
 require("dotenv").config();
 const cors = require("cors");
+
 const app = express();
 const port = process.env.PORT;
 
@@ -8,10 +9,6 @@ const port = process.env.PORT;
 const connectDB = require("./db/dbConnect");
 const MongoStore = require("connect-mongo");
 connectDB();
-
-// Для фото и док-ов
-const multer = require('multer');
-const upload = multer({ dest: 'uploads/' }); 
 
 // Для обработки ошибок:
 const createError = require("http-errors");

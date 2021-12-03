@@ -17,6 +17,14 @@ const geolocateControlStyle = {
   right: 10,
   top: 10,
 };
+const getRightCategoryIcon = (category) => {
+  console.log('category--',category );
+  if (category === "plastic") return "/img/categories/bottle.png";
+  if (category === "paper") return "/img/categories/paper.png";
+  if (category === "electronics") return "/img/categories/electronics.png";
+  if (category === "event") return "/img/categories/event.png";
+  if (!category) return "/img/categories/unknown.png";
+};
 
 const MapStepa = () => {
   const [viewport, setViewport] = useState({
@@ -211,7 +219,7 @@ const MapStepa = () => {
               >
                 <img
                   className={classes.imgs}
-                  src="http://s1.iconbird.com/ico/2013/9/452/w448h5121380477116trash.png"
+                  src={getRightCategoryIcon(cluster.properties.category)}
                   alt="icon"
                 />
               </button>

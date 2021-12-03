@@ -4,21 +4,25 @@ export const getAllEntries = (entries) => ({
   type: ACTypes.ALL_ENTRIES,
   payload: { entries },
 });
-
-//CRUD
 export const createEntry = (entry) => ({
   type: ACTypes.ADD_ENTRY,
   payload: { entry },
 });
-// export const deleteNote = (id) => ({ type: ACTypes.DELETE_ENTRY, payload: { id } })
 export const editEntry = (id, author) => ({
   type: ACTypes.EDIT_ENTRY,
   payload: { id, author },
 });
-
 export const likeEntry = (id) => ({
   type: ACTypes.LIKE_ENTRY,
   payload: { id },
+});
+export const saveCurrentImg = (img) => ({
+  type: ACTypes.CURRENT_IMG,
+  payload: { img },
+});
+export const getAllComments = (comments) => ({
+  type: ACTypes.ALL_COMMENTS,
+  payload: { comments },
 });
 
 export const getAllEntriesThunk = () => async (dispatch) => {
@@ -32,14 +36,16 @@ export const getAllEntriesThunk = () => async (dispatch) => {
   if (entries) dispatch(getAllEntries(entries));
 };
 
-export const createEntryThunk = (values) => async (dispatch) => {
+export const createEntryThunk = (values, link) => async (dispatch) => {
   const response = await fetch("/entry/new", {
     method: "post",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ values}),
+    body: JSON.stringify({ values, link }),
   });
   const entry = await response.json();
-  console.log("entry---->", entry);
+
+  console.log("createEntryThunk entry---->", entry);
+  
   dispatch(createEntry(entry));
 };
 
@@ -52,32 +58,31 @@ export const likeEntryThunk = (id, author) => async (dispatch) => {
   dispatch(editEntry(id, author));
 };
 
-// export const deleteNoteThunk = (id) => async (dispatch) => {
-//     try {
-//         const response = await fetch(`/note/${id}`, {
-//             method: 'delete',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify({ id })
-//         })
-//         const status = await response.json();
+export const uploadImgThunk = (imgSelected) => async (dispatch) => {
+  const formData = new FormData();
+  formData.append("file", imgSelected);
+  formData.append("upload_preset", "bh4tv9ap");
 
-//         if (status) dispatch(deleteNote(id))
-//     } catch (err) {
-//         console.log('err', err);
-//     }
-// }
+  const sendImg = await fetch(
+    `https://api.cloudinary.com/v1_1/dwvm712y7/image/upload`,
+    {
+      method: "post",
+      body: formData,
+    }
+  );
+  const img = await sendImg.json();
+  dispatch(saveCurrentImg(img));
+  console.log('uploadImgThunk',img);
+};
 
-// export const editNoteFetch = (values, id) => async (dispatch) => {
+export const getAllCommentsThunk = (id) => async (dispatch) => {
+  console.log({id})
+  const response = await fetch(`/entry/${id}`, {
+    method: "get",
+    headers: { "Content-Type": "application/json" },
+  });
+  const comments = await response.json();
+  console.log("comments--->", comments);
 
-//     await fetch(`/note/${id}`, {
-//         method: 'put',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify(values),
-//     })
-
-//     dispatch(isOpenEditNoteComponent(true))
-//     dispatch(editNote(id, values.note))
-
-// };
+  if (comments) dispatch(getAllComments(comments));
+};

@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { signinThunk } from "../../store/auth/actions";
 
 const Signin = () => {
-  const dispatch = useDispatch();
+    const navigate = useNavigate()
+    const dispatch = useDispatch();
 
   const [value, setValue] = useState({ email: "", password: "" });
 
@@ -15,11 +17,10 @@ const Signin = () => {
     setValue((prev) => ({ ...prev, email: value }));
   };
 
-  const createNewPost = (event) => {
-    // TODO
+  const loginFunction = (event) => {
     event.preventDefault();
-    console.log(value);
     dispatch(signinThunk(value));
+    navigate('/')
   };
 
   return (
@@ -31,7 +32,7 @@ const Signin = () => {
         initialValues={{
           remember: true,
         }}
-        onSubmit={createNewPost}
+        onSubmit={loginFunction}
       >
         <input
           type="email"
