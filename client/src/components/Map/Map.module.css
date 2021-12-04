@@ -1,7 +1,10 @@
 .markerbtn {
-  background: none;
+  background: #3aec93;
   border: none;
+  border-radius: 50%;
   cursor: pointer;
+  width: 38px;
+  height: 38px;
 }
 .markerbtn img {
   width: 20px;
@@ -14,7 +17,7 @@
 
 .cluster {
   color: #fff;
-  background: #1978c8;
+  background: #3aec93;
   border-radius: 50%;
   padding: 10px;
   display: flex;
