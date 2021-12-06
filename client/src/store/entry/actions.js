@@ -47,7 +47,6 @@ export const getAllEntriesThunk = () => async (dispatch) => {
     headers: { "Content-Type": "application/json" },
   });
   const entries = await response.json();
-  console.log("entries--->", entries);
 
   if (entries) dispatch(getAllEntries(entries));
 };
@@ -60,8 +59,6 @@ export const createEntryThunk = (values, link) => async (dispatch) => {
   });
   const entry = await response.json();
 
-  console.log("createEntryThunk entry---->", entry);
-
   dispatch(createEntry(entry));
 };
 export const editEntryThunk = (values, link, id) => async (dispatch) => {
@@ -72,8 +69,6 @@ export const editEntryThunk = (values, link, id) => async (dispatch) => {
   });
   const entry = await response.json();
 
-  console.log("editEntryThunk entry---->", entry);
-
   dispatch(editEntry(entry));
 };
 export const deleteEntryThunk = (id) => async (dispatch) => {
@@ -83,8 +78,6 @@ export const deleteEntryThunk = (id) => async (dispatch) => {
     body: JSON.stringify({ id }),
   });
   const result = await response.json();
-
-  console.log("entry deleted", result);
 
   dispatch(deleteEntry(id));
 };
@@ -112,18 +105,15 @@ export const uploadImgThunk = (imgSelected) => async (dispatch) => {
   );
   const img = await sendImg.json();
   dispatch(saveCurrentImg(img));
-  console.log("uploadImgThunk", img);
 };
 
 export const getAllCommentsThunk = (id) => async (dispatch) => {
-  console.log({ id });
   dispatch(isLoadingComments(true));
   const response = await fetch(`/entry/${id}`, {
     method: "get",
     headers: { "Content-Type": "application/json" },
   });
   const comments = await response.json();
-  console.log("comments--->", comments);
 
   if (comments) dispatch(getAllComments(comments));
   dispatch(isLoadingComments(false));
@@ -137,21 +127,16 @@ export const createCommentThunk = (values, entryId) => async (dispatch) => {
   });
   const comment = await response.json();
 
-  console.log("createcommentThunk comment---->", comment);
-
   dispatch(createComment(comment));
 };
 
 export const deleteCommentThunk = (id) => async (dispatch) => {
-  console.log('id', id)
   const response = await fetch(`/entry/comment/delete`, {
     method: "delete",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ id }),
   });
   const result = await response.json();
-
-  console.log("comment deleted", result);
 
   dispatch(deleteComment(id));
 };

@@ -48,7 +48,6 @@ const EditEntry = ({ entry, setIsOpenEditEntryForm }) => {
           {user && (
             <div>
               <img src={entry.img} style={{ width: 200 }} alt="" />
-              {/* <CaretUpOutlined onClick={changeState} /> */}
               {currentImg && (
                 <>
                   <Image

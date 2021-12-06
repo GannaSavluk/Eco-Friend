@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Card, Avatar, Button, Tooltip } from "antd";
+import { Card,  Button, Tooltip } from "antd";
 import {
   SmileTwoTone,
-  CaretDownOutlined,
   CloseOutlined,
   EditOutlined,
 } from "@ant-design/icons";
@@ -15,7 +14,6 @@ import {
   likeEntry,
   deleteEntryThunk,
 } from "../../store/entry/actions";
-// import { entry } from "../../store/entry/reducers";
 
 import EditEntry from "./EditEntry";
 import EntryComments from "./EntryComments";
@@ -46,9 +44,6 @@ const News = () => {
     setIsEmptyPrevComment(true);
   };
 
-  // useEffect(() => {
-  //   dispatch(getAllEntriesThunk());
-  // }, []);
 
   const changeState = () => {
     setIsOpen(!isOpen);
@@ -66,15 +61,10 @@ const News = () => {
     <div className={classes.News}>
       <img
         src="img/rest/Artboard-8Eco-News.png"
-        // src="img/rest/HEN-logo-2021-website-header-272x93-1.png"
-        // src="https://www.ifpri.org/sites/default/files/latest-icon.gif"
-        // src="https://www.seedandlightinternational.org/wpimages/wpac3b23e1.gif"
-        // src="https://storage.googleapis.com/proudcity/elgl/uploads/2018/04/Environmental-11.gif"
         alt=""
       />
       {isOpen && (
         <>
-          {/* <CaretUpOutlined onClick={changeState} /> */}
           {entries?.map((entry) => (
             <>
               {entry.author.role === 0 && (
@@ -86,7 +76,6 @@ const News = () => {
                         key={entry._id}
                         cover={
                           <img
-                            // className={classes.photo}
                             style={{ width: 300 }}
                             variant="top"
                             src={entry?.img}
@@ -151,12 +140,6 @@ const News = () => {
                                   />
                                 )}
                               </div>
-                              {/* {isEmptyPrevComment && isOpenComments[entry._id] && (
-                          <Comment
-                            key={`comment-${entry._id}`}
-                            entryId={entry._id}
-                          />
-                        )} */}
                             </div>
                           }
                         />

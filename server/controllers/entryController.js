@@ -78,17 +78,14 @@ exports.likeEntry = async (req, res) => {
     await Entry.updateOne({ _id: entryId }, { likes: entry.likes });
 
     const like = await Like.findOne({ entry: entryId, user: userId });
-    console.log("LIKEEEEEEE", like);
     if (like) {
       await Like.findOne({ entry: entryId, user: userId }).remove().exec();
-      console.log("<<<<<deletedLike>>>>>>");
     } else {
       const addedLike = await Like.create({
         user: userId,
         entry: entryId,
         date: new Date(),
       });
-      console.log("<<<<<addedLike>>>>>>", addedLike);
     }
     res.json({ message: "ok" });
   } catch (err) {
@@ -118,7 +115,6 @@ exports.getAllComments = async (req, res) => {
     const sortedComments = comments.sort(
       (a, b) => Date.parse(a.date) - Date.parse(b.date)
     );
-    console.log("sortedComments>>>>>>>>>", sortedComments);
     res.json(sortedComments);
   } catch (err) {
     console.error("Err message:", err.message);
@@ -129,7 +125,6 @@ exports.getAllComments = async (req, res) => {
 exports.createComment = async (req, res, next) => {
   try {
     const { values, entryId } = req.body;
-    console.log("values", values, entryId);
 
     const newComment = await Comment.create({
       text: values.text,
@@ -143,7 +138,6 @@ exports.createComment = async (req, res, next) => {
       author: req.session.user.id,
     }).populate("author");
 
-    // console.log("created Comment---->", newComment);
     res.json(comment);
   } catch (err) {
     console.error("Err message:", err.message);

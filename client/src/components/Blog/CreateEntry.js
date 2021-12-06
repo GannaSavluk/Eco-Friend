@@ -55,14 +55,12 @@ const CreateEntry = () => {
         <div>
           {isOpen && user && (
             <div className={classes.block}>
-              {/* <CaretUpOutlined onClick={changeState} /> */}
 
               {!currentImg && (
                 <Image
                   className={classes.imgs}
                   width={200}
-                  // height={200}
-                  // src="img/empty/default_photo.png"
+            
                   src="https://storage.googleapis.com/proudcity/elgl/uploads/2018/04/Environmental-11.gif"
                   fallback="public/img/empty/default_photo.png"
                 />
@@ -71,7 +69,6 @@ const CreateEntry = () => {
                 <Image
                   className={classes.imgs}
                   width={200}
-                  // height={200}
                   cloudName="dwvm712y7"
                   publicId={`https://res.cloudinary.com/dwvm712y7/image/upload/v${currentImg.version}/${currentImg.public_id}.${currentImg.format}`}
                 />
@@ -132,15 +129,7 @@ const CreateEntry = () => {
                     <CheckOutlined style={{ color: "green" }} />
                   </Button>
                 </div>
-                {/* <button
-                  variant="primary"
-                  onClick={() => setValue({ text: "", category: "" })}
-                >
-                  Reset
-                </button>
-                <button variant="primary" type="submit">
-                  Send
-                </button>{" "} */}
+
               </form>
             </div>
           )}
