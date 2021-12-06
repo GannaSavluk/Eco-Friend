@@ -8,8 +8,8 @@ function AccountImage(props) {
         src="https://www.imgonline.com.ua/examples/bee-on-daisy.jpg"
       />
       <Card.Body>
-        <Card.Title>Username</Card.Title>
-        <Card.Text>Reputation: </Card.Text>
+        <Card.Title>{props.user.name}</Card.Title>
+        <Card.Text>Reputation: {props.user.reputation}</Card.Text>
       </Card.Body>
     </Card>
   );
