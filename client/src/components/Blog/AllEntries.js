@@ -1,86 +1,380 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { CloseButton } from "react-bootstrap";
+import { Card, Avatar, Button, Badge, Tooltip } from "antd";
+import {
+  SmileTwoTone,
+  CaretDownOutlined,
+  CloseOutlined,
+  EditOutlined,
+} from "@ant-design/icons";
+import classes from "./AllEntries.module.css";
 
 import {
-  getAllEntriesThunk,
   likeEntryThunk,
   likeEntry,
+  deleteEntryThunk,
 } from "../../store/entry/actions";
-import Comment from "./Comment";
+import EditEntry from "./EditEntry";
+import EntryComments from "./EntryComments";
+import CreateEntry from "./CreateEntry";
+import EntryText from "./EntryText";
+import UserInfo from "./UserInfo";
+const { Meta } = Card;
 
 const AllEntries = () => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(true);
-  const [isOpenComments, setIsOpenComments] = useState(false);
+  const [isOpenText, setIsOpenText] = useState({ id: "" });
+  const [isOpenComments, setIsOpenComments] = useState({ id: "" });
+  const [isOpenEditEntryForm, setIsOpenEditEntryForm] = useState({ id: "" });
+  const [isEmptyPrevComment, setIsEmptyPrevComment] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isOpenCategory, setIsOpenCategory] = useState('');
 
   const entries = useSelector((store) => store.entry.entries);
   const user = useSelector((store) => store.auth.user);
+
+useEffect(() => {
+
+}, [])
 
   const onLike = (entryid, userid) => {
     dispatch(likeEntryThunk(entryid, userid));
     dispatch(likeEntry(entryid));
   };
 
-  useEffect(() => {
-    dispatch(getAllEntriesThunk());
-  }, []);
+  const clickOpenComments = (id) => {
+    setIsOpenComments("");
+    setIsOpenComments({ [id]: true });
+    setIsEmptyPrevComment(true);
+  };
 
   const changeState = () => {
     setIsOpen(!isOpen);
   };
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  const showUserInfo = (userId) => {
+    console.log("show user ID", userId);
+    setIsModalVisible(true);
+    console.log("show user ID", isModalVisible);
+  };
+
+  const openEditEntryForm = (entryid) => {
+    setIsOpenEditEntryForm({ id: entryid });
+  };
 
   return (
-    <div className="AllEntries">
+    <div className={classes.AllEntries}>
+      <CreateEntry />
       {!isOpen && (
         <div className="d-grid gap-2">
           <button variant="secondary" size="lg" onClick={changeState}>
-            Open Blog
+            Open Blog <CaretDownOutlined />
           </button>
         </div>
       )}
-      {isOpen && (
+      {isOpen && !isOpenCategory && (
         <>
-          <CloseButton onClick={changeState} />
           {entries?.map((entry) => (
-            <div key={entry._id}>
-              <div style={{ width: "18rem" }}>
-                <img
-                  style={{ width: 300 }}
-                  variant="top"
-                  src={entry?.img}
-                  alt=" "
-                />
-                <div>
-                  <h3>Category: {entry.category}</h3>
-                  <p>{entry.text}</p>
-                  <p>Author: {entry.author.name}</p>
-                  <p>Likes: {entry.likes.length} </p>
-                  <svg
-                    onClick={() => onLike(entry._id, user.id)}
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    className="bi bi-hand-thumbs-up"
-                    viewBox="0 0 16 16"
+            <>
+              {isOpenEditEntryForm.id !== entry._id ? (
+                <>
+                  <Card
+                    className={classes.card}
+                    key={entry._id}
+                    style={{ maxWidth: 900 }}
+                    cover={
+                      <div className={classes.images}>
+                        {entry.likes.length > 5 && (
+                          <img
+                            className={classes.front_img}
+                            variant="top"
+                            src="https://walidsodki.com/unisale/animations/ecofriendly.gif"
+                            alt=" "
+                          />
+                        )}
+                        <img
+                          className={classes.main_img}
+                          style={{ width: 300 }}
+                          variant="top"
+                          src={entry?.img}
+                          alt=" "
+                        />
+                      </div>
+                    }
                   >
-                    <path d="M8.864.046C7.908-.193 7.02.53 6.956 1.466c-.072 1.051-.23 2.016-.428 2.59-.125.36-.479 1.013-1.04 1.639-.557.623-1.282 1.178-2.131 1.41C2.685 7.288 2 7.87 2 8.72v4.001c0 .845.682 1.464 1.448 1.545 1.07.114 1.564.415 2.068.723l.048.03c.272.165.578.348.97.484.397.136.861.217 1.466.217h3.5c.937 0 1.599-.477 1.934-1.064a1.86 1.86 0 0 0 .254-.912c0-.152-.023-.312-.077-.464.201-.263.38-.578.488-.901.11-.33.172-.762.004-1.149.069-.13.12-.269.159-.403.077-.27.113-.568.113-.857 0-.288-.036-.585-.113-.856a2.144 2.144 0 0 0-.138-.362 1.9 1.9 0 0 0 .234-1.734c-.206-.592-.682-1.1-1.2-1.272-.847-.282-1.803-.276-2.516-.211a9.84 9.84 0 0 0-.443.05 9.365 9.365 0 0 0-.062-4.509A1.38 1.38 0 0 0 9.125.111L8.864.046zM11.5 14.721H8c-.51 0-.863-.069-1.14-.164-.281-.097-.506-.228-.776-.393l-.04-.024c-.555-.339-1.198-.731-2.49-.868-.333-.036-.554-.29-.554-.55V8.72c0-.254.226-.543.62-.65 1.095-.3 1.977-.996 2.614-1.708.635-.71 1.064-1.475 1.238-1.978.243-.7.407-1.768.482-2.85.025-.362.36-.594.667-.518l.262.066c.16.04.258.143.288.255a8.34 8.34 0 0 1-.145 4.725.5.5 0 0 0 .595.644l.003-.001.014-.003.058-.014a8.908 8.908 0 0 1 1.036-.157c.663-.06 1.457-.054 2.11.164.175.058.45.3.57.65.107.308.087.67-.266 1.022l-.353.353.353.354c.043.043.105.141.154.315.048.167.075.37.075.581 0 .212-.027.414-.075.582-.05.174-.111.272-.154.315l-.353.353.353.354c.047.047.109.177.005.488a2.224 2.224 0 0 1-.505.805l-.353.353.353.354c.006.005.041.05.041.17a.866.866 0 0 1-.121.416c-.165.288-.503.56-1.066.56z" />
-                  </svg>
-                </div>
-                <button
-                  variant="primary"
-                  onClick={() => setIsOpenComments(!isOpenComments)}
-                >
-                  Comments
-                </button>
-                {isOpenComments && <Comment entryId={entry._id} />}
-              </div>
-            </div>
+                    {isModalVisible && (
+                      <UserInfo
+                        visible={isModalVisible}
+                        handleOk={handleOk}
+                        handleCancel={handleCancel}
+                      />
+                    )}
+                    <Meta
+                      avatar={
+                        entry.author?.img ? (
+                          <Badge count={entry.author.rating}>
+                            <Avatar
+                              src={entry.author?.img}
+                              onClick={() => showUserInfo(entry.author?._id)}
+                            />
+                          </Badge>
+                        ) : (
+                          <Badge count={entry.author?.rating}>
+                            <Avatar src="/img/person/default_avatar.png" />{" "}
+                          </Badge>
+                        )
+                      }
+                      title={
+                        <div className={classes?.title}>
+                          <Tooltip title="see more">
+                            <div
+                              onClick={() => {
+                                setIsOpenCategory(entry.category);
+                                console.log(entry.category);
+                                console.log('isOpenCategory',isOpenCategory)
+                              }}
+                            >
+                              {entry.category}
+                            </div>
+                          </Tooltip>
+
+                          <div>
+                            {user?.id === entry.author?._id && (
+                              <EditOutlined
+                                onClick={() => openEditEntryForm(entry._id)}
+                              />
+                            )}
+                            {(user?.id === entry.author?._id ||
+                              user?.role === 0) && (
+                              <CloseOutlined
+                                onClick={() =>
+                                  dispatch(deleteEntryThunk(entry._id))
+                                }
+                              />
+                            )}
+                          </div>
+                        </div>
+                      }
+                      description={
+                        <div>
+                          <div className={classes.cardDescription}>
+                            {isOpenText.id !== entry._id && (
+                              <Tooltip title="click to read more">
+                                <p
+                                  onClick={() =>
+                                    setIsOpenText({ id: entry._id })
+                                  }
+                                >
+                                  {entry.text.slice(0, 50)}...
+                                </p>
+                              </Tooltip>
+                            )}
+                            {isOpenText.id === entry._id && (
+                              <EntryText
+                                setIsOpenText={setIsOpenText}
+                                text={entry.text}
+                              />
+                            )}
+                            <p>Author: {entry.author?.name} </p>
+                            Posted: {String(entry?.date).slice(0, 10)}
+                            <p>Likes: {entry.likes?.length} </p>
+                          </div>
+                          <div className={classes.like_btn}>
+                            <Button
+                              className={classes.button_comment}
+                              type="link"
+                              variant="primary"
+                              onClick={() => clickOpenComments(entry._id)}
+                            >
+                              Comments
+                            </Button>
+                            {user && (
+                              <SmileTwoTone
+                                style={{ fontSize: 20, width: 50 }}
+                                onClick={() => onLike(entry._id, user.id)}
+                              />
+                            )}
+                          </div>
+                        </div>
+                      }
+                    />
+                  </Card>
+                  <div>
+                    {isEmptyPrevComment && isOpenComments[entry._id] && (
+                      <EntryComments
+                        key={`comment-${entry._id}`}
+                        entryId={entry._id}
+                      />
+                    )}
+                  </div>
+                </>
+              ) : (
+                <EditEntry
+                  entry={entry}
+                  setIsOpenEditEntryForm={setIsOpenEditEntryForm}
+                />
+              )}
+            </>
           ))}
         </>
       )}
+      {/* {isOpen && isOpenCategory && (
+        <>
+          {entries?.filter((entry) => {
+            entry.category === isOpenCategory ? (
+              <>
+                {isOpenEditEntryForm.id !== entry._id ? (
+                  <>
+                    <Card
+                      className={classes.card}
+                      key={entry._id}
+                      style={{ maxWidth: 900 }}
+                      cover={
+                        <div className={classes.images}>
+                          {entry.likes.length > 5 && (
+                            <img
+                              className={classes.front_img}
+                              variant="top"
+                              src="https://walidsodki.com/unisale/animations/ecofriendly.gif"
+                              alt=" "
+                            />
+                          )}
+                          <img
+                            className={classes.main_img}
+                            style={{ width: 300 }}
+                            variant="top"
+                            src={entry?.img}
+                            alt=" "
+                          />
+                        </div>
+                      }
+                    >
+                      {isModalVisible && (
+                        <UserInfo
+                          visible={isModalVisible}
+                          handleOk={handleOk}
+                          handleCancel={handleCancel}
+                        />
+                      )}
+                      <Meta
+                        avatar={
+                          entry.author?.img ? (
+                            <Badge count={entry.author.rating}>
+                              <Avatar
+                                src={entry.author?.img}
+                                onClick={() => showUserInfo(entry.author?._id)}
+                              />
+                            </Badge>
+                          ) : (
+                            <Badge count={entry.author?.rating}>
+                              <Avatar src="/img/person/default_avatar.png" />{" "}
+                            </Badge>
+                          )
+                        }
+                        title={
+                          <div className={classes?.title}>
+                            <Tooltip title="see more">
+                              <div
+                                onClick={() =>
+                                  setIsOpenCategory(entry.category)
+                                }
+                              >
+                                {entry.category}
+                              </div>
+                            </Tooltip>
+
+                            <div>
+                              {user?.id === entry.author?._id && (
+                                <EditOutlined
+                                  onClick={() => openEditEntryForm(entry._id)}
+                                />
+                              )}
+                              {(user?.id === entry.author?._id ||
+                                user?.role === 0) && (
+                                <CloseOutlined
+                                  onClick={() =>
+                                    dispatch(deleteEntryThunk(entry._id))
+                                  }
+                                />
+                              )}
+                            </div>
+                          </div>
+                        }
+                        description={
+                          <div>
+                            <div className={classes.cardDescription}>
+                              {isOpenText.id !== entry._id && (
+                                <Tooltip title="click to read more">
+                                  <p
+                                    onClick={() =>
+                                      setIsOpenText({ id: entry._id })
+                                    }
+                                  >
+                                    {entry.text.slice(0, 50)}...
+                                  </p>
+                                </Tooltip>
+                              )}
+                              {isOpenText.id === entry._id && (
+                                <EntryText
+                                  setIsOpenText={setIsOpenText}
+                                  text={entry.text}
+                                />
+                              )}
+                              <p>Author: {entry.author?.name} </p>
+                              Posted: {String(entry?.date).slice(0, 10)}
+                              <p>Likes: {entry.likes?.length} </p>
+                            </div>
+                            <div className={classes.like_btn}>
+                              <Button
+                                className={classes.button_comment}
+                                type="link"
+                                variant="primary"
+                                onClick={() => clickOpenComments(entry._id)}
+                              >
+                                Comments
+                              </Button>
+                              {user && (
+                                <SmileTwoTone
+                                  style={{ fontSize: 20, width: 50 }}
+                                  onClick={() => onLike(entry._id, user.id)}
+                                />
+                              )}
+                            </div>
+                          </div>
+                        }
+                      />
+                    </Card>
+                    <div>
+                      {isEmptyPrevComment && isOpenComments[entry._id] && (
+                        <EntryComments
+                          key={`comment-${entry._id}`}
+                          entryId={entry._id}
+                        />
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  <EditEntry
+                    entry={entry}
+                    setIsOpenEditEntryForm={setIsOpenEditEntryForm}
+                  />
+                )}
+              </>
+            ) : (
+              <h3>---</h3>
+            );
+          })}
+        </>
+      )} */}
     </div>
   );
 };
