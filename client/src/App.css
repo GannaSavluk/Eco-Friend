@@ -1,0 +1,16 @@
+.ant-divider-horizontal {
+  min-width: 50px;
+}
+
+.ant-card-cover {
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.News_News__3PGTU{
+  margin-left: 13px;
+  margin-top: 10px;
+  max-width: 400px;
+}

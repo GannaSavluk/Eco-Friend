@@ -33,6 +33,10 @@ export const entry = (state = initialState, action) => {
       state.currentEntryId = "";
       return state;
 
+    case ACTypes.DELETE_ENTRY:
+      state.entries = state.entries.filter((el) => el._id !== action.payload.id);
+      return { ...state, entries: state.entries };
+
     case ACTypes.LIKE_ENTRY:
       return {
         ...state,

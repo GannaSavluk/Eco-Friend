@@ -1,0 +1,13 @@
+.CreateComment{
+    max-width: 900px;
+    min-width: 400px;
+    margin-top: 3px;
+}
+/* 
+.ant-card-cover{
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+} */

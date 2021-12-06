@@ -1,0 +1,16 @@
+.News{
+    
+}
+.card{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+.title{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.img{
+    margin-top: 10px;
+}

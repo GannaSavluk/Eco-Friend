@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Form, CloseButton } from "react-bootstrap";
+import classes from "./CreateComment.module.css";
+
 
 import { createCommentThunk } from "../../store/entry/actions";
 
@@ -25,7 +27,7 @@ const CreateComment = ({ entryId }) => {
   // }, []);
 
   return (
-    <div className="CreateComment">
+    <div className={classes.CreateComment}>
       <form onSubmit={createNewPost}>
         <Form.Control
           as="textarea"

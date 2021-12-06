@@ -16,6 +16,10 @@ export const likeEntry = (id) => ({
   type: ACTypes.LIKE_ENTRY,
   payload: { id },
 });
+export const deleteEntry = (id) => ({
+  type: ACTypes.DELETE_ENTRY,
+  payload: { id },
+});
 export const saveCurrentImg = (img) => ({
   type: ACTypes.CURRENT_IMG,
   payload: { img },
@@ -56,6 +60,30 @@ export const createEntryThunk = (values, link) => async (dispatch) => {
 
   dispatch(createEntry(entry));
 };
+export const editEntryThunk = (values, link, id) => async (dispatch) => {
+  const response = await fetch(`/entry/${id}`, {
+    method: "put",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ values, link }),
+  });
+  const entry = await response.json();
+
+  console.log("editEntryThunk entry---->", entry);
+
+  dispatch(editEntry(entry));
+};
+export const deleteEntryThunk = (id) => async (dispatch) => {
+  const response = await fetch(`/entry/delete`, {
+    method: "delete",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id }),
+  });
+  const result = await response.json();
+
+  console.log("entry deleted", result);
+
+  dispatch(deleteEntry(id));
+};
 
 export const likeEntryThunk = (id, author) => async (dispatch) => {
   const response = await fetch(`/entry/${id}/like`, {
@@ -85,7 +113,7 @@ export const uploadImgThunk = (imgSelected) => async (dispatch) => {
 
 export const getAllCommentsThunk = (id) => async (dispatch) => {
   console.log({ id });
-  dispatch(isLoadingComments(true))
+  dispatch(isLoadingComments(true));
   const response = await fetch(`/entry/${id}`, {
     method: "get",
     headers: { "Content-Type": "application/json" },
@@ -94,7 +122,7 @@ export const getAllCommentsThunk = (id) => async (dispatch) => {
   console.log("comments--->", comments);
 
   if (comments) dispatch(getAllComments(comments));
-  dispatch(isLoadingComments(false))
+  dispatch(isLoadingComments(false));
 };
 
 export const createCommentThunk = (values, entryId) => async (dispatch) => {

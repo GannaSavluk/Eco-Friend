@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { checkUserAuthThunk } from "./store/auth/actions";
 import { mapFetchThunk } from "./store/map/actions";
+import {getAllEntriesThunk} from './store/entry/actions'
 
 import "./App.css";
 import 'antd/dist/antd.css'
@@ -26,6 +27,7 @@ function App() {
   useEffect(() => {
     dispatch(mapFetchThunk());
     dispatch(checkUserAuthThunk());
+    dispatch(getAllEntriesThunk());
   });
   return (
     <div className="App">
