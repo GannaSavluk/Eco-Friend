@@ -4,10 +4,11 @@ export const isAuthCheck = (id) => ({
   type: ACTypes.AUTH,
   payload: { id: id },
 });
-export const checkUserRole = (id, role, name) => ({
+export const checkUserRole = (id, role, name, rating) => ({
   type: ACTypes.USER_ROLE,
-  payload: { id: id, role: role, name: name },
+  payload: { id: id, role: role, name: name, rating:rating },
 });
+export const isLogout = (id) => ({ type: ACTypes.AUTH_LOGOUT });
 
 export const logoutThunk = () => async (dispatch) => {
   console.log("quit");
@@ -16,6 +17,7 @@ export const logoutThunk = () => async (dispatch) => {
     headers: { "Content-Type": "application/json" },
   });
   dispatch(isAuthCheck(null));
+  dispatch(isLogout())
 };
 
 export const signinThunk = (values) => async (dispatch, navigate) => {
@@ -52,5 +54,5 @@ export const checkUserAuthThunk = () => async (dispatch) => {
   });
   const user = await response.json();
 
-  if (user) dispatch(checkUserRole(user.id, user.role, user.name));
+  if (user) dispatch(checkUserRole(user.id, user.role, user.name, user.rating));
 };
