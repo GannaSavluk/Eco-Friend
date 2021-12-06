@@ -1,10 +1,9 @@
 import React from "react";
+import style from "./LeaderProfile.module.css";
 
 const LeaderProfile = () => {
   return (
-    <div>
-      {/* <img src="..." class="rounded" alt="..."> */}
-    </div>
-  )
-}
- export default LeaderProfile;
+   <div>hello</div> 
+  );
+};
+export default LeaderProfile;

@@ -138,7 +138,7 @@ const MapStepa = () => {
       <ReactMapGl
         {...viewport}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-        mapStyle={process.env.REACT_APP_MAPBOX_STYLE}
+        // mapStyle={process.env.REACT_APP_MAPBOX_STYLE}
         onViewportChange={(viewport) => {
           setViewport(viewport);
         }}

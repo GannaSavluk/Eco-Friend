@@ -1,0 +1,10 @@
+.scroll {
+  height: 330px;
+  overflow-y: scroll; 
+}
+
+.bg-danger {
+  background-color: let(--bs-indigo #6610f2); 
+  color:blue
+}
+

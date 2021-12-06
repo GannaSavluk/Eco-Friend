@@ -3,7 +3,9 @@ import { Button, Form, FormControl, ListGroup } from "react-bootstrap";
 // import style from "./Leaderboard.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { showUsersListThunk } from "../../store/usersList/actions";
+import Carousel from "./Carousel/Carousel";
 import LeaderProfile from "./LeaderProfile/LeaderProfile";
+import "./Leaderboard.css";
 
 const Leaderboard = () => {
   const data = useSelector((store) => store.userList.userList);
@@ -26,43 +28,62 @@ const Leaderboard = () => {
     dispatch(showUsersListThunk(data));
   }, []);
 
+  const quantity = data.length;
+  console.log("col", quantity);
   return (
-    <div className="d-flex ">
-      <div className="border border-secondary border-5 rounded-3 w-50 p-2 m-1">
-        <Form className="d-flex">
-          <FormControl
-            type="search"
-            placeholder="Search"
-            className="me-2"
-            aria-label="Search"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-          />
-          <Button variant="outline-success">Search</Button>
-        </Form>
+    <div>
+      <div className="top">
+        <Carousel />
+      </div>
+      <div className="d-flex ">
+        <div className="border border-secondary border-5 rounded-3 w-50 p-2 m-1 ">
+          <Form className="d-flex">
+            <FormControl
+              type="search"
+              placeholder="Search..."
+              className="me-2 w-75"
+              aria-label="Search"
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+            />
+            {/* <Button variant="outline-success">Search</Button> */}
+            <div>
+              {" "}
+              <p>We already have:</p> {quantity} people
+            </div>
+          </Form>
 
-        <ListGroup className="d-flex mt-1 w-100  ">
-          {filter.map((user) => (
-            <ListGroup.Item key={user._id} action variant="success">
-              <div className="d-flex justify-content-between mt-1">
-                <div>{user.name}</div>
-                <div>{user.role}</div>
-              </div>
-            </ListGroup.Item>
-          ))}
-        </ListGroup>
+          <ListGroup className="d-flex mt-1 w-100 scroll">
+            {filter.map((user) => (
+              <ListGroup.Item
+                key={user._id}
+                action
+                variant="success"
+                id="list-example"
+                class="list-group"
+              >
+                <div
+                  className=" d-flex justify-content-between mt-1 "
+                  data-bs-spy="scroll"
+                >
+                  <div>{user.name}</div>
+                  <span  class="badge bg-primary rounded-pill">{user.rating}</span>
+                </div>
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+        </div>
+        <div className="border border-secondary  border-5 rounded-3 w-50 p-2 m-1 ">
+          <img
+            src="https://cdn.pixabay.com/photo/2021/11/26/20/44/lantern-6826687_640.jpg"
+            width="100%"
+            height="400px"
+            alt="img"
+          ></img>
+          {/* <img src={img} width='100%' height='400px' alt="img"></img> */}
+        </div>
       </div>
-      <div className="border border-secondary border-5 rounded-3 w-50 p-2 m-1 ">
-        <LeaderProfile />
-        <img
-          src="https://cdn.pixabay.com/photo/2021/11/26/20/44/lantern-6826687_640.jpg"
-          width="100%"
-          height="400px"
-          alt="img"
-        ></img>
-        {/* <img src={img} width='100%' height='400px' alt="img"></img> */}
-      </div>
-      <div></div>
+      <LeaderProfile />
     </div>
   );
 };
