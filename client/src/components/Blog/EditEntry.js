@@ -1,15 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Image } from "cloudinary-react";
-import { Link } from "react-router-dom";
 
-import { Form, CloseButton } from "react-bootstrap";
-// import {
-//   CaretDownOutlined,
-//   CaretUpOutlined,
-//   UploadOutlined,
-// } from "@ant-design/icons";
-// import { Upload, message, Button } from "antd";
+import classes from "./EditEntry.module.css";
+import { DeleteOutlined, CheckOutlined } from "@ant-design/icons";
+import { Button } from "antd";
 import { Input } from "antd";
 
 import { editEntryThunk, uploadImgThunk } from "../../store/entry/actions";
@@ -47,7 +42,7 @@ const EditEntry = ({ entry, setIsOpenEditEntryForm }) => {
   };
 
   return (
-    <div className="EditEntry">
+    <div className={classes.EditEntry}>
       <div>
         <div>
           {user && (
@@ -90,15 +85,14 @@ const EditEntry = ({ entry, setIsOpenEditEntryForm }) => {
                   <option value="sorting">sorting</option>
                   <option value="events">events</option>
                 </select>
-                <button variant="primary" type="submit">
-                  Save changes
-                </button>{" "}
-                <button
-                  variant="primary"
-                  onClick={() => setIsOpenEditEntryForm({ id: "" })}
-                >
-                  Cancel
-                </button>{" "}
+                <div className={classes.btns}>
+                  <Button onClick={() => setIsOpenEditEntryForm({ id: "" })}>
+                    <DeleteOutlined style={{ color: "red" }} />
+                  </Button>
+                  <Button variant="primary" htmlType="submit">
+                    <CheckOutlined style={{ color: "green" }} />
+                  </Button>
+                </div>
               </form>
             </div>
           )}

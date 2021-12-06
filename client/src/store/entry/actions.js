@@ -36,6 +36,10 @@ export const isLoadingComments = (status) => ({
   type: ACTypes.LOADING_COMMENTS,
   payload: { status },
 });
+export const deleteComment = (id) => ({
+  type: ACTypes.DELETE_COMMENT,
+  payload: { id },
+});
 
 export const getAllEntriesThunk = () => async (dispatch) => {
   const response = await fetch("/entry", {
@@ -136,4 +140,18 @@ export const createCommentThunk = (values, entryId) => async (dispatch) => {
   console.log("createcommentThunk comment---->", comment);
 
   dispatch(createComment(comment));
+};
+
+export const deleteCommentThunk = (id) => async (dispatch) => {
+  console.log('id', id)
+  const response = await fetch(`/entry/comment/delete`, {
+    method: "delete",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id }),
+  });
+  const result = await response.json();
+
+  console.log("comment deleted", result);
+
+  dispatch(deleteComment(id));
 };

@@ -4,15 +4,8 @@ import { Image } from "cloudinary-react";
 import { Link } from "react-router-dom";
 
 import { Form, CloseButton } from "react-bootstrap";
-import {
-  CaretDownOutlined,
-  CaretUpOutlined,
-  UploadOutlined,
-  PlusOutlined,
-  DeleteOutlined,
-  CheckOutlined,
-} from "@ant-design/icons";
-import { Upload, message, Button, Select } from "antd";
+import { PlusOutlined, DeleteOutlined, CheckOutlined } from "@ant-design/icons";
+import { Button, Select } from "antd";
 import classes from "./CreateEntry.module.css";
 
 import { createEntryThunk, uploadImgThunk } from "../../store/entry/actions";
@@ -30,9 +23,7 @@ const CreateEntry = () => {
   const onInputText = ({ target: { value } }) => {
     setValue((prev) => ({ ...prev, text: value }));
   };
-  // const onInputCategory = ({ target: { value } }) => {
-  //   setValue((prev) => ({ ...prev, category: value }));
-  // };
+  
   const onInputCategory = (value) => {
     console.log({ value });
     setValue((prev) => ({ ...prev, category: value }));
@@ -68,31 +59,37 @@ const CreateEntry = () => {
 
               {!currentImg && (
                 <Image
-                className={classes.imgs}
+                  className={classes.imgs}
                   width={200}
-                  height={200}
-                  src="img/empty/default_photo.png"
+                  // height={200}
+                  // src="img/empty/default_photo.png"
+                  src="https://storage.googleapis.com/proudcity/elgl/uploads/2018/04/Environmental-11.gif"
                   fallback="public/img/empty/default_photo.png"
                 />
               )}
               {currentImg && (
                 <Image
-                className={classes.imgs}
+                  className={classes.imgs}
                   width={200}
-                  height={200}
+                  // height={200}
                   cloudName="dwvm712y7"
                   publicId={`https://res.cloudinary.com/dwvm712y7/image/upload/v${currentImg.version}/${currentImg.public_id}.${currentImg.format}`}
                 />
               )}
               <form onSubmit={createNewPost}>
                 {/* <Button > */}
+
                 <input
+                  className={["input", "input__file"]}
+                  //  className={classes.input,classes.input__file}
+                  // className={classes.input__wrapper}
                   type="file"
                   name="file"
                   onChange={(e) => {
                     dispatch(uploadImgThunk(e.target.files[0]));
                   }}
                 />
+
                 {/* </Button> */}
                 <Form.Control
                   className={classes.textArea}
@@ -121,14 +118,18 @@ const CreateEntry = () => {
                   <Option value="sorting">sorting</Option>
                   <Option value="events">events</Option>
                 </Select>
-<div className={classes.btns}>
-                <Button onClick={() => {
-                  setValue({ text: "", category: "" })
-                  setIsOpen(false)
-                }}>
-                <DeleteOutlined style={{color: 'red'}}/>
-                </Button>
-                <Button variant="primary" htmlType="submit"><CheckOutlined style={{color: 'green'}}/></Button>
+                <div className={classes.btns}>
+                  <Button
+                    onClick={() => {
+                      setValue({ text: "", category: "" });
+                      setIsOpen(false);
+                    }}
+                  >
+                    <DeleteOutlined style={{ color: "red" }} />
+                  </Button>
+                  <Button variant="primary" htmlType="submit">
+                    <CheckOutlined style={{ color: "green" }} />
+                  </Button>
                 </div>
                 {/* <button
                   variant="primary"
@@ -145,11 +146,11 @@ const CreateEntry = () => {
         </div>
         <div>
           {isOpen && !user && (
-            <div>
+            <div className={classes.entryAccess}>
               <CloseButton onClick={changeState} />
-              <p>
-                You don't have access. Please <Link to="/signin">login</Link>!
-              </p>
+              <h5 className={classes.access}>
+                You don't have access. Please <Link to="/signin">login</Link>
+              </h5>
             </div>
           )}
         </div>

@@ -9,7 +9,8 @@ const {
   getAllComments,
   createComment,
   deleteEntry,
-  editEntry
+  editEntry,
+  deleteComment,
 } = require("../controllers/entryController");
 
 router.delete("/delete", deleteEntry);
@@ -20,5 +21,6 @@ router.put("/:id/like", likeEntry);
 
 router.get("/:id", getAllComments);
 router.post("/comment/new", createComment);
+router.delete("/comment/delete", deleteComment);
 
 module.exports = router;

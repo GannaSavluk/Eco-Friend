@@ -1,32 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Card, Avatar, Button, Badge } from "antd";
+import { Card, Avatar, Button, Badge, Tooltip } from "antd";
 import {
   SmileTwoTone,
   CaretDownOutlined,
-  CaretUpOutlined,
   CloseOutlined,
   EditOutlined,
 } from "@ant-design/icons";
 import classes from "./AllEntries.module.css";
 
 import {
-  getAllEntriesThunk,
   likeEntryThunk,
   likeEntry,
   deleteEntryThunk,
-  editEntryThunk,
 } from "../../store/entry/actions";
 import EditEntry from "./EditEntry";
 import EntryComments from "./EntryComments";
 import CreateEntry from "./CreateEntry";
-import { entry } from "../../store/entry/reducers";
+import EntryText from "./EntryText";
 const { Meta } = Card;
 
 const AllEntries = () => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(true);
+  const [isOpenText, setIsOpenText] = useState({ id: "" });
   const [isOpenComments, setIsOpenComments] = useState({ id: "" });
   const [isOpenEditEntryForm, setIsOpenEditEntryForm] = useState({ id: "" });
   const [isEmptyPrevComment, setIsEmptyPrevComment] = useState(false);
@@ -34,7 +32,6 @@ const AllEntries = () => {
   const entries = useSelector((store) => store.entry.entries);
   const user = useSelector((store) => store.auth.user);
 
-  // console.log({user});
   const onLike = (entryid, userid) => {
     dispatch(likeEntryThunk(entryid, userid));
     dispatch(likeEntry(entryid));
@@ -45,12 +42,6 @@ const AllEntries = () => {
     setIsOpenComments({ [id]: true });
     setIsEmptyPrevComment(true);
   };
-console.log({entries})
-// console.log(entries[0].author.rating)
-
-  // useEffect(() => {
-  //   dispatch(getAllEntriesThunk());
-  // }, []);
 
   const changeState = () => {
     setIsOpen(!isOpen);
@@ -60,7 +51,6 @@ console.log({entries})
   };
 
   const openEditEntryForm = (entryid) => {
-    console.log("openEditEntryForm", entryid);
     setIsOpenEditEntryForm({ id: entryid });
   };
 
@@ -76,7 +66,6 @@ console.log({entries})
       )}
       {isOpen && (
         <>
-          {/* <CaretUpOutlined onClick={changeState} /> */}
           {entries?.map((entry) => (
             <>
               {isOpenEditEntryForm.id !== entry._id ? (
@@ -87,7 +76,6 @@ console.log({entries})
                     style={{ maxWidth: 900 }}
                     cover={
                       <img
-                        // className={classes.photo}
                         style={{ width: 300 }}
                         variant="top"
                         src={entry?.img}
@@ -113,25 +101,43 @@ console.log({entries})
                       title={
                         <div className={classes?.title}>
                           {entry.category}
-                          {(user?.id === entry.author?._id ||
-                            user?.role === 0) && (
-                            <div>
+                          <div>
+                            {user?.id === entry.author?._id && (
                               <EditOutlined
                                 onClick={() => openEditEntryForm(entry._id)}
                               />
+                            )}
+                            {(user?.id === entry.author?._id ||
+                              user?.role === 0) && (
                               <CloseOutlined
                                 onClick={() =>
                                   dispatch(deleteEntryThunk(entry._id))
                                 }
                               />
-                            </div>
-                          )}
+                            )}
+                          </div>
                         </div>
                       }
                       description={
                         <div>
                           <div className={classes.cardDescription}>
-                            <p>{entry.text}</p>
+                            {isOpenText.id !== entry._id && (
+                              <Tooltip title="click to read more">
+                                <p
+                                  onClick={() =>
+                                    setIsOpenText({ id: entry._id })
+                                  }
+                                >
+                                  {entry.text.slice(0, 50)}...
+                                </p>
+                              </Tooltip>
+                            )}
+                            {isOpenText.id === entry._id && (
+                              <EntryText
+                                setIsOpenText={setIsOpenText}
+                                text={entry.text}
+                              />
+                            )}
                             <p>Author: {entry.author?.name} </p>
                             <p>Posted: {entry?.date}</p>
                             <p>Likes: {entry.likes?.length} </p>
@@ -152,12 +158,6 @@ console.log({entries})
                               />
                             )}
                           </div>
-                          {/* {isEmptyPrevComment && isOpenComments[entry._id] && (
-                          <Comment
-                            key={`comment-${entry._id}`}
-                            entryId={entry._id}
-                          />
-                        )} */}
                         </div>
                       }
                     />

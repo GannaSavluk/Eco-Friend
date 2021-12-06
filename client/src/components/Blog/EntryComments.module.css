@@ -7,6 +7,7 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+  margin-left: 20px;
   
 }
 p {
@@ -22,9 +23,11 @@ p {
 .ant-comment-inner{
   margin-left: 20px;
 }
-.create_comment_form{
 
-}
-.one_comment{
-  margin-left: 20px;
+.oneComment{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 20px;
+  margin-left: 20 px;
 }

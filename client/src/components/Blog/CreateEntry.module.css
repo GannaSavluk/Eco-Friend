@@ -1,25 +1,30 @@
-.CreateEntry{
-    margin-top: 10px;
+.CreateEntry {
+  margin-top: 10px;
 }
-.block{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
+.block {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
 }
-.textArea{
-    min-width: 400px;
-    max-width: 600px;
-    margin-bottom: 10px;
-}
-
-.btns{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    margin-top: 10px;
+.textArea {
+  min-width: 400px;
+  max-width: 600px;
+  margin-bottom: 10px;
 }
 
-.imgs{
+.btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
 
+.entryAccess {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.access {
+  color: white;
 }

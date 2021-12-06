@@ -29,8 +29,14 @@ exports.createEntry = async (req, res, next) => {
       author: req.session.user.id,
       date: new Date(),
     });
-    console.log("created ENTRY---->", newEntry);
-    res.json(newEntry);
+
+    const entry = await Entry.findOne({
+      text: values.text,
+      category: values.category,
+      img: link,
+      author: req.session.user.id,
+    }).populate("author");
+    res.json(entry);
   } catch (err) {
     console.error("Err message:", err.message);
     console.error("Err code", err);
@@ -131,12 +137,29 @@ exports.createComment = async (req, res, next) => {
       author: req.session.user.id,
       date: new Date(),
     });
-    console.log("created Comment---->", newComment);
-    res.json(newComment);
+    const comment = await Comment.findOne({
+      text: values.text,
+      entry: entryId,
+      author: req.session.user.id,
+    }).populate("author");
+
+    // console.log("created Comment---->", newComment);
+    res.json(comment);
   } catch (err) {
     console.error("Err message:", err.message);
     console.error("Err code", err);
   }
 
+  res.status(200).end();
+};
+exports.deleteComment = async (req, res) => {
+  const { id } = req.body;
+  try {
+    await Comment.deleteOne({ _id: id });
+  } catch (err) {
+    console.error("Err message:", err.message);
+    console.error("Err code", err);
+  }
+  res.json({ message: "ok" });
   res.status(200).end();
 };

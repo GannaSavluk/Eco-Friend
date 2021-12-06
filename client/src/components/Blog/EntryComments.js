@@ -1,10 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Comment, Tooltip, Avatar, Button,  Divider } from "antd";
+import { Comment, Tooltip, Avatar, Divider } from "antd";
 import classes from "./EntryComments.module.css";
+import { CloseOutlined } from "@ant-design/icons";
 
-import { getAllCommentsThunk } from "../../store/entry/actions";
+import {
+  getAllCommentsThunk,
+  deleteCommentThunk,
+} from "../../store/entry/actions";
 import CreateComment from "./CreateComment";
 
 const EntryComments = ({ entryId }) => {
@@ -32,38 +36,42 @@ const EntryComments = ({ entryId }) => {
         <div>
           {comments.map((oneComment) => (
             <div key={oneComment._id} className={classes.comments}>
-              <Divider style={{width: '50%'}}/>
-              <Comment
-              className={classes.one_comment}
-                // actions={actions}
-                author={oneComment?.author?.name}
-                avatar={
-   
-                  oneComment.author.img ? (
-                    <Avatar
-                      src={oneComment?.author?.img}
-                      alt=""
-                    />
-                  ) : (
-                    <Avatar
-                      src="img/person/default_avatar.png"
-                      alt=""
-                    />
-                  )
-                }
-                content={<p>{oneComment?.text}</p>}
-                datetime={
-                  <Tooltip title='Published:'>
-                    <span>{oneComment.date}</span>
-                  </Tooltip>
-                }
-              />
-
+              <Divider style={{ width: "50%" }} />
+              <div className={classes.oneComment}>
+                <Comment
+                  className={classes.one_comment}
+                  // actions={actions}
+                  author={oneComment?.author?.name}
+                  avatar={
+                    oneComment?.author?.img ? (
+                      <Avatar src={oneComment?.author?.img} alt="" />
+                    ) : (
+                      <Avatar src="img/person/default_avatar.png" alt="" />
+                    )
+                  }
+                  content={<p>{oneComment?.text}</p>}
+                  datetime={
+                    <Tooltip title="Published:">
+                      <span>{oneComment.date}</span>
+                    </Tooltip>
+                  }
+                />
+                {(user?.id === oneComment.author?._id || user?.role === 0) && (
+                  <CloseOutlined
+                    onClick={() => dispatch(deleteCommentThunk(oneComment._id))}
+                  />
+                )}
+              </div>
             </div>
           ))}
         </div>
       )}
-      {user && <CreateComment className={classes.create_comment_form} entryId={entryId} />}
+      {user && (
+        <CreateComment
+          className={classes.create_comment_form}
+          entryId={entryId}
+        />
+      )}
     </div>
   );
 };

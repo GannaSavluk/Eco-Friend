@@ -11,7 +11,7 @@ const Blog = () => {
       {/* <CreateEntry /> */}
       <div className={classes.entries_blocks}>
       <AllEntries />
-      {/* <News/> */}
+      <News/>
       </div>
     </div>
   );

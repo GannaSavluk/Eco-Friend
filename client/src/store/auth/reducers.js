@@ -16,6 +16,7 @@ export const auth = (state = initialState, action) => {
           id: action.payload.id,
           name: action.payload.name,
           role: action.payload.role,
+          rating: action.payload.rating
         },
       };
 

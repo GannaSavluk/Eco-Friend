@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
-import { Form, CloseButton } from "react-bootstrap";
+import { Form} from "react-bootstrap";
+import {DeleteOutlined, CheckOutlined } from "@ant-design/icons";
+import { Button} from "antd";
 import classes from "./CreateComment.module.css";
-
 
 import { createCommentThunk } from "../../store/entry/actions";
 
 const CreateComment = ({ entryId }) => {
   const dispatch = useDispatch();
-  const [value, setValue] = useState({ text: ""});
-  
+  const [value, setValue] = useState({ text: "" });
 
   const onInputText = ({ target: { value } }) => {
     setValue((prev) => ({ ...prev, text: value }));
@@ -28,7 +28,8 @@ const CreateComment = ({ entryId }) => {
 
   return (
     <div className={classes.CreateComment}>
-      <form onSubmit={createNewPost}>
+      <form onSubmit={createNewPost}
+      className={classes.CreateCommentForm}>
         <Form.Control
           as="textarea"
           type="text"
@@ -38,15 +39,25 @@ const CreateComment = ({ entryId }) => {
           value={value?.text}
           onChange={onInputText}
         />
-        <button
-          variant="primary"
-          onClick={() => setValue({ text: ""})}
-        >
+        <div className={classes.btns}>
+          {/* <Button
+            onClick={() => {
+              setValue({ text: "", category: "" });
+              setIsOpen(false);
+            }}
+          >
+            <DeleteOutlined style={{ color: "red" }} />
+          </Button> */}
+          <Button variant="primary" htmlType="submit">
+            Send <CheckOutlined style={{ color: "green" }} />
+          </Button>
+        </div>
+        {/* <button variant="primary" onClick={() => setValue({ text: "" })}>
           Reset
-        </button>
-        <button variant="primary" type="submit">
+        </button> */}
+        {/* <button variant="primary" type="submit">
           Send
-        </button>{" "}
+        </button>{" "} */}
       </form>
     </div>
   );

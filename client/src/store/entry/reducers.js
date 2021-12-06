@@ -34,7 +34,9 @@ export const entry = (state = initialState, action) => {
       return state;
 
     case ACTypes.DELETE_ENTRY:
-      state.entries = state.entries.filter((el) => el._id !== action.payload.id);
+      state.entries = state.entries.filter(
+        (el) => el._id !== action.payload.id
+      );
       return { ...state, entries: state.entries };
 
     case ACTypes.LIKE_ENTRY:
@@ -51,6 +53,12 @@ export const entry = (state = initialState, action) => {
 
     case ACTypes.ADD_COMMENT:
       state.comments = [...state.comments, action.payload.comment];
+      return { ...state, comments: state.comments };
+
+    case ACTypes.DELETE_COMMENT:
+      state.comments = state.comments.filter(
+        (el) => el._id !== action.payload.id
+      );
       return { ...state, comments: state.comments };
 
     case ACTypes.LOADING_COMMENTS:
