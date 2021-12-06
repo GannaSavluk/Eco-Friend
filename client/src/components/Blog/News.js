@@ -95,20 +95,6 @@ const News = () => {
                         }
                       >
                         <Meta
-                          avatar={
-                            entry.author?.img ? (
-                              <Avatar
-                                // className={classes.img}
-                                src={entry.author?.img}
-                                onClick={() => showUserInfo(entry.author?._id)}
-                              />
-                            ) : (
-                              <Avatar
-                                className={classes.img}
-                                src="/img/person/default_avatar.png"
-                              />
-                            )
-                          }
                           title={
                             <div className={classes.title}>
                               {entry.category}
@@ -146,7 +132,7 @@ const News = () => {
                                   />
                                 )}
                                 <p>Author: {entry.author?.name} </p>
-                                <p>Posted: {entry?.date}</p>
+                                <p>Posted: {String(entry?.date).slice(0,10)}</p>
                                 <p>Likes: {entry.likes?.length} </p>
                               </div>
                               <div className={classes.like_btn}>

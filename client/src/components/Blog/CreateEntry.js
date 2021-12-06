@@ -23,7 +23,7 @@ const CreateEntry = () => {
   const onInputText = ({ target: { value } }) => {
     setValue((prev) => ({ ...prev, text: value }));
   };
-  
+
   const onInputCategory = (value) => {
     console.log({ value });
     setValue((prev) => ({ ...prev, category: value }));
@@ -77,20 +77,21 @@ const CreateEntry = () => {
                 />
               )}
               <form onSubmit={createNewPost}>
-                {/* <Button > */}
-
-                <input
-                  className={["input", "input__file"]}
-                  //  className={classes.input,classes.input__file}
-                  // className={classes.input__wrapper}
-                  type="file"
-                  name="file"
-                  onChange={(e) => {
-                    dispatch(uploadImgThunk(e.target.files[0]));
-                  }}
-                />
-
-                {/* </Button> */}
+                <div>
+                  <label for="upload_img" 
+                  className={classes.custom_file_upload}>
+                    Choose a profile picture:
+                    <input
+                      id="upload_img"
+                      style={{ display: 'none'}}
+                      type="file"
+                      name="file"
+                      onChange={(e) => {
+                        dispatch(uploadImgThunk(e.target.files[0]));
+                      }}
+                    />
+                  </label>
+                </div>
                 <Form.Control
                   className={classes.textArea}
                   as="textarea"

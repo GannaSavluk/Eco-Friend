@@ -14,3 +14,6 @@
   margin-top: 10px;
   max-width: 400px;
 }
+.ant-card-body{
+  width: 500px;
+}

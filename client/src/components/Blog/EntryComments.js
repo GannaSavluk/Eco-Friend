@@ -40,7 +40,6 @@ const EntryComments = ({ entryId }) => {
               <div className={classes.oneComment}>
                 <Comment
                   className={classes.one_comment}
-                  // actions={actions}
                   author={oneComment?.author?.name}
                   avatar={
                     oneComment?.author?.img ? (
@@ -52,7 +51,7 @@ const EntryComments = ({ entryId }) => {
                   content={<p>{oneComment?.text}</p>}
                   datetime={
                     <Tooltip title="Published:">
-                      <span>{oneComment.date}</span>
+                      <span>{String(oneComment?.date).slice(0,10)}</span>
                     </Tooltip>
                   }
                 />
