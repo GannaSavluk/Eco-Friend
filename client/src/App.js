@@ -4,8 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { checkUserAuthThunk } from "./store/auth/actions";
 import { mapFetchThunk } from "./store/map/actions";
+import {getAllEntriesThunk} from './store/entry/actions'
 
 import "./App.css";
+import 'antd/dist/antd.css'
 import Header from "./components/Header/Header";
 import Blog from "./components/Blog/Blog";
 import Leaderboard from "./components/Leaderboard/Leaderboard";
@@ -26,6 +28,7 @@ function App() {
   useEffect(() => {
     dispatch(mapFetchThunk());
     dispatch(checkUserAuthThunk());
+    dispatch(getAllEntriesThunk());
   });
   return (
     <div className="App">
