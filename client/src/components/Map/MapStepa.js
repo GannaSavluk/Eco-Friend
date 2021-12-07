@@ -18,7 +18,7 @@ const geolocateControlStyle = {
   top: 10,
 };
 const getRightCategoryIcon = (category) => {
-  console.log('category--',category );
+  console.log("category--", category);
   if (category === "plastic") return "/img/categories/bottle.png";
   if (category === "paper") return "/img/categories/paper.png";
   if (category === "electronics") return "/img/categories/electronics.png";
@@ -149,9 +149,7 @@ const MapStepa = () => {
           mapRef={mapRef}
           onViewportChange={handleGeocoderViewportChange}
           onResult={handleGeocoderResult}
-          mapboxApiAccessToken={
-            "pk.eyJ1IjoiZ2FubmFzYXYiLCJhIjoiY2t3b2dweWRoMDJvYTJ2cG1samw0bGhhNCJ9.zFlq-4XRaeQQ9NvOn0_gsQ"
-          }
+          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
           position="top-left"
           ref={geoRef}
         />
@@ -180,8 +178,8 @@ const MapStepa = () => {
                 <div
                   className={classes.cluster}
                   style={{
-                    width: `${10 + (pointCount / points.length) * 20}px`,
-                    height: `${10 + (pointCount / points.length) * 20}px`,
+                    width: `${10 + (pointCount / points.length) * 50}px`,
+                    height: `${10 + (pointCount / points.length) * 50}px`,
                   }}
                   onClick={() => {
                     const expansionZoom = Math.min(
@@ -213,7 +211,7 @@ const MapStepa = () => {
               longitude={longitude}
             >
               <button
-                className={classes.markerbt}
+                className={classes.markerbtn}
                 onClick={(e) => {
                   e.preventDefault();
                   setSelectedMapPoint(cluster);

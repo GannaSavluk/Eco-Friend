@@ -56,3 +56,10 @@ export const checkUserAuthThunk = () => async (dispatch) => {
 
   if (user) dispatch(checkUserRole(user.id, user.role, user.name, user.rating));
 };
+
+export const deleteUserThunk = (id) => async (dispatch) => {
+  await fetch(`/auth/${id}`, {
+    method: "delete",
+    headers: { "Content-Type": "application/json" },
+  });
+};

@@ -1,38 +1,87 @@
 import { Card, Button, Container, Row, Col } from "react-bootstrap";
 
-import classes from "./UserProfile.module.css";
+import Modal from "react-modal";
 
-function AccountInfo() {
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+
+import { deleteUserThunk } from "../../store/auth/actions";
+
+import classes from "./UserProfile.module.css";
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+
+function AccountInfo(props) {
+  Modal.setAppElement("#root");
+
+  const dispatch = useDispatch();
+
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  const deleteUserHandler = () => openModal();
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal(choice) {
+    if (choice) dispatch(deleteUserThunk(props.user.id));
+    setIsOpen(false);
+  }
+
   return (
-    <Card className={classes.box}>
-      <Container>
-        <h2>Username</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras blandit
-          tristique est nec condimentum. Aliquam bibendum, urna at bibendum
-          varius, augue purus varius erat, ut aliquam dolor lectus vitae urna.
-          Duis convallis, ipsum vel porttitor pharetra, tellus neque accumsan
-          urna, non tristique nibh felis ac eros. Ut sed orci lacinia, bibendum
-          purus sit amet, eleifend ipsum. Ut eget lorem est. Nullam eu augue
-          ligula. Cras placerat porttitor mi ac finibus. Vestibulum pretium,
-          augue et bibendum facilisis, orci ligula rutrum libero, eu luctus orci
-          nunc quis purus. Aliquam erat volutpat.
-        </p>
+    <>
+      <Card className={classes.box}>
         <Container>
-          <Row>
-            <Col>
+          <h2>{props.user.name}</h2>
+
+          <Container>
+            <Row>
+              {/* <Col>
               <Button>Edit</Button>
-            </Col>
-            <Col>
-              <Button>Change Password</Button>
-            </Col>
-            <Col>
-              <Button variant="danger">Delete Account</Button>
-            </Col>
-          </Row>
+            </Col> */}
+              <Col>
+                <Button>Change Password</Button>
+              </Col>
+              <Col>
+                <Button
+                  variant="danger"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    deleteUserHandler();
+                  }}
+                >
+                  Delete Account
+                </Button>
+              </Col>
+            </Row>
+          </Container>
         </Container>
-      </Container>
-    </Card>
+      </Card>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Delete Account"
+        style={customStyles}
+      >
+        <h2>
+          Are you sure you want to delete your account? This action is permanent
+          and cannot be undone.
+        </h2>
+        <Button onClick={() => closeModal(true)}>Yes</Button>
+        <Button onClick={() => closeModal(false)} variant="danger">
+          Cancel
+        </Button>
+      </Modal>
+    </>
   );
 }
 
