@@ -44,3 +44,15 @@ exports.editMapPoint = async (req, res) => {
   }
   res.status(200).end();
 };
+
+exports.deletePoint = async (req, res) => {
+  const id = req.params.id
+  try {
+    await Map.deleteOne({ _id: id });
+  } catch (err) {
+    console.error("Err message:", err.message);
+    console.error("Err code", err);
+  }
+  res.json({ message: "ok" });
+  res.status(200).end();
+};

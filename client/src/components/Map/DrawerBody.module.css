@@ -1,3 +1,7 @@
-.author{
-    
+.author {
+}
+.btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
