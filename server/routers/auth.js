@@ -19,7 +19,7 @@ router.post("/signin", checkUserAndCreateSession);
 router.post("/logout", destroySession);
 router.delete("/:id", deleteUser);
 router.post("/img", editUserProfilePicture);
-router.post("/check-img", getImg);
+// router.post("/check-img", getImg);
 
 router.get("/check", (req, res) => {
   // req.session.maxAge = 1000 //TODO использовать, если будем делать "запомнить меня" при регестрации

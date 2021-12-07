@@ -40,7 +40,7 @@ exports.createUserAndSession = async (req, res, next) => {
 
 exports.checkUserAndCreateSession = async (req, res, next) => {
   const { email, password } = req.body;
-  // console.log(email, password)
+  console.log(email, password);
   try {
     // Пытаемся сначала найти пользователя в БД
     const user = await User.findOne({ email: email });
@@ -54,6 +54,7 @@ exports.checkUserAndCreateSession = async (req, res, next) => {
 
     // записываем в req.session.user данные (id & name) (создаем сессию)
     req.session.user = serializeUser(user);
+    console.log(req.session.user);
   } catch (err) {
     console.error("Err message:", err.message);
     console.error("Err code", err.code);
@@ -105,15 +106,15 @@ exports.editUserProfilePicture = async (req, res) => {
   res.status(200).end();
 };
 
-exports.getImg = async (req, res) => {
-  try {
-    const { _id } = req.body;
-    const user = await User.findOne({ _id });
-    console.log(user);
-    res.json(user.img);
-  } catch (err) {
-    console.error("Err message:", err.message);
-    console.error("Err code", err);
-  }
-  res.status(200).end();
-};
+// exports.getImg = async (req, res) => {
+//   try {
+//     const { _id } = req.body;
+//     const user = await User.findOne({ _id });
+//     console.log(user);
+//     res.json(user.img);
+//   } catch (err) {
+//     console.error("Err message:", err.message);
+//     console.error("Err code", err);
+//   }
+//   res.status(200).end();
+// };
