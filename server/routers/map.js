@@ -3,7 +3,7 @@ const multer = require("multer"); // библиотека для загрузк�
 
 const router = express.Router();
 
-const { getMap, setNewMarker } = require("../controllers/mapController");
+const { getMap, setNewMarker, editMapPoint } = require("../controllers/mapController");
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
@@ -20,6 +20,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 router.get("/", getMap);
+router.put("/:id", editMapPoint);
 router.post("/", setNewMarker);
 
 module.exports = router;

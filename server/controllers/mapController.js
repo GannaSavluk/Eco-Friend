@@ -23,3 +23,24 @@ exports.setNewMarker = async (req, res) => {
     res.status(500).end();
   }
 };
+
+exports.editMapPoint = async (req, res) => {
+  try {
+    const { values, link } = req.body;
+    const id = req.params.id;
+    console.log('id------>>>>>', id)
+     await Map.updateOne(
+      { _id: id },
+      {
+        confirmed: true,
+      }
+    );
+    const updatedPoint = await Map.findOne({ _id: id }).populate('author')
+    console.log("updatedPoint", updatedPoint)
+    res.json(updatedPoint);
+  } catch (err) {
+    console.error("Err message:", err.message);
+    console.error("Err code", err);
+  }
+  res.status(200).end();
+};

@@ -1,12 +1,8 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Card,  Button, Tooltip } from "antd";
-import {
-  SmileTwoTone,
-  CloseOutlined,
-  EditOutlined,
-} from "@ant-design/icons";
+import { Card, Button, Tooltip } from "antd";
+import { SmileTwoTone, CloseOutlined, EditOutlined } from "@ant-design/icons";
 import classes from "./News.module.css";
 
 import {
@@ -28,6 +24,7 @@ const News = () => {
   const [isOpenComments, setIsOpenComments] = useState({ id: "" });
   const [isOpenEditEntryForm, setIsOpenEditEntryForm] = useState({ id: "" });
   const [isEmptyPrevComment, setIsEmptyPrevComment] = useState(false);
+  const [dotPosition, setDotPosition] = useState("left");
 
   const entries = useSelector((store) => store.entry.entries);
   const user = useSelector((store) => store.auth.user);
@@ -44,7 +41,6 @@ const News = () => {
     setIsEmptyPrevComment(true);
   };
 
-
   const changeState = () => {
     setIsOpen(!isOpen);
   };
@@ -59,10 +55,7 @@ const News = () => {
 
   return (
     <div className={classes.News}>
-      <img
-        src="img/rest/Artboard-8Eco-News.png"
-        alt=""
-      />
+      <img src="img/rest/Artboard-8Eco-News.png" alt="" />
       {isOpen && (
         <>
           {entries?.map((entry) => (
@@ -105,23 +98,27 @@ const News = () => {
                           description={
                             <div>
                               <div className={classes.cardDescription}>
-                              {isOpenText.id !==entry._id && (
+                                {isOpenText.id !== entry._id && (
                                   <Tooltip title="click to read more">
                                     <p
-                                      onClick={() => setIsOpenText({ id: entry._id })}
+                                      onClick={() =>
+                                        setIsOpenText({ id: entry._id })
+                                      }
                                     >
                                       {entry.text.slice(0, 50)}...
                                     </p>
                                   </Tooltip>
                                 )}
-                               {(isOpenText.id===entry._id) && (
+                                {isOpenText.id === entry._id && (
                                   <NewsDetails
                                     setIsOpenText={setIsOpenText}
                                     text={entry.text}
                                   />
                                 )}
                                 <p>Author: {entry.author?.name} </p>
-                                <p>Posted: {String(entry?.date).slice(0,10)}</p>
+                                <p>
+                                  Posted: {String(entry?.date).slice(0, 10)}
+                                </p>
                                 <p>Likes: {entry.likes?.length} </p>
                               </div>
                               <div className={classes.like_btn}>

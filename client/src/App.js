@@ -4,18 +4,15 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { checkUserAuthThunk } from "./store/auth/actions";
 import { mapFetchThunk } from "./store/map/actions";
-import {getAllEntriesThunk} from './store/entry/actions'
+import { getAllEntriesThunk } from "./store/entry/actions";
 
 import "./App.css";
-import 'antd/dist/antd.css'
+import "antd/dist/antd.css";
+
 import Header from "./components/Header/Header";
 import Blog from "./components/Blog/Blog";
 import Leaderboard from "./components/Leaderboard/Leaderboard";
-import Modal from "react-modal";
-
-// import Map from "./components/Map/Map";
-import MapStepa from "./components/Map/MapStepa";
-
+import Map from "./components/Map/Map";
 import Signin from "./components/Auth/Signin";
 import Signup from "./components/Auth/Signup";
 import Logout from "./components/Auth/Logout";
@@ -35,9 +32,7 @@ function App() {
       <Header />
 
       <Routes>
-        {/* <Route path="/" element={<Map />} /> */}
-        <Route path="/" element={<MapStepa />} />
-
+        <Route path="/" element={<Map />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/signup" element={!userId && <Signup />} />
