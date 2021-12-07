@@ -3,9 +3,10 @@ import { Card, Button, Container, Row, Col } from "react-bootstrap";
 import Modal from "react-modal";
 
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-import { deleteUserThunk } from "../../store/auth/actions";
+import { deleteUserThunk, logoutThunk } from "../../store/auth/actions";
 
 import classes from "./UserProfile.module.css";
 const customStyles = {
@@ -23,6 +24,7 @@ function AccountInfo(props) {
   Modal.setAppElement("#root");
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [modalIsOpen, setIsOpen] = useState(false);
 
@@ -33,7 +35,10 @@ function AccountInfo(props) {
   }
 
   function closeModal(choice) {
-    if (choice) dispatch(deleteUserThunk(props.user.id));
+    if (choice) {
+      navigate("/logout");
+      dispatch(deleteUserThunk(props.user.id));
+    }
     setIsOpen(false);
   }
 
