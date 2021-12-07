@@ -22,17 +22,17 @@ export const setImg = (img) => ({
   payload: { img },
 });
 
-export const getImg = (id) => async (dispatch) => {
-  const response = await fetch("/auth/check-img", {
-    method: "post",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ _id: id }),
-  });
-  const img = await response.json();
-  console.log(img);
+// export const getImg = (id) => async (dispatch) => {
+//   const response = await fetch("/auth/check-img", {
+//     method: "put",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify({ _id: id }),
+//   });
+//   const img = await response.json();
+//   console.log(img);
 
-  if (img) dispatch(setImg(img));
-};
+//   if (img) dispatch(setImg(img));
+// };
 
 export const logoutThunk = () => async (dispatch) => {
   console.log("quit");
@@ -45,10 +45,11 @@ export const logoutThunk = () => async (dispatch) => {
 };
 
 export const signinThunk = (values) => async (dispatch, navigate) => {
-  console.log({ values });
+  console.log("________", { values });
   const response = await fetch("/auth/signin", {
     method: "post",
     headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(values),
   });
 
   const userId = await response.json();
@@ -78,8 +79,9 @@ export const checkUserAuthThunk = () => async (dispatch) => {
   const user = await response.json();
 
   if (user) {
-    dispatch(checkUserRole(user.id, user.role, user.name, user.rating));
-    dispatch(getImg(user.id));
+    dispatch(
+      checkUserRole(user.id, user.role, user.name, user.rating, user.img)
+    );
   }
 };
 
@@ -112,5 +114,5 @@ export const changeUserProfilePic = (id, link) => async (dispatch) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ id, link }),
   });
-  dispatch(getImg(id));
+  dispatch(setImg(link));
 };
