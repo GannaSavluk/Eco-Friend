@@ -1,6 +1,8 @@
 import { Table, Tag, Space } from "antd";
-import {CloseOutlined}  from "@ant-design/icons";
+import { CloseOutlined } from "@ant-design/icons";
 import classes from "./DrawerBody.module.css";
+
+import { deleteUserThunk } from "../../store/auth/actions";
 
 const columns = [
   {
@@ -29,7 +31,6 @@ const columns = [
       <div className={classes.author}>
         <p>{author.name}</p>
         {/* <CloseOutlined onClick={}/> */}
-
       </div>
     ),
   },
