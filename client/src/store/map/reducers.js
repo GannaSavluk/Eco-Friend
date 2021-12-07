@@ -4,7 +4,7 @@ const initialState = {
   map: [],
   point: [], // позиция по клику
   currentImg: null,
-  currentPoint: {}
+  currentPoint: {},
 };
 
 export const map = (state = initialState, action) => {
@@ -20,9 +20,9 @@ export const map = (state = initialState, action) => {
       return { ...state, currentImg: action.payload.img };
 
     case ACTypes.CONFIRM_POINT:
-      console.log('1111')
+      console.log("1111");
       state.map = state.map.map((point) => {
-        console.log('action.payload.point._id', action.payload.point)
+        console.log("action.payload.point._id", action.payload.point);
         if (point?._id === action.payload.point._id) {
           return {
             ...point,
@@ -33,6 +33,12 @@ export const map = (state = initialState, action) => {
       });
       state.currentPoint = {};
       return state;
+
+    case ACTypes.DELETE_POINT:
+      state.map = state.map.filter(
+        (el) => el._id !== action.payload.id
+      );
+      return { ...state, map: state.map };
 
     default:
       return state;

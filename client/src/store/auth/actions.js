@@ -22,23 +22,10 @@ export const setImg = (img) => ({
   payload: { img },
 });
 
-// export const getImg = (id) => async (dispatch) => {
-//   const response = await fetch("/auth/check-img", {
-//     method: "put",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify({ _id: id }),
-//   });
-//   const img = await response.json();
-//   console.log(img);
-
-//   if (img) dispatch(setImg(img));
-// };
-
 export const logoutThunk = () => async (dispatch) => {
   console.log("quit");
   await fetch("/auth/logout", {
     method: "post",
-    headers: { "Content-Type": "application/json" },
   });
   dispatch(isAuthCheck(null));
   dispatch(isLogout());
@@ -54,7 +41,6 @@ export const signinThunk = (values) => async (dispatch, navigate) => {
 
   const userId = await response.json();
 
-  console.log("userId--->", userId);
   dispatch(isAuthCheck(userId));
   navigate("/");
 };

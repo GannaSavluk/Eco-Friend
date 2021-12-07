@@ -3,23 +3,21 @@ const express = require("express");
 const router = express.Router();
 
 const {
-  signupRender,
-  signinRender,
+
   createUserAndSession,
   checkUserAndCreateSession,
   destroySession,
   deleteUser,
   editUserProfilePicture,
-  getImg,
 } = require("../controllers/authController");
 // const { isValidPassword } = require('../middleware/authMiddleware');
 
 router.post("/signup", createUserAndSession);
 router.post("/signin", checkUserAndCreateSession);
 router.post("/logout", destroySession);
+router.delete("/admin/:id", deleteUser);
 router.delete("/:id", deleteUser);
 router.post("/img", editUserProfilePicture);
-// router.post("/check-img", getImg);
 
 router.get("/check", (req, res) => {
   // req.session.maxAge = 1000 //TODO использовать, если будем делать "запомнить меня" при регестрации
