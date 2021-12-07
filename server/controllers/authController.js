@@ -1,5 +1,7 @@
 const bcrypt = require("bcryptjs");
 const User = require("../db/models/user");
+const Entry = require("../db/models/entry");
+const Comment = require("../db/models/comment");
 
 function failAuth(res) {
   res.json(null);
@@ -74,9 +76,14 @@ exports.destroySession = (req, res, next) => {
   }
 };
 
-exports.deleteUser = (req, res) => {
+exports.deleteUser = async (req, res) => {
   try {
     console.log(req.params.id);
-    // логика удаления юзера
-  } catch (error) {}
+    await Comment.deleteMany({ author: req.params.id });
+    await Entry.deleteMany({ author: req.params.id });
+    await User.deleteMany({ _id: req.params.id });
+  } catch (error) {
+    console.log(error.message);
+  }
+  res.status(200).end();
 };
