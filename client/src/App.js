@@ -11,6 +11,7 @@ import 'antd/dist/antd.css'
 import Header from "./components/Header/Header";
 import Blog from "./components/Blog/Blog";
 import Leaderboard from "./components/Leaderboard/Leaderboard";
+import Modal from "react-modal";
 
 // import Map from "./components/Map/Map";
 import MapStepa from "./components/Map/MapStepa";
