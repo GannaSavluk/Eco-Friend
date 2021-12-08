@@ -8,3 +8,17 @@
   color:blue
 }
 
+.scroll-rigth {
+  height: 392px;
+  overflow-y: scroll; 
+}
+.colorTextPeople h5 {
+  color:rgb(7, 6, 6) 
+}
+.list-group-item {
+  background-color: white;
+  color:black
+}
+.colorTextItem {
+  color: black;
+}
