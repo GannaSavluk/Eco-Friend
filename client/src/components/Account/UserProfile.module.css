@@ -57,3 +57,7 @@
 .btn {
   margin-right: 10px;
 }
+
+.error {
+  color: #f54242;
+}
