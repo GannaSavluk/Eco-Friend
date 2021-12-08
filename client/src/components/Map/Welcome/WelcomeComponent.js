@@ -39,13 +39,12 @@ const WelcomeComponent = () => {
       title: "Welcome",
       content: (
         <div>
-        <p>
-          If you want to comment and add points to the map, please login
-          !
-          {/* , please */}
-          {/* <Link to="/signin"> signin</Link> or
-          <Link to="/signup"> signup</Link> right now. */}
-        </p>
+          <p>If you want to comment and add points to the map, please login!</p>
+          <img
+            src="https://i.pinimg.com/originals/f9/04/07/f90407a75a3ecff9d8a28b4789a6a54e.gif"
+            alt=""
+            style={{ width: "250px" }}
+          />
         </div>
       ),
       onOk() {
