@@ -159,6 +159,7 @@ const Map = () => {
         }}
         ref={mapRef}
       >
+        
         <Geocoder
           className={classes.geocoder}
           mapRef={mapRef}
