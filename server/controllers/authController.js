@@ -79,11 +79,23 @@ exports.destroySession = (req, res, next) => {
 };
 
 exports.deleteUser = async (req, res) => {
+  const { userId } = req.body;
   try {
-    console.log(req.params.id);
-    await Comment.deleteMany({ author: req.params.id });
-    await Entry.deleteMany({ author: req.params.id });
-    await User.deleteMany({ _id: req.params.id });
+    if (req.session.user.id === req.params.id && req.session.user.role ===1) {
+      console.log(11111111, req.session.user)
+      await Comment.deleteMany({ author: req.params.id });
+      await Entry.deleteMany({ author: req.params.id });
+      await User.deleteMany({ _id: req.params.id });
+    }
+    if (req.session.user.role === 0 && req.params.id !== req.session.user.id) {
+      console.log(2222222222)
+
+      await Comment.deleteMany({ author: req.params.id });
+      await Entry.deleteMany({ author: req.params.id });
+      await User.deleteMany({ _id: req.params.id });
+    }
+    console.log(33333333)
+
   } catch (error) {
     console.log(error.message);
   }

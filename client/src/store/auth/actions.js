@@ -38,7 +38,6 @@ export const logoutThunk = () => async (dispatch) => {
   console.log("quit");
   await fetch("/auth/logout", {
     method: "post",
-    headers: { "Content-Type": "application/json" },
   });
   dispatch(isAuthCheck(null));
   dispatch(isLogout());
@@ -54,7 +53,6 @@ export const signinThunk = (values) => async (dispatch, navigate) => {
 
   const userId = await response.json();
 
-  console.log("userId--->", userId);
   dispatch(isAuthCheck(userId));
   navigate("/");
 };

@@ -285,7 +285,9 @@ const Map = () => {
               onClose={onClose}
               visible={visible}
             >
-              <DrawerBody mapData={mapData} />
+              <DrawerBody 
+              className={classes.Drawer}
+              mapData={mapData} />
             </Drawer>
           </>
         )}

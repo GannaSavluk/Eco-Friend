@@ -17,6 +17,11 @@ export const confirmPoint = (point) => ({
   payload: { point },
 });
 
+export const deletePoint = (id) => ({
+  type: ACTypes.DELETE_POINT,
+  payload: { id },
+});
+
 export const mapFetchThunk = () => async (dispatch) => {
   const response = await fetch("/map", {
     method: "get",
@@ -65,10 +70,17 @@ export const confirmPointDataThunk = (id) => async (dispatch) => {
 
   const response = await fetch(`/map/${id}`, {
     method: "put",
-    // headers: { "Content-Type": "application/json" },
-    // body: JSON.stringify({ values, link }),
   });
   const point = await response.json();
   console.log("confirmPointDataThunk ---- point", point);
   dispatch(confirmPoint(point));
+};
+
+export const deletePointThunk = (id) => async (dispatch) => {
+  const response = await fetch(`/map/${id}`, {
+    method: "delete",
+  });
+  const result = await response.json();
+
+  dispatch(deletePoint(id));
 };

@@ -3,8 +3,6 @@ const express = require("express");
 const router = express.Router();
 
 const {
-  signupRender,
-  signinRender,
   createUserAndSession,
   checkUserAndCreateSession,
   destroySession,
@@ -17,6 +15,7 @@ const {
 router.post("/signup", createUserAndSession);
 router.post("/signin", checkUserAndCreateSession);
 router.post("/logout", destroySession);
+router.delete("/admin/:id", deleteUser);
 router.delete("/:id", deleteUser);
 router.post("/img", editUserProfilePicture);
 router.post("/check-img", getImg);

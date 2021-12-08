@@ -1,4 +1,4 @@
-import { Card, Button } from "react-bootstrap";
+import { Card, Button } from "antd";
 import { Image } from "cloudinary-react";
 
 import {
@@ -26,65 +26,65 @@ function AccountImage(props) {
     }
   };
   return (
-    <Card>
-      <label for="upload_profile_img" className={classes.custom_file_upload}>
-        {console.log("1", props.user, "2", currentImg)}
-        {!currentImg && img && (
-          <div className={classes.container}>
-            <Image
-              className={classes.imgs}
-              src={img}
-              fallback="public/img/rest/green_planet.jpeg"
-            />
-            <div className={classes.middle}>
-              <div className={classes.text}>Change Photo</div>
+    <Card
+      cover={
+        <label for="upload_profile_img" className={classes.custom_file_upload}>
+          {console.log("1", props.user, "2", currentImg)}
+          {!currentImg && img && (
+            <div className={classes.container}>
+              <Image
+                className={classes.imgs}
+                src={img}
+                //fallback="https://mir-s3-cdn-cf.behance.net/project_modules/disp/35771931234507.564a1d2403b3a.gif"
+              />
+              <div className={classes.middle}>
+                <div className={classes.text}>Change Photo</div>
+              </div>
             </div>
-          </div>
-        )}
-        {!currentImg && !img && (
-          <div className={classes.container}>
-            <Image
-              className={classes.imgs}
-              src="img/rest/green_planet.jpeg"
-              fallback="img/rest/green_planet.jpeg"
-            />
-            <div className={classes.middle}>
-              <div className={classes.text}>Change Photo</div>
+          )}
+          {!currentImg && !img && (
+            <div className={classes.container}>
+              <Image
+                className={classes.imgs}
+                src="img/rest/green_planet.jpeg"
+                fallback="img/rest/green_planet.jpeg"
+              />
+              <div className={classes.middle}>
+                <div className={classes.text}>Change Photo</div>
+              </div>
             </div>
-          </div>
-        )}
-        {currentImg && (
-          <>
-            <Image
-              className={classes.imgs}
-              cloudName="dwvm712y7"
-              publicId={`https://res.cloudinary.com/dwvm712y7/image/upload/v${currentImg.version}/${currentImg.public_id}.${currentImg.format}`}
-            />
-            <Button
-              onClick={(e) => {
-                e.preventDefault();
-                saveProfilePic();
-              }}
-            >
-              Save
-            </Button>
-          </>
-        )}
-        <input
-          id="upload_profile_img"
-          style={{ display: "none" }}
-          type="file"
-          name="file"
-          onChange={(e) => {
-            dispatch(uploadUserImgThunk(e.target.files[0]));
-          }}
-        />
-      </label>
-
-      <Card.Body>
-        <Card.Title>{props.user.name}</Card.Title>
-        <Card.Text>Reputation: {props.user.reputation}</Card.Text>
-      </Card.Body>
+          )}
+          {currentImg && (
+            <>
+              <Image
+                className={classes.imgs}
+                cloudName="dwvm712y7"
+                publicId={`https://res.cloudinary.com/dwvm712y7/image/upload/v${currentImg.version}/${currentImg.public_id}.${currentImg.format}`}
+              />
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  saveProfilePic();
+                }}
+              >
+                Save
+              </Button>
+            </>
+          )}
+          <input
+            id="upload_profile_img"
+            style={{ display: "none" }}
+            type="file"
+            name="file"
+            onChange={(e) => {
+              dispatch(uploadUserImgThunk(e.target.files[0]));
+            }}
+          />
+        </label>
+      }
+    >
+      <h1>{props.user.name}</h1>
+      <p>Reputation: {props.user.reputation}</p>
     </Card>
   );
 }
