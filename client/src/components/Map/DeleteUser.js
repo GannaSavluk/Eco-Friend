@@ -5,33 +5,17 @@ import {
   confirmPointDataThunk,
   deletePointThunk,
 } from "../../store/map/actions";
+import { deleteUserThunk, logoutThunk } from "../../store/auth/actions";
 
 import { Modal, Button, Space } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 
-const DeleteUser = ({ setIsOpenDeleteUser, pointId }) => {
+const DeleteUser = ({ setIsOpenDeleteUser, pointId, userId }) => {
   const dispatch = useDispatch();
 
-  //   showModal = () => {
-  //     this.setState({
-  //       visible: true,
-  //     });
-  //   };
-
-  //   hideModal = () => {
-  //     this.setState({
-  //       visible: false,
-  //     });
-  //   };
-  // const confirm =() =>{
-  //     Modal.confirm({
-  //       title: 'Confirm',
-  //       icon: <ExclamationCircleOutlined />,
-  //       content: 'Bla bla ...',
-  //       okText: '确认',
-  //       cancelText: '取消',
-  //     });
-  //   }
+  const user = useSelector((store) => store.auth.user);
+  const adminId = user.id;
+  console.log("adminId", adminId, 'userId', userId);
 
   return (
     <>
@@ -41,6 +25,7 @@ const DeleteUser = ({ setIsOpenDeleteUser, pointId }) => {
         onOk={() => {
           setIsOpenDeleteUser(false);
           dispatch(deletePointThunk(pointId));
+          dispatch(deleteUserThunk(adminId, userId));
         }}
         onCancel={() => {
           setIsOpenDeleteUser(false);
