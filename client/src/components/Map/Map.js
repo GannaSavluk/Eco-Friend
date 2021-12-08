@@ -147,7 +147,8 @@ const Map = () => {
   const onClose = () => {
     setVisible(false);
   };
-
+ 
+  
   return (
     <div className="Map">
       <ReactMapGl
