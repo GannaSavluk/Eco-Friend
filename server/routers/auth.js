@@ -10,7 +10,7 @@ const {
   editUserProfilePicture,
   getImg,
 } = require("../controllers/authController");
-// const { isValidPassword } = require('../middleware/authMiddleware');
+//const { email } = require("../middleware/email");
 
 router.post("/signup", createUserAndSession);
 router.post("/signin", checkUserAndCreateSession);
