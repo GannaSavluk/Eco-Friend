@@ -28,8 +28,7 @@ function AccountImage(props) {
   return (
     <Card
       cover={
-        <label for="upload_profile_img" className={classes.custom_file_upload}>
-          {console.log("1", props.user, "2", currentImg)}
+        <label htmlFor="upload_profile_img" className={classes.custom_file_upload}>
           {!currentImg && img && (
             <div className={classes.container}>
               <Image

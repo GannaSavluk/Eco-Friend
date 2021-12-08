@@ -5,8 +5,6 @@ const Comment = require("../db/models/comment");
 const nodemailer = require("nodemailer");
 
 const sendEmail = async (user) => {
-  console.log("enter");
-  console.log("user-------", user);
   const transporter = nodemailer.createTransport({
     service: "Gmail",
     auth: {
@@ -62,7 +60,6 @@ exports.createUserAndSession = async (req, res, next) => {
 
 exports.checkUserAndCreateSession = async (req, res, next) => {
   const { email, password } = req.body;
-  console.log(email, password);
   try {
     // Пытаемся сначала найти пользователя в БД
     const user = await User.findOne({ email: email });
