@@ -85,12 +85,10 @@ export const deletePointThunk = (id) => async (dispatch) => {
   dispatch(deletePoint(id));
 };
 
-export const addStarToMapPointThunk= (pointId, userId) => async (dispatch) => {
-  console.log('pointId, userId',pointId, userId)
+export const addStarToMapPointThunk= (pointId) => async (dispatch) => {
   const response = await fetch(`/map/point/${pointId}`, {
     method: "put",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({userId}),
   });
   const result = await response.json();
 console.log('response addStarToMapPointThunk', response)
