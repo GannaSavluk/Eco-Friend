@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { signinThunk } from "../../store/auth/actions";
+import { Input, Button } from "antd";
 
 const Signin = () => {
-    const navigate = useNavigate()
-    const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [value, setValue] = useState({ email: "", password: "" });
 
@@ -20,21 +21,22 @@ const Signin = () => {
   const loginFunction = (event) => {
     event.preventDefault();
     dispatch(signinThunk(value));
-    navigate('/')
+    navigate("/");
   };
 
   return (
-    <div className="Auth">
+    <div>
       <h1>Signin</h1>
       <form
-        name="normal_login"
         className="login-form"
+        name="normal_login"
+        // className="login-form"
         initialValues={{
           remember: true,
         }}
         onSubmit={loginFunction}
       >
-        <input
+        <Input
           type="email"
           name="email"
           placeholder="email"
@@ -45,8 +47,8 @@ const Signin = () => {
             },
           ]}
           onChange={onInputEmail}
-        ></input>
-        <input
+        />
+        <Input
           name="password"
           type="password"
           placeholder="password"
@@ -58,9 +60,9 @@ const Signin = () => {
           ]}
           onChange={onInputPassword}
         />
-        <button type="primary" htmlType="submit" className="login-form-button">
+        <Button type="primary" htmlType="submit" className="login-form-button">
           Log in
-        </button>
+        </Button>
         Or
         <Link to="/signup"> register now!</Link>
       </form>
