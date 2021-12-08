@@ -44,18 +44,19 @@ function AccountInfo(props) {
 
   const [modalIsOpen, setIsOpen] = useState(false);
   const [passModalIsOpen, setPassModalIsOpen] = useState(false);
-
-  const deleteUserHandler = () => openModal();
+  const [passError, setPassError] = useState(false);
 
   function openModal() {
     setIsOpen(true);
   }
 
-  function closeModal(choice) {
-    if (choice) {
-      navigate("/logout");
-      dispatch(deleteUserThunk(props.user.id));
-    }
+  function deleteUserHandler() {
+    navigate("/logout");
+    dispatch(deleteUserThunk(props.user.id));
+    setIsOpen(false);
+  }
+
+  function closeModal() {
     setIsOpen(false);
   }
 
@@ -63,9 +64,9 @@ function AccountInfo(props) {
     setPassModalIsOpen(true);
   }
 
-  async function closePassModal(values) {
-    // if (choice) {
-    const response = await fetch("/user/password", {
+  async function changePasswordHandler(values) {
+    setPassError(false);
+    const response = await fetch("/auth/password", {
       method: "put",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
@@ -73,7 +74,13 @@ function AccountInfo(props) {
 
     const result = await response.json();
     console.log({ result });
-    //}
+    if (result) {
+      closePassModal();
+    } else setPassError(true);
+  }
+
+  async function closePassModal() {
+    setPassError(false);
     setPassModalIsOpen(false);
   }
 
@@ -83,13 +90,21 @@ function AccountInfo(props) {
         <Container>
           <h2>{props.user.name}</h2>
 
-          <Button className={classes.btn}>Change Password</Button>
+          <Button
+            className={classes.btn}
+            onClick={(e) => {
+              e.preventDefault();
+              openPassModal();
+            }}
+          >
+            Change Password
+          </Button>
 
           <Button
             className={classes.redbtn}
             onClick={(e) => {
               e.preventDefault();
-              deleteUserHandler();
+              openModal();
             }}
           >
             Delete Account
@@ -106,12 +121,12 @@ function AccountInfo(props) {
           Are you sure you want to delete your account? <br />
           This action is permanent and cannot be undone.
         </h2>
-        <Button className={classes.redbtn} onClick={() => closeModal(true)}>
+        <Button className={classes.redbtn} onClick={deleteUserHandler}>
           Yes
         </Button>
         <Button
           className={classes.bluebtn}
-          onClick={() => closeModal(false)}
+          onClick={closeModal}
           variant="danger"
         >
           Cancel
@@ -129,7 +144,7 @@ function AccountInfo(props) {
           initialValues={{
             remember: true,
           }}
-          onFinish={closePassModal}
+          onFinish={changePasswordHandler}
         >
           <Space>
             <Form.Item
@@ -137,7 +152,7 @@ function AccountInfo(props) {
               rules={[
                 {
                   required: true,
-                  message: "Please input your Password!",
+                  message: "Old Password",
                 },
               ]}
             >
@@ -149,7 +164,7 @@ function AccountInfo(props) {
               rules={[
                 {
                   required: true,
-                  message: "Please input new Password!",
+                  message: "New Password",
                 },
               ]}
             >
@@ -162,11 +177,12 @@ function AccountInfo(props) {
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit">
-                change
+                Change Password
               </Button>
             </Form.Item>
           </Space>
         </Form>
+        {passError ? <p className={classes.error}>Incorrect password</p> : null}
       </Modal>
     </>
   );
