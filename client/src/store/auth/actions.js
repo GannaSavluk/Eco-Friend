@@ -16,6 +16,8 @@ export const saveCurrentImgUser = (img) => ({
 });
 
 export const clearCurrentImg = () => ({ type: ACTypes.CURRENT_IMG_CLEAR });
+export const closeWelcomeComponent = () => ({ type: ACTypes.WECLOME_COMPONENT });
+
 
 export const setImg = (img) => ({
   type: ACTypes.SET_IMG,

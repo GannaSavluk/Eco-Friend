@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { createMarkerThunk } from "../../store/map/actions";
+
 import useSupercluster from "use-supercluster";
-import classes from "./Map.module.css";
 import ReactMapGl, {
   Marker,
   FlyToInterpolator,
@@ -10,11 +9,16 @@ import ReactMapGl, {
   NavigationControl,
 } from "react-map-gl";
 import Geocoder from "react-map-gl-geocoder";
-import CreatePoint from "./CreatePoint";
-import SelectedPoint from "./SelectedPoint";
 
+import classes from "./Map.module.css";
 import { Drawer, Button } from "antd";
 import DrawerBody from "./DrawerBody";
+
+import CreatePoint from "./CreatePoint";
+import SelectedPoint from "./SelectedPoint";
+import WelcomeComponent from "./Welcome/WelcomeComponent";
+
+import { createMarkerThunk } from "../../store/map/actions";
 
 const geolocateControlStyle = {
   right: 10,
@@ -38,6 +42,7 @@ const Map = () => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [selectedMapPoint, setSelectedMapPoint] = useState(null);
+  // const [isOpenWelcomeComponent, setIsOpenWelcomeComponent] = useState(true);
   const [newMarker, setNewMarker] = useState(null);
   const [viewport, setViewport] = useState({
     latitude: 45.4211, //!!
@@ -47,7 +52,6 @@ const Map = () => {
     zoom: 10,
   });
 
-
   const mapRef = useRef();
   const geoRef = useRef();
   const categoryRef = useRef();
@@ -55,6 +59,7 @@ const Map = () => {
 
   const user = useSelector((store) => store.auth.user);
   const mapData = useSelector((store) => store?.map?.map);
+  const isOpenWelcomeComponent = useSelector((store)=>store.auth.isOpenWelcomeComponent)
 
   const handleViewportChange = useCallback(
     (newViewport) => setViewport(newViewport),
@@ -159,7 +164,6 @@ const Map = () => {
         }}
         ref={mapRef}
       >
-        
         <Geocoder
           className={classes.geocoder}
           mapRef={mapRef}
@@ -271,6 +275,11 @@ const Map = () => {
             >
               Open Moderator's menu
             </Button>
+            {isOpenWelcomeComponent && (
+              <WelcomeComponent
+                // setIsOpenWelcomeComponent={setIsOpenWelcomeComponent}
+              />
+            )}
             <Drawer
               title={
                 <div className={classes.Drawer_header}>
@@ -287,9 +296,7 @@ const Map = () => {
               onClose={onClose}
               visible={visible}
             >
-              <DrawerBody 
-              className={classes.Drawer}
-              mapData={mapData} />
+              <DrawerBody className={classes.Drawer} mapData={mapData} />
             </Drawer>
           </>
         )}

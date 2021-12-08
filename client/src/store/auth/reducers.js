@@ -3,6 +3,7 @@ import ACTypes from "../types";
 const initialState = {
   user: null,
   currentImg: null,
+  isOpenWelcomeComponent: true,
 };
 
 export const auth = (state = initialState, action) => {
@@ -33,6 +34,9 @@ export const auth = (state = initialState, action) => {
 
     case ACTypes.SET_IMG:
       return { ...state, user: { ...state.user, img: action.payload.img } };
+
+    case ACTypes.WECLOME_COMPONENT:
+      return { ...state, isOpenWelcomeComponent: false };
 
     default:
       return state;
