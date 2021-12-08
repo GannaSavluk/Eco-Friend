@@ -13,6 +13,7 @@ function serializeUser(user) {
     name: user.name,
     email: user.email,
     role: user.role,
+    // img: user.img,
   };
 }
 
@@ -111,6 +112,19 @@ exports.editUserProfilePicture = async (req, res) => {
       }
     );
     res.json(updatedUser);
+  } catch (err) {
+    console.error("Err message:", err.message);
+    console.error("Err code", err);
+  }
+  res.status(200).end();
+};
+
+exports.getImg = async (req, res) => {
+  try {
+    const { _id } = req.body;
+    const user = await User.findOne({ _id });
+    console.log(user);
+    res.json(user.img);
   } catch (err) {
     console.error("Err message:", err.message);
     console.error("Err code", err);

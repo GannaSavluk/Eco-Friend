@@ -41,3 +41,19 @@
   font-size: 16px;
   padding: 16px 32px;
 }
+
+.redbtn {
+  border-color: #f54242;
+  margin-right: 10px;
+  color: #f54242;
+}
+
+.redbtn:hover {
+  border-color: #f54242;
+  background-color: #f54242;
+  color: white;
+}
+
+.btn {
+  margin-right: 10px;
+}

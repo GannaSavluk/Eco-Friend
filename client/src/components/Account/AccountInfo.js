@@ -1,4 +1,6 @@
-import { Card, Button, Container, Row, Col } from "react-bootstrap";
+import { Container } from "react-bootstrap";
+
+import { Card, Button, Row, Col } from "antd";
 
 import Modal from "react-modal";
 
@@ -17,6 +19,7 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
+    border: "1px solid #f54242",
   },
 };
 
@@ -48,27 +51,17 @@ function AccountInfo(props) {
         <Container>
           <h2>{props.user.name}</h2>
 
-          <Container>
-            <Row>
-              {/* <Col>
-              <Button>Edit</Button>
-            </Col> */}
-              <Col>
-                <Button>Change Password</Button>
-              </Col>
-              <Col>
-                <Button
-                  variant="danger"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    deleteUserHandler();
-                  }}
-                >
-                  Delete Account
-                </Button>
-              </Col>
-            </Row>
-          </Container>
+          <Button className={classes.btn}>Change Password</Button>
+
+          <Button
+            className={classes.redbtn}
+            onClick={(e) => {
+              e.preventDefault();
+              deleteUserHandler();
+            }}
+          >
+            Delete Account
+          </Button>
         </Container>
       </Card>
       <Modal
@@ -78,11 +71,17 @@ function AccountInfo(props) {
         style={customStyles}
       >
         <h2>
-          Are you sure you want to delete your account? This action is permanent
-          and cannot be undone.
+          Are you sure you want to delete your account? <br />
+          This action is permanent and cannot be undone.
         </h2>
-        <Button onClick={() => closeModal(true)}>Yes</Button>
-        <Button onClick={() => closeModal(false)} variant="danger">
+        <Button className={classes.redbtn} onClick={() => closeModal(true)}>
+          Yes
+        </Button>
+        <Button
+          className={classes.bluebtn}
+          onClick={() => closeModal(false)}
+          variant="danger"
+        >
           Cancel
         </Button>
       </Modal>

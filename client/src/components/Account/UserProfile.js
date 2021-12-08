@@ -1,4 +1,5 @@
-import { Container, Row, Col } from "react-bootstrap";
+import { Container } from "react-bootstrap";
+import { Row, Col } from "antd";
 import { useSelector } from "react-redux";
 import AccountImage from "./AccountImage";
 import AccountInfo from "./AccountInfo";
@@ -11,11 +12,11 @@ function UserProfile(props) {
   console.log(user);
   return (
     <Container className={classes.box}>
-      <Row>
-        <Col>
+      <Row gutter={36}>
+        <Col className="gutter-row" span={8}>
           <AccountImage user={user} />
         </Col>
-        <Col xs={8}>
+        <Col className="gutter-row" span={16}>
           <AccountInfo user={user} />
         </Col>
       </Row>
