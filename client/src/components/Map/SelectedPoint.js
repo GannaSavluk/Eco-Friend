@@ -1,18 +1,21 @@
 import { useSelector, useDispatch } from "react-redux";
-
 import { Popup } from "react-map-gl";
 
 import classes from "./SelectedPoint.module.css";
-import { Card, Button, Progress } from "antd";
+import { Card, Button, Progress, Tooltip } from "antd";
 
-import { confirmPointDataThunk } from "../../store/map/actions";
+import {
+  confirmPointDataThunk,
+  addStarToMapPointThunk,
+} from "../../store/map/actions";
 
 const { Meta } = Card;
 
 const SelectedPoint = ({ selectedMapPoint, setSelectedMapPoint }) => {
   const dispatch = useDispatch();
+
   const user = useSelector((store) => store.auth.user);
-  // console.log("selectedMapPoint", selectedMapPoint.properties.pointId);
+
   return (
     <Popup
       latitude={selectedMapPoint?.geometry.coordinates[1]}
@@ -27,29 +30,32 @@ const SelectedPoint = ({ selectedMapPoint, setSelectedMapPoint }) => {
         ) : (
           <Progress type="circle" percent={50} width={50} />
         )}
-      {!selectedMapPoint.properties.confirmed && 
-
-        (user?.role === 0 ? (
-          <Button
-            className={classes.confirmed_btn}
-            type="primary"
-            danger
-            onClick={() => {
-              dispatch(
-                confirmPointDataThunk(selectedMapPoint.properties.pointId)
-              );
-              console.log('(((((selectedMapPoint)))))',selectedMapPoint)
-              setSelectedMapPoint({...selectedMapPoint, properties : {...selectedMapPoint.properties, confirmed: true }})
-            }}
-          >
-            Сonfirm
-          </Button>
-        ) : (
-          <Button className={classes.confirmed_btn} type="primary" danger>
-            Awaiting confirmation
-          </Button>
-        ))
-      }
+        {!selectedMapPoint.properties.confirmed &&
+          (user?.role === 0 ? (
+            <Button
+              className={classes.confirmed_btn}
+              type="primary"
+              danger
+              onClick={() => {
+                dispatch(
+                  confirmPointDataThunk(selectedMapPoint.properties.pointId)
+                );
+                setSelectedMapPoint({
+                  ...selectedMapPoint,
+                  properties: {
+                    ...selectedMapPoint.properties,
+                    confirmed: true,
+                  },
+                });
+              }}
+            >
+              Сonfirm
+            </Button>
+          ) : (
+            <Button className={classes.confirmed_btn} type="primary" danger>
+              Awaiting confirmation
+            </Button>
+          ))}
       </div>
       <Card
         className={classes.card}
@@ -67,9 +73,52 @@ const SelectedPoint = ({ selectedMapPoint, setSelectedMapPoint }) => {
         }
       >
         <Meta
-          title={selectedMapPoint?.properties.category}
+          title={
+            <div className={classes.title}>
+              <p>{selectedMapPoint?.properties.category}</p>
+              <p>
+                Verified by:
+                <br /> {selectedMapPoint?.properties.stars.length} people
+              </p>
+            </div>
+          }
           description={selectedMapPoint?.properties.adress}
         />
+        <Tooltip title="Thank the author">
+          <img
+            src="/img/rest/like.jpeg"
+            alt=""
+            style={{ width: "50px", opacity: "50%" }}
+            onClick={() => {
+              const userIdInStars = selectedMapPoint.properties?.stars?.find(
+                (star) => star === user.id
+              );
+              userIdInStars
+                ? setSelectedMapPoint({
+                    ...selectedMapPoint,
+                    properties: {
+                      ...selectedMapPoint.properties,
+                      stars: selectedMapPoint.properties.stars.filter(
+                        (el) => el !== user.id
+                      ),
+                    },
+                  })
+                : setSelectedMapPoint({
+                    ...selectedMapPoint,
+                    properties: {
+                      ...selectedMapPoint.properties,
+                      stars: [...selectedMapPoint.properties.stars, user.id],
+                    },
+                  });
+              dispatch(
+                addStarToMapPointThunk(
+                  selectedMapPoint.properties.pointId,
+                  user.id
+                )
+              );
+            }}
+          />
+        </Tooltip>
       </Card>
     </Popup>
   );
