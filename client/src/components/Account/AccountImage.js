@@ -2,7 +2,7 @@ import { Card, Button } from "react-bootstrap";
 import { Image } from "cloudinary-react";
 
 import {
-  changeUserProfilePic,
+  changeUserProfilePicThunk,
   uploadUserImgThunk,
   clearCurrentImg,
 } from "../../store/auth/actions";
@@ -15,23 +15,25 @@ import classes from "./UserProfile.module.css";
 function AccountImage(props) {
   const dispatch = useDispatch();
   const currentImg = useSelector((store) => store.auth.currentImg);
+  const img = useSelector((store) => store.auth.user.img);
 
   const saveProfilePic = () => {
     let link;
     if (currentImg) {
       link = `https://res.cloudinary.com/dwvm712y7/image/upload/v${currentImg.version}/${currentImg.public_id}.${currentImg.format}`;
-      dispatch(changeUserProfilePic(props.user.id, link));
+      dispatch(changeUserProfilePicThunk(props.user.id, link));
       dispatch(clearCurrentImg());
     }
   };
   return (
     <Card>
       <label for="upload_profile_img" className={classes.custom_file_upload}>
-        {!currentImg && props.user.img && (
+        {console.log("1", props.user, "2", currentImg)}
+        {!currentImg && img && (
           <div className={classes.container}>
             <Image
               className={classes.imgs}
-              src={props.user.img}
+              src={img}
               fallback="public/img/rest/green_planet.jpeg"
             />
             <div className={classes.middle}>
@@ -39,7 +41,7 @@ function AccountImage(props) {
             </div>
           </div>
         )}
-        {!currentImg && !props.user.img && (
+        {!currentImg && !img && (
           <div className={classes.container}>
             <Image
               className={classes.imgs}
