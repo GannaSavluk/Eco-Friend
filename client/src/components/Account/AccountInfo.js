@@ -1,6 +1,8 @@
 import { Container } from "react-bootstrap";
 
-import { Card, Button, Row, Col } from "antd";
+import { Card, Button } from "antd";
+import { Space, Input, Form } from "antd";
+import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 
 import Modal from "react-modal";
 
@@ -8,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-import { deleteUserThunk, logoutThunk } from "../../store/auth/actions";
+import { deleteUserThunk } from "../../store/auth/actions";
 
 import classes from "./UserProfile.module.css";
 const customStyles = {
@@ -23,6 +25,17 @@ const customStyles = {
   },
 };
 
+const customPassStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+
 function AccountInfo(props) {
   Modal.setAppElement("#root");
 
@@ -30,6 +43,7 @@ function AccountInfo(props) {
   const navigate = useNavigate();
 
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [passModalIsOpen, setPassModalIsOpen] = useState(false);
 
   const deleteUserHandler = () => openModal();
 
@@ -43,6 +57,24 @@ function AccountInfo(props) {
       dispatch(deleteUserThunk(props.user.id));
     }
     setIsOpen(false);
+  }
+
+  function openPassModal() {
+    setPassModalIsOpen(true);
+  }
+
+  async function closePassModal(values) {
+    // if (choice) {
+    const response = await fetch("/user/password", {
+      method: "put",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    });
+
+    const result = await response.json();
+    console.log({ result });
+    //}
+    setPassModalIsOpen(false);
   }
 
   return (
@@ -84,6 +116,57 @@ function AccountInfo(props) {
         >
           Cancel
         </Button>
+      </Modal>
+      <Modal
+        isOpen={passModalIsOpen}
+        onRequestClose={closePassModal}
+        contentLabel="Change Password"
+        style={customPassStyles}
+      >
+        <Form
+          name="normal_login"
+          className="login-form"
+          initialValues={{
+            remember: true,
+          }}
+          onFinish={closePassModal}
+        >
+          <Space>
+            <Form.Item
+              name="prev"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your Password!",
+                },
+              ]}
+            >
+              <Input.Password placeholder="previous password" value="prev" />
+            </Form.Item>
+
+            <Form.Item
+              name="newpass"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input new Password!",
+                },
+              ]}
+            >
+              <Input.Password
+                placeholder="new password"
+                iconRender={(visible) =>
+                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                }
+              />
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                change
+              </Button>
+            </Form.Item>
+          </Space>
+        </Form>
       </Modal>
     </>
   );

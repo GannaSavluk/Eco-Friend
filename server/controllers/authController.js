@@ -61,7 +61,6 @@ exports.createUserAndSession = async (req, res, next) => {
 
 exports.checkUserAndCreateSession = async (req, res, next) => {
   const { email, password } = req.body;
-  console.log(email, password);
   try {
     // Пытаемся сначала найти пользователя в БД
     const user = await User.findOne({ email: email });
