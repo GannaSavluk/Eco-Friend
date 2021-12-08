@@ -2,11 +2,11 @@ const bcrypt = require("bcryptjs");
 const User = require("../db/models/user");
 const Entry = require("../db/models/entry");
 const Comment = require("../db/models/comment");
+const Map = require("../db/models/map");
+
 const nodemailer = require("nodemailer");
 
 const sendEmail = async (user) => {
-  console.log("enter");
-  console.log("user-------", user);
   const transporter = nodemailer.createTransport({
     service: "Gmail",
     auth: {
@@ -33,7 +33,6 @@ function serializeUser(user) {
     name: user.name,
     email: user.email,
     role: user.role,
-    // img: user.img,
   };
 }
 
@@ -82,7 +81,6 @@ exports.checkUserAndCreateSession = async (req, res, next) => {
     console.error("Err code", err.code);
     return failAuth(res);
   }
-  // console.log(req.session)
   res.json(req.session.user.id);
   res.status(200).end(); // ответ 200 + отправка cookies в заголовке на сервер
 };
@@ -100,22 +98,19 @@ exports.destroySession = (req, res, next) => {
 };
 
 exports.deleteUser = async (req, res) => {
-  const { userId } = req.body;
+  let { userId } = req.body;
   try {
     if (req.session.user.id === req.params.id && req.session.user.role === 1) {
-      console.log(11111111, req.session.user);
       await Comment.deleteMany({ author: req.params.id });
       await Entry.deleteMany({ author: req.params.id });
       await User.deleteMany({ _id: req.params.id });
     }
-    if (req.session.user.role === 0 && req.params.id !== req.session.user.id) {
-      console.log(2222222222);
-
-      await Comment.deleteMany({ author: req.params.id });
-      await Entry.deleteMany({ author: req.params.id });
-      await User.deleteMany({ _id: req.params.id });
+    if (req.session.user.role === 0) {
+      await Comment.deleteMany({ author: userId });
+      await Entry.deleteMany({ author: userId });
+      await User.deleteMany({ _id: userId });
+      await Map.deleteMany({ author: userId });
     }
-    console.log(33333333);
   } catch (error) {
     console.log(error.message);
   }

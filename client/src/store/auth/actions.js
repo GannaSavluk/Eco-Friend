@@ -83,11 +83,13 @@ export const checkUserAuthThunk = () => async (dispatch) => {
   }
 };
 
-export const deleteUserThunk = (id) => async (dispatch) => {
+export const deleteUserThunk = (id, userId) => async (dispatch) => {
   await fetch(`/auth/${id}`, {
     method: "delete",
     headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ userId}),
   });
+  // dispatch()//TODO
 };
 
 export const uploadUserImgThunk = (imgSelected) => async (dispatch) => {

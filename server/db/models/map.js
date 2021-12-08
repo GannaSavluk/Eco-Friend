@@ -7,8 +7,9 @@ const MapSchema = new mongoose.Schema({
   img: { type: String },
   coordinates: { type: Array, unique: true },
   date: { type: Date },
-  confirmed: {type: Boolean, default: false },
+  confirmed: { type: Boolean, default: false },
   adress: { type: String },
+  stars: { type: Array, default: [] },
 });
 
 module.exports = mongoose.model("Map", MapSchema);
