@@ -45,7 +45,7 @@ const EntryComments = ({ entryId }) => {
                     oneComment?.author?.img ? (
                       <Avatar src={oneComment?.author?.img} alt="" />
                     ) : (
-                      <Avatar src="img/person/default_avatar.png" alt="" />
+                      <Avatar src="img/person/default_avatar.jpeg" alt="" />
                     )
                   }
                   content={<p>{oneComment?.text}</p>}

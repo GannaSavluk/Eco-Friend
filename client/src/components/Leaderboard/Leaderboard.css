@@ -1,24 +1,30 @@
 .scroll {
   height: 330px;
-  overflow-y: scroll; 
+  overflow-y: scroll;
 }
 
 .bg-danger {
-  background-color: let(--bs-indigo #6610f2); 
-  color:blue
+  background-color: let(--bs-indigo #6610f2);
+  color: blue;
 }
 
 .scroll-rigth {
   height: 392px;
-  overflow-y: scroll; 
+  overflow-y: scroll;
 }
 .colorTextPeople h5 {
-  color:rgb(7, 6, 6) 
+  color: rgb(7, 6, 6);
 }
 .list-group-item {
   background-color: white;
-  color:black
+  color: black;
 }
 .colorTextItem {
   color: black;
+}
+.gifBox {
+  display: flex;
+  height: 370px;
+  align-items: center;
+  justify-content: center;
 }

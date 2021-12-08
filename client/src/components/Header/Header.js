@@ -5,6 +5,7 @@ import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 
 const Header = () => {
   const userId = useSelector((store) => store.auth.user?.id);
+  const user = useSelector((store) => store.auth.user);
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -35,7 +36,7 @@ const Header = () => {
               </Nav.Link>
             )}
             {userId && (
-              <NavDropdown title="Username" id="collasible-nav-dropdown">
+              <NavDropdown title={user.name} id="collasible-nav-dropdown">
                 <NavDropdown.Item>
                   <Link to="/account">Profile</Link>
                 </NavDropdown.Item>

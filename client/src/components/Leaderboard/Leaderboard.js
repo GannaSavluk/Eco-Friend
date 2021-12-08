@@ -79,8 +79,8 @@ const Leaderboard = () => {
             ))}
           </ListGroup>
         </div>
-        <div className=" w-50 p-2 m-1 scroll-rigth">
-          {showInfo && (
+        <div className=" w-50 p-2 m-1 scroll-rigth ">
+          {showInfo ? (
             <>
               {openProfile && (
                 <LeaderProfile
@@ -92,15 +92,18 @@ const Leaderboard = () => {
                 <PublicationsProfile authorId={openProfile._id} />
               )}
             </>
+          ) : (
+            <div className="gifBox">
+              <div>
+                <img
+                  src="https://wiki.soiro.ru/images/%D0%9C%D0%B8%D1%80_%D0%BD%D0%B0_%D0%BB%D0%B0%D0%B4%D0%BE%D0%BD%D0%B8%D0%B3%D0%B8%D1%84.gif"
+                  width="200"
+                  height="150px"
+                  alt="img"
+                ></img>
+              </div>
+            </div>
           )}
-          {/* <LeaderProfile /> */}
-          {/* <img
-            src="https://cdn.pixabay.com/photo/2021/11/26/20/44/lantern-6826687_640.jpg"
-            width="100%"
-            height="400px"
-            alt="img"
-          ></img> */}
-          {/* <img src={img} width='100%' height='400px' alt="img"></img> */}
         </div>
       </div>
     </div>
