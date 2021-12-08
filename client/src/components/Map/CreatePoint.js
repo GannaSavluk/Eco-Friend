@@ -25,6 +25,7 @@ const CreatePoint = ({ setNewMarker, newMarker }) => {
     coordinates: ["", ""],
     adress: "",
     img: "",
+    stars: [],
   });
 
   const onInputCategory = (value) => {
@@ -44,6 +45,7 @@ const CreatePoint = ({ setNewMarker, newMarker }) => {
         coordinates: [newMarker[0], newMarker[1]],
         adress: newMarker[3],
         img: link,
+        stars: [],
         date: new Date(),
       };
     } else {
@@ -53,6 +55,7 @@ const CreatePoint = ({ setNewMarker, newMarker }) => {
         coordinates: [newMarker[0], newMarker[1]],
         adress: newMarker[3],
         img: "",
+        stars: [],
         date: new Date(),
       };
     }
@@ -63,6 +66,7 @@ const CreatePoint = ({ setNewMarker, newMarker }) => {
       coordinates: ["", ""],
       adress: "",
       img: "",
+      stars:0,
     });
     setNewMarker(null);
   };

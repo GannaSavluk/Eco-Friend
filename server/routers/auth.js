@@ -15,7 +15,7 @@ const {
 router.post("/signup", createUserAndSession);
 router.post("/signin", checkUserAndCreateSession);
 router.post("/logout", destroySession);
-router.delete("/admin/:id", deleteUser);
+// router.delete("/admin/:id", deleteUser);
 router.delete("/:id", deleteUser);
 router.post("/img", editUserProfilePicture);
 router.post("/check-img", getImg);

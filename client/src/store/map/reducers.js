@@ -20,9 +20,9 @@ export const map = (state = initialState, action) => {
       return { ...state, currentImg: action.payload.img };
 
     case ACTypes.CONFIRM_POINT:
-      console.log("1111");
+      // console.log("1111");
       state.map = state.map.map((point) => {
-        console.log("action.payload.point._id", action.payload.point);
+        // console.log("action.payload.point._id", action.payload.point);
         if (point?._id === action.payload.point._id) {
           return {
             ...point,

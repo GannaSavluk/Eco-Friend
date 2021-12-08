@@ -22,7 +22,6 @@ const geolocateControlStyle = {
 };
 
 const getRightCategoryIcon = (category) => {
-  // console.log("category--", category);
   if (category === "plastic") return "/img/categories/bottle.png";
   if (category === "paper") return "/img/categories/paper.png";
   if (category === "metal") return "/img/categories/metal.png";
@@ -38,6 +37,8 @@ const getRightCategoryIcon = (category) => {
 const Map = () => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
+  const [selectedMapPoint, setSelectedMapPoint] = useState(null);
+  const [newMarker, setNewMarker] = useState(null);
   const [viewport, setViewport] = useState({
     latitude: 45.4211, //!!
     longitude: -75.6903, //!!
@@ -45,8 +46,7 @@ const Map = () => {
     height: "100vh",
     zoom: 10,
   });
-  const [selectedMapPoint, setSelectedMapPoint] = useState(null);
-  const [newMarker, setNewMarker] = useState(null);
+
 
   const mapRef = useRef();
   const geoRef = useRef();
@@ -71,6 +71,7 @@ const Map = () => {
       img: point.img,
       adress: point.adress,
       confirmed: point.confirmed,
+      stars: point.stars,
     },
     geometry: {
       type: "Point",
@@ -158,6 +159,7 @@ const Map = () => {
         }}
         ref={mapRef}
       >
+        
         <Geocoder
           className={classes.geocoder}
           mapRef={mapRef}
