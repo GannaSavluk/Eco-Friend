@@ -145,3 +145,36 @@ exports.getImg = async (req, res) => {
   }
   res.status(200).end();
 };
+
+exports.editUserPassword = async (req, res) => {
+  try {
+    const { prev, newpass } = req.body;
+    const id = `new ObjectId(\"${req.session.user.id}\")`; //id user in DB
+
+    // Пытаемся сначала найти пользователя в БД
+    const user = await User.findOne({ _id: req.session.user.id });
+    if (!user) return failAuth(res);
+
+    const saltRounds = 10;
+    const newHashedPassword = await bcrypt.hash(newpass, saltRounds);
+
+    // Сравниваем хэш в БД с хэшем введённого пароля
+    const isValidPassword = await bcrypt.compare(prev, user.password);
+    console.log(isValidPassword);
+    // const isValidPassword = user.password === password;
+    if (isValidPassword) {
+      await User.updateOne(
+        { _id: req.session.user.id },
+        { password: newHashedPassword }
+      );
+      res.json({ message: "ok" });
+    }
+    if (!isValidPassword) return failAuth(res);
+  } catch (err) {
+    console.error("Err message:", err.message);
+    console.error("Err code", err.code);
+
+    return failAuth(res);
+  }
+  res.status(200).end(); // ответ 200 + отправка cookies в заголовке на сервер
+};
