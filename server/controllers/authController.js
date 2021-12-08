@@ -4,6 +4,25 @@ const Entry = require("../db/models/entry");
 const Comment = require("../db/models/comment");
 const Map = require("../db/models/map");
 
+const nodemailer = require("nodemailer");
+
+const sendEmail = async (user) => {
+  const transporter = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+      user: "mebelmebel545@gmail.com",
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
+
+  await transporter.sendMail({
+    from: '"EcoFriend" <mebelmebel545@gmail.com>',
+    to: user.email,
+    subject: `Registration on EcoFriend ✔`,
+    text: `Welcome to EcoFriend, ${user.name}!`,
+  });
+};
+
 function failAuth(res) {
   res.json(null);
 }
@@ -30,6 +49,7 @@ exports.createUserAndSession = async (req, res, next) => {
     });
 
     req.session.user = serializeUser(user);
+    sendEmail(user);
   } catch (err) {
     console.error("Err message:", err.message);
     console.error("Err code", err.code);
@@ -61,7 +81,6 @@ exports.checkUserAndCreateSession = async (req, res, next) => {
     console.error("Err code", err.code);
     return failAuth(res);
   }
-  // console.log(req.session)
   res.json(req.session.user.id);
   res.status(200).end(); // ответ 200 + отправка cookies в заголовке на сервер
 };
@@ -108,6 +127,19 @@ exports.editUserProfilePicture = async (req, res) => {
       }
     );
     res.json(updatedUser);
+  } catch (err) {
+    console.error("Err message:", err.message);
+    console.error("Err code", err);
+  }
+  res.status(200).end();
+};
+
+exports.getImg = async (req, res) => {
+  try {
+    const { _id } = req.body;
+    const user = await User.findOne({ _id });
+    console.log(user);
+    res.json(user.img);
   } catch (err) {
     console.error("Err message:", err.message);
     console.error("Err code", err);
