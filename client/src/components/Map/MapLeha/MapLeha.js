@@ -1,6 +1,4 @@
-
-
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import classes from "../Map.module.css";
 import ReactMapGL, {
@@ -8,11 +6,9 @@ import ReactMapGL, {
   Layer,
   Marker,
   NavigationControl,
-  Popup,
   Source,
 } from "react-map-gl";
 import { pointAC } from "../../../store/map/actions";
-
 
 const geolocateControlStyle = {
   right: 10,
@@ -24,21 +20,23 @@ const navControlStyle = {
 };
 
 const geojson = {
-  type: 'FeatureCollection',
+  type: "FeatureCollection",
   features: [
-    {type: 'Feature', geometry: {type: 'Point', coordinates: [-122.4, 37.8]}}
-  ]
+    {
+      type: "Feature",
+      geometry: { type: "Point", coordinates: [-122.4, 37.8] },
+    },
+  ],
 };
 
 const layerStyle = {
-  id: 'point',
-  type: 'circle',
+  id: "point",
+  type: "circle",
   paint: {
-    'circle-radius': 10,
-    'circle-color': '#007cbf'
-  }
+    "circle-radius": 10,
+    "circle-color": "#007cbf",
+  },
 };
-
 
 const Map = () => {
   const [viewport, setViewport] = useState({
@@ -49,15 +47,13 @@ const Map = () => {
     zoom: 8,
   });
 
-  
   const coords = useSelector((store) => store.map.point);
   console.log("123", coords);
   const dispatch = useDispatch();
   const pointHandler = (target) => {
     dispatch(pointAC(target.lngLat));
   };
-  
-  
+
   return (
     <ReactMapGL
       onClick={pointHandler}
@@ -76,32 +72,27 @@ const Map = () => {
         positionOptions={{ enableHighAccuracy: true }}
         trackUserLocation={true}
         auto={false}
-        
       />
       {coords.map((item) => (
-      <Marker
-        latitude={item[1]}
-        longitude={item[0]}
-        offsetLeft={-20}
-        offsetTop={-10}
-      >
-        <div>
-          <img
-            alt="photo"
-            src="https://icon-library.com/images/map-pinpoint-icon/map-pinpoint-icon-14.jpg"
-            width={50}
-            height={50}
-          />
-        </div>
-      </Marker>
+        <Marker
+          latitude={item[1]}
+          longitude={item[0]}
+          offsetLeft={-20}
+          offsetTop={-10}
+        >
+          <div>
+            <img
+              alt="photo"
+              src="https://icon-library.com/images/map-pinpoint-icon/map-pinpoint-icon-14.jpg"
+              width={50}
+              height={50}
+            />
+          </div>
+        </Marker>
       ))}
       <Source id="my-data" type="geojson" data={geojson}>
         <Layer {...layerStyle} />
       </Source>
-
-
-
-      
     </ReactMapGL>
   );
 };

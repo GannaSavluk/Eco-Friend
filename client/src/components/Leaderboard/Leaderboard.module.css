@@ -1,4 +1,7 @@
-.border {
-  
-  
+
+.backLeaderboard {
+  background-color: hsl(102deg 22% 24%);
+}
+.color h4 {
+  color: rgb(74, 79, 87);
 }

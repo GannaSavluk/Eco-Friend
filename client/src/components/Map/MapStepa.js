@@ -1,44 +1,32 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { Card } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { createMarkerThunk } from "../../store/map/actions";
+import { createMarkerAndFetchMapThunk } from "../../store/map/actions";
 import useSupercluster from "use-supercluster";
 import classes from "./Map.module.css";
 import ReactMapGl, {
   Marker,
+  Popup,
   FlyToInterpolator,
   GeolocateControl,
   NavigationControl,
 } from "react-map-gl";
 import Geocoder from "react-map-gl-geocoder";
-import CreatePoint from "./CreatePoint";
-import SelectedPoint from "./SelectedPoint";
-
-import { Drawer, Button } from "antd";
-import DrawerBody from "./DrawerBody";
 
 const geolocateControlStyle = {
   right: 10,
   top: 10,
 };
-
 const getRightCategoryIcon = (category) => {
+  console.log('category--',category );
   if (category === "plastic") return "/img/categories/bottle.png";
   if (category === "paper") return "/img/categories/paper.png";
-  if (category === "metal") return "/img/categories/metal.png";
-  if (category === "glass") return "/img/categories/glass.png";
-
   if (category === "electronics") return "/img/categories/electronics.png";
-  if (category === "appliances") return "/img/categories/appliances.png";
-  if (category === "batteries") return "/img/categories/batteries.png";
-
+  if (category === "event") return "/img/categories/event.png";
   if (!category) return "/img/categories/unknown.png";
 };
 
-const Map = () => {
-  const dispatch = useDispatch();
-  const [visible, setVisible] = useState(false);
-  const [selectedMapPoint, setSelectedMapPoint] = useState(null);
-  const [newMarker, setNewMarker] = useState(null);
+const MapStepa = () => {
   const [viewport, setViewport] = useState({
     latitude: 45.4211, //!!
     longitude: -75.6903, //!!
@@ -46,32 +34,36 @@ const Map = () => {
     height: "100vh",
     zoom: 10,
   });
-
-
-  const mapRef = useRef();
-  const geoRef = useRef();
-  const categoryRef = useRef();
-  const descRef = useRef();
+  const [selectedMapPoint, setSelectedMapPoint] = useState(null);
 
   const user = useSelector((store) => store.auth.user);
-  const mapData = useSelector((store) => store?.map?.map);
+
+  const [newMarker, setNewMarker] = useState(null);
+
+  const dispatch = useDispatch();
 
   const handleViewportChange = useCallback(
     (newViewport) => setViewport(newViewport),
     []
   );
 
+  const mapRef = useRef();
+  const geoRef = useRef();
+  const categoryRef = useRef();
+  const descRef = useRef();
+
+  const mapData = useSelector((store) => store?.map?.map);
+
+  console.log("mapData---->", mapData);
+
   const points = mapData.map((point) => ({
     type: "Feature",
     properties: {
       cluster: false,
       pointId: point._id,
-      confirmed: point.confirmed,
       category: point.category,
-      img: point.img,
+      imgs: point.imgs,
       adress: point.adress,
-      confirmed: point.confirmed,
-      stars: point.stars,
     },
     geometry: {
       type: "Point",
@@ -106,7 +98,7 @@ const Map = () => {
   );
 
   const handleGeocoderResult = async (e) => {
-    // console.log(e.result);
+    console.log(e.result);
     await setNewMarker([
       ...e.result.center,
       e.result.place_name,
@@ -132,28 +124,21 @@ const Map = () => {
     const marker = {
       category: categoryRef.current.value,
       description: descRef.current.value,
-      author: user.id,
+      author: user.id, // take author from session
       coordinates: [newMarker[0], newMarker[1]],
       adress: newMarker[3],
     };
     console.log(marker);
-    dispatch(createMarkerThunk(marker));
+    dispatch(createMarkerAndFetchMapThunk(marker));
     setNewMarker(null);
   }
-
-  const showDrawer = () => {
-    setVisible(true);
-  };
-  const onClose = () => {
-    setVisible(false);
-  };
 
   return (
     <div className="Map">
       <ReactMapGl
         {...viewport}
-        mapboxApiAccessToken={"pk.eyJ1IjoiZWxicnVzLXBvamVjdCIsImEiOiJja3d1YjNxOWYxbzZlMzJxb3BtM2hsMnh6In0.T4UaFSWGmZMvx6MmDiTM1w"}
-        mapStyle={"mapbox://styles/elbrus-poject/ckwuq7vpm230h14n21m6orax1"}
+        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+        mapStyle={process.env.REACT_APP_MAPBOX_STYLE}
         onViewportChange={(viewport) => {
           setViewport(viewport);
         }}
@@ -164,7 +149,9 @@ const Map = () => {
           mapRef={mapRef}
           onViewportChange={handleGeocoderViewportChange}
           onResult={handleGeocoderResult}
-          mapboxApiAccessToken={"pk.eyJ1IjoiZWxicnVzLXBvamVjdCIsImEiOiJja3d1YjNxOWYxbzZlMzJxb3BtM2hsMnh6In0.T4UaFSWGmZMvx6MmDiTM1w"}
+          mapboxApiAccessToken={
+            "pk.eyJ1IjoiZ2FubmFzYXYiLCJhIjoiY2t3b2dweWRoMDJvYTJ2cG1samw0bGhhNCJ9.zFlq-4XRaeQQ9NvOn0_gsQ"
+          }
           position="top-left"
           ref={geoRef}
         />
@@ -174,10 +161,8 @@ const Map = () => {
           trackUserLocation={true}
           //auto
         />
-
         <NavigationControl className={classes.navigation} showCompass={false} />
         {clusters.map((cluster) => {
-          // console.log("points", cluster)
           // every cluster point has coordinates
           const [longitude, latitude] = cluster.geometry.coordinates;
           // the point may be either a cluster or a crime point
@@ -195,8 +180,8 @@ const Map = () => {
                 <div
                   className={classes.cluster}
                   style={{
-                    width: `${10 + (pointCount / points.length) * 50}px`,
-                    height: `${10 + (pointCount / points.length) * 50}px`,
+                    width: `${10 + (pointCount / points.length) * 20}px`,
+                    height: `${10 + (pointCount / points.length) * 20}px`,
                   }}
                   onClick={() => {
                     const expansionZoom = Math.min(
@@ -228,11 +213,7 @@ const Map = () => {
               longitude={longitude}
             >
               <button
-                className={
-                  cluster.properties.confirmed
-                    ? classes.markerbtn_confirmed
-                    : classes.markerbtn_not_confirmed
-                }
+                className={classes.markerbt}
                 onClick={(e) => {
                   e.preventDefault();
                   setSelectedMapPoint(cluster);
@@ -249,52 +230,49 @@ const Map = () => {
         })}
 
         {selectedMapPoint && (
-          <SelectedPoint
-            selectedMapPoint={selectedMapPoint}
-            setSelectedMapPoint={setSelectedMapPoint}
-          />
+          <Popup
+            latitude={selectedMapPoint?.geometry.coordinates[1]}
+            longitude={selectedMapPoint?.geometry.coordinates[0]}
+            onClose={() => {
+              setSelectedMapPoint(null);
+            }}
+          >
+            <h2>{selectedMapPoint?.properties.category}</h2>
+            <img
+              src={selectedMapPoint?.properties.imgs[0]}
+              alt="photo"
+              width={100}
+              height={100}
+            />
+            <p>{selectedMapPoint?.properties.adress}</p>
+          </Popup>
         )}
         {newMarker && (
-          <CreatePoint
-            setNewMarker={setNewMarker}
-            onSaveMarker={onSaveMarker}
-            newMarker={newMarker}
-          />
-        )}
-        {user?.role === 0 && (
-          <>
-            <Button
-              className={classes.moderator_btn}
-              type="primary"
-              onClick={showDrawer}
-            >
-              Open Moderator's menu
-            </Button>
-            <Drawer
-              title={
-                <div className={classes.Drawer_header}>
-                  <p> Run the ECO world</p>
-                  <img
-                    // src="https://thumbs.gfycat.com/HeavySneakyBorer-size_restricted.gif"
-                    src="https://64.media.tumblr.com/a61ce9e8117a908c0f68ff7db7281449/tumblr_n4dyv0dkDU1shalg6o1_640.gifv"
-                    alt=""
-                    style={{ width: "150px" }}
-                  />
-                </div>
-              }
-              placement="right"
-              onClose={onClose}
-              visible={visible}
-            >
-              <DrawerBody 
-              className={classes.Drawer}
-              mapData={mapData} />
-            </Drawer>
-          </>
+          <Popup
+            latitude={newMarker[1]}
+            longitude={newMarker[0]}
+            onClose={() => {
+              setNewMarker(null);
+            }}
+          >
+            <h2>{newMarker[2]}</h2>
+            <form>
+              <input type="text" placeholder="category" ref={categoryRef} />
+              <input type="text" placeholder="description" ref={descRef} />
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  onSaveMarker();
+                }}
+              >
+                Save
+              </button>
+            </form>
+          </Popup>
         )}
       </ReactMapGl>
     </div>
   );
 };
 
-export default Map;
+export default MapStepa;
