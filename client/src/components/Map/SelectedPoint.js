@@ -111,10 +111,7 @@ const SelectedPoint = ({ selectedMapPoint, setSelectedMapPoint }) => {
                     },
                   });
               dispatch(
-                addStarToMapPointThunk(
-                  selectedMapPoint.properties.pointId,
-                  user.id
-                )
+                addStarToMapPointThunk(selectedMapPoint.properties.pointId)
               );
             }}
           />

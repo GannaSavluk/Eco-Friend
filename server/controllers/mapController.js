@@ -1,4 +1,5 @@
 const Map = require("../db/models/map");
+const User = require("../db/models/user");
 
 exports.getMap = async (req, res) => {
   try {
@@ -59,16 +60,32 @@ exports.deletePoint = async (req, res) => {
 
 exports.addStar = async (req, res) => {
   const pointId = req.params.id;
-  const { userId } = req.body;
+  const currentUserId = req.session.user.id;
+  console.log(111111, currentUserId, "pointId", pointId);
+  let authorOfPoint;
+  let updatedRating;
+
   try {
-    const point = await Map.findOne({ _id: pointId });
-    const findStar = point.stars.indexOf(userId);
+    const point = await Map.findOne({ _id: pointId }).populate("author");
+    authorOfPoint = point.author._id;
+    const findStar = point.stars.indexOf(currentUserId);
+
     if (findStar === -1) {
-      point.stars.push(userId);
+      point.stars.push(currentUserId);
+      updatedRating = point.author.rating + 1;
     } else {
       point.stars.splice(findStar, 1);
+      updatedRating = point.author.rating - 1;
     }
-    await Map.updateOne({ _id: pointId }, { stars: point.stars });
+    await Map.updateOne(
+      { _id: pointId },
+      { $set: { stars: point.stars } }
+    );
+     await User.updateOne(
+      { _id: authorOfPoint },
+      { rating: updatedRating }
+    );
+    await User.findOne({ _id: point.author._id });
   } catch (err) {
     console.error("Err message:", err.message);
     console.error("Err code", err);
