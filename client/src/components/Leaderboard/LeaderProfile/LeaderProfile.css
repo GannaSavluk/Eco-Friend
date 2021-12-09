@@ -1,0 +1,7 @@
+.backgroundUser {
+  /* background-color: rgba(var(--bs-primary-rgb))!important */
+  background-color: white;
+}
+.colorTextProfile {
+  color: rgb(5, 5, 5);
+}

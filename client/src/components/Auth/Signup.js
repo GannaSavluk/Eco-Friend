@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { signupThunk } from "../../store/auth/actions";
+import { Input, Button } from "antd";
+import "./Auth.css";
 
 const Signup = () => {
-    const navigate = useNavigate()
-    const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [value, setValue] = useState({ name: "", email: "", password: "" });
   const onInputName = ({ target: { value } }) => {
@@ -21,60 +23,69 @@ const Signup = () => {
   const loginFunction = (event) => {
     event.preventDefault();
     dispatch(signupThunk(value));
-    navigate('/')
+    navigate("/");
   };
 
   return (
     <div className="Auth">
-      <h1>Signup</h1>
-      <form
-        name="normal_login"
-        className="login-form"
-        initialValues={{
-          remember: true,
-        }}
-        onSubmit={loginFunction}
-      >
-        <input
-          type="text"
-          name="name"
-          placeholder="name"
-          rules={[
-            {
-              required: true,
-              message: "Please input your name!",
-            },
-          ]}
-          onChange={onInputName}
-        ></input>
-        <input
-          type="email"
-          name="email"
-          placeholder="email"
-          rules={[
-            {
-              required: true,
-              message: "Please input your Email!",
-            },
-          ]}
-          onChange={onInputEmail}
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="password"
-          rules={[
-            {
-              required: true,
-              message: "Please input your Password!",
-            },
-          ]}
-          onChange={onInputPassword}
-        />
-        <button type="primary" htmlType="submit" className="login-form-button">
-          Signup
-        </button>
-      </form>
+      <div>
+        <form
+          name="normal_login"
+          className="login-form"
+          initialValues={{
+            remember: true,
+          }}
+          onSubmit={loginFunction}
+        >
+          <h1>Signup</h1>
+          <Input
+            className="login-input"
+            type="text"
+            name="name"
+            placeholder="name"
+            rules={[
+              {
+                required: true,
+                message: "Please input your name!",
+              },
+            ]}
+            onChange={onInputName}
+          />
+          <Input
+            className="login-input"
+            type="email"
+            name="email"
+            placeholder="email"
+            rules={[
+              {
+                required: true,
+                message: "Please input your Email!",
+              },
+            ]}
+            onChange={onInputEmail}
+          />
+          <Input
+            className="login-input"
+            name="password"
+            type="password"
+            placeholder="password"
+            rules={[
+              {
+                required: true,
+                message: "Please input your Password!",
+              },
+            ]}
+            onChange={onInputPassword}
+          />
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="login-form-button"
+          >
+            Signup
+          </Button>
+        </form>
+      </div>
     </div>
   );
 };

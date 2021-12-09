@@ -161,6 +161,8 @@ const Map = () => {
         {...viewport}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
         mapStyle={process.env.REACT_APP_MAPBOX_STYLE}
+        // mapboxApiAccessToken={"pk.eyJ1IjoiZWxicnVzLXBvamVjdCIsImEiOiJja3d1YjNxOWYxbzZlMzJxb3BtM2hsMnh6In0.T4UaFSWGmZMvx6MmDiTM1w"}
+        // mapStyle={"mapbox://styles/elbrus-poject/ckwuq7vpm230h14n21m6orax1"}
         onViewportChange={(viewport) => {
           setViewport(viewport);
         }}
@@ -172,6 +174,7 @@ const Map = () => {
           onViewportChange={handleGeocoderViewportChange}
           onResult={handleGeocoderResult}
           mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+          // mapboxApiAccessToken={"pk.eyJ1IjoiZWxicnVzLXBvamVjdCIsImEiOiJja3d1YjNxOWYxbzZlMzJxb3BtM2hsMnh6In0.T4UaFSWGmZMvx6MmDiTM1w"}
           position="top-left"
           ref={geoRef}
         />
