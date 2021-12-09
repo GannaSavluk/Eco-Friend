@@ -35,9 +35,21 @@ export const map = (state = initialState, action) => {
       return state;
 
     case ACTypes.DELETE_POINT:
-      state.map = state.map.filter(
-        (el) => el._id !== action.payload.id
-      );
+      state.map = state.map.filter((el) => el._id !== action.payload.id);
+      return { ...state, map: state.map };
+
+    case ACTypes.ADD_STAR_POINT:
+      state.map = state.map.map((point) => {
+        if (point._id === action.payload.pointId) {
+          if (action.payload.sign === "-") {
+            point.stars.filter((el) => el !== action.payload.userId);
+          }
+          if (action.payload.sign === "+") {
+            point.stars = [...point.stars, action.payload.userId];
+          }
+        }
+        return point;
+      });
       return { ...state, map: state.map };
 
     default:

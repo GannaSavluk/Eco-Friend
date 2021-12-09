@@ -1,4 +1,5 @@
 import ACTypes from "../types";
+import { getRating } from "../auth/actions";
 
 export const getMap = (map) => ({
   type: ACTypes.MAP,
@@ -20,6 +21,11 @@ export const confirmPoint = (point) => ({
 export const deletePoint = (id) => ({
   type: ACTypes.DELETE_POINT,
   payload: { id },
+});
+
+export const changeStarPoint = (pointId, userId, sign) => ({
+  type: ACTypes.ADD_STAR_POINT,
+  payload: { sign, pointId, userId },
 });
 
 export const mapFetchThunk = () => async (dispatch) => {
@@ -85,12 +91,13 @@ export const deletePointThunk = (id) => async (dispatch) => {
   dispatch(deletePoint(id));
 };
 
-export const addStarToMapPointThunk= (pointId) => async (dispatch) => {
+export const addStarToMapPointThunk = (pointId) => async (dispatch) => {
   const response = await fetch(`/map/point/${pointId}`, {
     method: "put",
     headers: { "Content-Type": "application/json" },
   });
   const result = await response.json();
-console.log('response addStarToMapPointThunk', response)
-  // dispatch(deletePoint(id));
+  console.log("response addStarToMapPointThunk", result);
+  //dispatch(addStarPoint(id));
+  dispatch(getRating(result.authorOfPoint));
 };

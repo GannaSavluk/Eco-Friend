@@ -7,6 +7,7 @@ import { Card, Button, Progress, Tooltip } from "antd";
 import {
   confirmPointDataThunk,
   addStarToMapPointThunk,
+  changeStarPoint,
 } from "../../store/map/actions";
 
 const { Meta } = Card;
@@ -93,23 +94,39 @@ const SelectedPoint = ({ selectedMapPoint, setSelectedMapPoint }) => {
               const userIdInStars = selectedMapPoint.properties?.stars?.find(
                 (star) => star === user.id
               );
-              userIdInStars
-                ? setSelectedMapPoint({
-                    ...selectedMapPoint,
-                    properties: {
-                      ...selectedMapPoint.properties,
-                      stars: selectedMapPoint.properties.stars.filter(
-                        (el) => el !== user.id
-                      ),
-                    },
-                  })
-                : setSelectedMapPoint({
-                    ...selectedMapPoint,
-                    properties: {
-                      ...selectedMapPoint.properties,
-                      stars: [...selectedMapPoint.properties.stars, user.id],
-                    },
-                  });
+              if (userIdInStars) {
+                setSelectedMapPoint({
+                  ...selectedMapPoint,
+                  properties: {
+                    ...selectedMapPoint.properties,
+                    stars: selectedMapPoint.properties.stars.filter(
+                      (el) => el !== user.id
+                    ),
+                  },
+                });
+                dispatch(
+                  changeStarPoint(
+                    selectedMapPoint.properties.pointId,
+                    user.id,
+                    "-"
+                  )
+                );
+              } else {
+                setSelectedMapPoint({
+                  ...selectedMapPoint,
+                  properties: {
+                    ...selectedMapPoint.properties,
+                    stars: [...selectedMapPoint.properties.stars, user.id],
+                  },
+                });
+                dispatch(
+                  changeStarPoint(
+                    selectedMapPoint.properties.pointId,
+                    user.id,
+                    "+"
+                  )
+                );
+              }
               dispatch(
                 addStarToMapPointThunk(selectedMapPoint.properties.pointId)
               );

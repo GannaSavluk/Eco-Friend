@@ -77,19 +77,13 @@ exports.addStar = async (req, res) => {
       point.stars.splice(findStar, 1);
       updatedRating = point.author.rating - 1;
     }
-    await Map.updateOne(
-      { _id: pointId },
-      { $set: { stars: point.stars } }
-    );
-     await User.updateOne(
-      { _id: authorOfPoint },
-      { rating: updatedRating }
-    );
+    await Map.updateOne({ _id: pointId }, { $set: { stars: point.stars } });
+    await User.updateOne({ _id: authorOfPoint }, { rating: updatedRating });
     await User.findOne({ _id: point.author._id });
   } catch (err) {
     console.error("Err message:", err.message);
     console.error("Err code", err);
   }
-  res.json({ message: "ok" });
+  res.json({ authorOfPoint });
   res.status(200).end();
 };
