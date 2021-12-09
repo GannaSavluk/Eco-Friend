@@ -124,7 +124,10 @@ const CreateEntry = () => {
                   >
                     <CloseOutlined style={{ color: "red" }} />
                   </Button>
-                  <Button variant="primary" htmlType="submit" onClick={changeState}>
+                  <Button
+                    variant="primary"
+                    htmlType="submit"
+                  >
                     <CheckOutlined style={{ color: "green" }} />
                   </Button>
                 </div>
