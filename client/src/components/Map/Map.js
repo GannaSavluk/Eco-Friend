@@ -280,11 +280,11 @@ const Map = () => {
             >
               Open Moderator's menu
             </Button>
-            {isOpenWelcomeComponent && (
+            {/* {isOpenWelcomeComponent && (
               <WelcomeComponent
               // setIsOpenWelcomeComponent={setIsOpenWelcomeComponent}
               />
-            )}
+            )} */}
             <Drawer
               title={
                 <div className={classes.Drawer_header}>

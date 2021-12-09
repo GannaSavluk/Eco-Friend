@@ -73,11 +73,11 @@ const DrawerBody = ({ mapData }) => {
       dataIndex: "author",
       key: "author",
       render: (author) => {
-        setCurrentUserId(author._id);
+        setCurrentUserId(author?._id);
 
         return (
           <div className={classes.author}>
-            <p>{author.name}</p>
+            <p>{author?.name}</p>
           </div>
         );
       },

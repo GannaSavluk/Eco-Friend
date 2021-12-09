@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Col, Container, Row, Form, Button } from "react-bootstrap";
-import style from "./LeaderProfile.module.css";
+import classes from "./LeaderProfile.module.css";
 import "./LeaderProfile.css";
 
 const LeaderProfile = ({ openProfile, setShowPublications }) => {
@@ -18,25 +18,40 @@ const LeaderProfile = ({ openProfile, setShowPublications }) => {
               className="mt-1"
             />
           </Col>
-          <Col md={{ span: 6 }} className="colorTextProfile">
+          {/* <Col md={{ span: 6 }} className="colorTextProfile">
             Coal powers 70 percent of India’s electricity generation, but Prime
             Minister Narendra Modi has pledged that by 2030, India will produce
             more energy through solar and other renewables than its entire grid
             now.
+          </Col> */}
+          <Col md={{ span: 6 }} className="colorTextProfile">
+            <div className="colorTextProfile">
+              <p>Name: {name}</p> 
+             <p> Rating: {rating} </p>
+            </div>
+            {/* <span className="colorTextProfile">{rating}</span> */}
           </Col>
+          {/* <Button
+          className={classes.btn_publication}
+            variant="outline-success"
+            onClick={() => setShowPublications((value) => !value)}
+          >
+            Publications
+          </Button> */}
         </Row>
-        <Row>
+        {/* <Row>
           <Form className="d-flex justify-content-between w-50 mt-1 mb-1">
             <div className="colorTextProfile">{name}</div>
             <span className="colorTextProfile">{rating}</span>
-          </Form>
+          </Form> */}
           <Button
+          className={classes.btn_publication}
             variant="outline-success"
             onClick={() => setShowPublications((value) => !value)}
           >
             Publications
           </Button>
-        </Row>
+        {/* </Row> */}
       </Container>
     </div>
   );

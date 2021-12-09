@@ -5,7 +5,9 @@ import { showUsersListThunk } from "../../store/usersList/actions";
 import Carousel from "./Carousel/Carousel";
 import LeaderProfile from "./LeaderProfile/LeaderProfile";
 import PublicationsProfile from "./LeaderProfile/PublicationsProfile/PublicationsProfile";
-import style from "./Leaderboard.module.css";
+// import styles from "./Leaderboard.module.css";
+import classes from "./Leaderboard.module.css";
+
 import "./Leaderboard.css";
 
 const Leaderboard = () => {
@@ -38,7 +40,7 @@ const Leaderboard = () => {
   };
 
   return (
-    <div className={style.backLeaderboard}>
+    <div className={classes.backLeaderboard}>
       <div className="top">
         <Carousel />
       </div>
@@ -54,7 +56,9 @@ const Leaderboard = () => {
               onChange={(e) => setValue(e.target.value)}
             />
             <div className="colorTextPeople" heigth="25px">
-              <p>We already have: <b>{quantity}</b> people</p>
+              <p >
+                We already have: <b className={classes.p}>{quantity}</b> people
+              </p>
             </div>
           </Form>
           <ListGroup className="d-flex mt-1 w-100 scroll">
@@ -74,7 +78,7 @@ const Leaderboard = () => {
                     data-bs-spy="scroll"
                   >
                     <div>{user.name}</div>
-                    <span className="">{user.rating}</span>
+                    <span className="">{user.rating} points</span>
                   </div>
                 </ListGroup.Item>
               ))}
@@ -97,11 +101,11 @@ const Leaderboard = () => {
             <div className="gifBox">
               <div>
                 <img
-                  src="https://wiki.soiro.ru/images/%D0%9C%D0%B8%D1%80_%D0%BD%D0%B0_%D0%BB%D0%B0%D0%B4%D0%BE%D0%BD%D0%B8%D0%B3%D0%B8%D1%84.gif"
-                  width="200"
-                  height="150px"
+                  src="https://media0.giphy.com/media/RnEApCzxC0800zvWol/giphy.gif?cid=6c09b9520c9zk7vnln2m4ofsqar5msfq8ivcvjfc68704zen&rid=giphy.gif&ct=s"
+                  width="300"
                   alt="img"
-                ></img>
+                />
+                <p className={classes.leaders_text}> Our leaders! We are poude of them!</p>
               </div>
             </div>
           )}
