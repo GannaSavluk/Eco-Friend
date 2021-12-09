@@ -1,24 +1,22 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Popup } from "react-map-gl";
+import { Image } from "cloudinary-react";
 
 import { createMarkerThunk, uploadImgThunk } from "../../store/map/actions";
 
 import classes from "./CreatePoint.module.css";
 import { CheckOutlined } from "@ant-design/icons";
 import { Button, Select } from "antd";
-import { Image } from "cloudinary-react";
+
 const { Option, OptGroup } = Select;
 
 const CreatePoint = ({ setNewMarker, newMarker }) => {
   const dispatch = useDispatch();
-  // const categoryRef = useRef();
-  // const descRef = useRef();
-
+  
   const user = useSelector((store) => store.auth.user);
   const currentImg = useSelector((store) => store.map.currentImg);
 
-  // const [isOpen, setIsOpen] = useState(false);
   const [value, setValue] = useState({
     category: "",
     author: "",

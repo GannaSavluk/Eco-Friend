@@ -25,7 +25,6 @@ const CreateEntry = () => {
   };
 
   const onInputCategory = (value) => {
-    // console.log({ value });
     setValue((prev) => ({ ...prev, category: value }));
   };
   const changeState = () => {

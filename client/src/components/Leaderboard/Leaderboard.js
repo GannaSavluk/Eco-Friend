@@ -5,7 +5,6 @@ import { showUsersListThunk } from "../../store/usersList/actions";
 import Carousel from "./Carousel/Carousel";
 import LeaderProfile from "./LeaderProfile/LeaderProfile";
 import PublicationsProfile from "./LeaderProfile/PublicationsProfile/PublicationsProfile";
-// import styles from "./Leaderboard.module.css";
 import classes from "./Leaderboard.module.css";
 
 import "./Leaderboard.css";

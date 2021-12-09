@@ -28,9 +28,6 @@ const BootstrapCarousel = () => {
             height="350px"
           />
           <Carousel.Caption>
-            {/* <p>
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-            </p> */}
             <h1
             className={classes.p}
             >You can make the planet a better place</h1>
@@ -44,9 +41,6 @@ const BootstrapCarousel = () => {
             height="350px"
           />
           <Carousel.Caption>
-            {/* <p>
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-            </p> */}
             <h1
             className={classes.p}
             >You can make the planet a better place</h1>

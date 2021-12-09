@@ -5,10 +5,8 @@ import { Table, Button } from "antd";
 import { DeleteOutlined, CheckOutlined } from "@ant-design/icons";
 import classes from "./DrawerBody.module.css";
 
-import { deleteUserThunk } from "../../store/auth/actions";
 import {
   confirmPointDataThunk,
-  deletePointThunk,
 } from "../../store/map/actions";
 import DeleteUser from "./DeleteUser";
 
@@ -17,13 +15,11 @@ const DrawerBody = ({ mapData }) => {
   const [isOpenDeleteUser, setIsOpenDeleteUser] = useState(false);
   const [currentUserId, setCurrentUserId] = useState("");
 
-  const user = useSelector((store) => store.auth.user);
   const columns = [
     {
       title: "Category",
       dataIndex: "category",
       key: "category",
-      // render: (text) => <a>{text}</a>,
     },
     {
       title: "Confirm",
@@ -90,7 +86,6 @@ const DrawerBody = ({ mapData }) => {
     },
   ];
   const unconfirmedPoints = mapData.filter((point) => !point.confirmed);
-  // console.log(1111, unconfirmedPoints);
   return <Table columns={columns} dataSource={unconfirmedPoints} />;
 };
 export default DrawerBody;

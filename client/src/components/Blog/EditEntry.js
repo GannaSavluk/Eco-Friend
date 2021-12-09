@@ -9,14 +9,11 @@ import { Input } from "antd";
 
 import { editEntryThunk, uploadImgThunk } from "../../store/entry/actions";
 
-const { TextArea } = Input;
-
 const EditEntry = ({ entry, setIsOpenEditEntryForm }) => {
   const dispatch = useDispatch();
   const currentImg = useSelector((store) => store.entry.currentImg);
   const user = useSelector((store) => store.auth.user);
 
-  const [isOpen, setIsOpen] = useState(false);
   const [value, setValue] = useState({ text: "", category: "", file: "" });
 
   const onInputText = ({ target: { value } }) => {
@@ -25,9 +22,7 @@ const EditEntry = ({ entry, setIsOpenEditEntryForm }) => {
   const onInputCategory = ({ target: { value } }) => {
     setValue((prev) => ({ ...prev, category: value }));
   };
-  const changeState = () => {
-    setIsOpen(!isOpen);
-  };
+
   const updateEntry = (event) => {
     event.preventDefault();
     let link;

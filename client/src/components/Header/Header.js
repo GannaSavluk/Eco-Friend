@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
+import classes from "./Header.module.css";
 
 const Header = () => {
   const userId = useSelector((store) => store.auth.user?.id);
@@ -9,8 +10,17 @@ const Header = () => {
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-      <Container>
-        <Navbar.Brand href="#home">Eco Friend</Navbar.Brand>
+      <Container 
+      // className={classes.main_block}
+      >
+        <Navbar.Brand href="#home">
+          Eco Friend{" "}
+          <img
+            src="https://cdn3.iconfinder.com/data/icons/spring-2-1/30/Leaf-512.png"
+            alt=""
+            width="50px"
+          />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">

@@ -1,14 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
-import React, { useState } from "react";
+import React from "react";
 
 import {
-  confirmPointDataThunk,
   deletePointThunk,
 } from "../../store/map/actions";
-import { deleteUserThunk, logoutThunk } from "../../store/auth/actions";
+import { deleteUserThunk } from "../../store/auth/actions";
 
-import { Modal, Button, Space } from "antd";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
+import { Modal } from "antd";
 
 const DeleteUser = ({ setIsOpenDeleteUser, pointId, userId }) => {
   const dispatch = useDispatch();
@@ -40,11 +38,4 @@ const DeleteUser = ({ setIsOpenDeleteUser, pointId, userId }) => {
   );
 };
 
-// ReactDOM.render(
-//   <Space>
-//     <LocalizedModal />
-//     <Button onClick={confirm}>Confirm</Button>
-//   </Space>,
-//   mountNode,
-// );
 export default DeleteUser;
