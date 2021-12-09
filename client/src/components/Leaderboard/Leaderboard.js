@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, FormControl, ListGroup } from "react-bootstrap";
-// import style from "./Leaderboard.module.css";
+import { Form, FormControl, ListGroup } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { showUsersListThunk } from "../../store/usersList/actions";
+import Carousel from "./Carousel/Carousel";
 import LeaderProfile from "./LeaderProfile/LeaderProfile";
+import PublicationsProfile from "./LeaderProfile/PublicationsProfile/PublicationsProfile";
+import style from "./Leaderboard.module.css";
+import "./Leaderboard.css";
 
 const Leaderboard = () => {
   const data = useSelector((store) => store.userList.userList);
-  console.log("users--->", data);
-
   const [value, setValue] = useState("");
   const [filter, setFilter] = useState([]);
+  const [openProfile, setOpenProfile] = useState(false);
+  const [showPublications, setShowPublications] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
+  const dispatch = useDispatch();
+  const quantity = data.length;
 
   useEffect(() => {
     setFilter(
@@ -20,81 +26,89 @@ const Leaderboard = () => {
     );
   }, [value, data]);
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(showUsersListThunk(data));
   }, []);
 
-  return (
-    <div className="d-flex ">
-      <div className="border border-secondary border-5 rounded-3 w-50 p-2 m-1">
-        <Form className="d-flex">
-          <FormControl
-            type="search"
-            placeholder="Search"
-            className="me-2"
-            aria-label="Search"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-          />
-          <Button variant="outline-success">Search</Button>
-        </Form>
+  const LeaderProfileHandler = (user) => {
+    setOpenProfile(user);
+    setValue("");
+    setShowPublications(false);
+    setShowInfo(user._id === openProfile._id ? (value) => !value : true);
+  };
 
-        <ListGroup className="d-flex mt-1 w-100  ">
-          {filter.map((user) => (
-            <ListGroup.Item key={user._id} action variant="success">
-              <div className="d-flex justify-content-between mt-1">
-                <div>{user.name}</div>
-                <div>{user.role}</div>
+  return (
+    <div className={style.backLeaderboard}>
+      <div className="top">
+        <Carousel />
+      </div>
+      <div className="d-flex ">
+        <div className=" w-50 p-2 m-1 colorTextPeople">
+          <Form className="d-flex justify-content-between">
+            <FormControl
+              type="search"
+              placeholder="Search..."
+              className="me-2 w-50 h-25 "
+              aria-label="Search"
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+            />
+            <div className="colorTextPeople" heigth="25px">
+              <p>We already have: <b>{quantity}</b> people</p>
+            </div>
+          </Form>
+          <ListGroup className="d-flex mt-1 w-100 scroll">
+            {filter
+              .sort((a, b) => (a.rating < b.rating ? 1 : -1))
+              .map((user) => (
+                <ListGroup.Item
+                  key={user._id}
+                  action
+                  variant="success"
+                  id="list-example"
+                  class="list-group"
+                  onClick={() => LeaderProfileHandler(user)}
+                >
+                  <div
+                    className=" d-flex justify-content-between mt-1 colorTextItem "
+                    data-bs-spy="scroll"
+                  >
+                    <div>{user.name}</div>
+                    <span className="">{user.rating}</span>
+                  </div>
+                </ListGroup.Item>
+              ))}
+          </ListGroup>
+        </div>
+        <div className=" w-50 p-2 m-1 scroll-rigth ">
+          {showInfo ? (
+            <>
+              {openProfile && (
+                <LeaderProfile
+                  openProfile={openProfile}
+                  setShowPublications={setShowPublications}
+                />
+              )}
+              {showPublications && (
+                <PublicationsProfile authorId={openProfile._id} />
+              )}
+            </>
+          ) : (
+            <div className="gifBox">
+              <div>
+                <img
+                  src="https://wiki.soiro.ru/images/%D0%9C%D0%B8%D1%80_%D0%BD%D0%B0_%D0%BB%D0%B0%D0%B4%D0%BE%D0%BD%D0%B8%D0%B3%D0%B8%D1%84.gif"
+                  width="200"
+                  height="150px"
+                  alt="img"
+                ></img>
               </div>
-            </ListGroup.Item>
-          ))}
-        </ListGroup>
+            </div>
+          )}
+        </div>
       </div>
-      <div className="border border-secondary border-5 rounded-3 w-50 p-2 m-1 ">
-        <LeaderProfile />
-        <img
-          src="https://cdn.pixabay.com/photo/2021/11/26/20/44/lantern-6826687_640.jpg"
-          width="100%"
-          height="400px"
-          alt="img"
-        ></img>
-        {/* <img src={img} width='100%' height='400px' alt="img"></img> */}
-      </div>
-      <div></div>
     </div>
   );
 };
 
 export default Leaderboard;
-
-// const [img, setImg] = useState()
-
-//  useEffect(() => {
-//   imgHandler()
-//   const interval = setInterval(() => {
-//     imgHandler()
-//   }, 5000);
-//   return () => {clearInterval(interval)}
-// }, [])
-// const imgHandler = async () => {
-//   try {
-//     let res = await fetch("https://pixabay.com/api/?key=24601395-dfb4c1c0ad1e4a945dbc42303=yellow+flowers&image_type=photo");
-//     let res = await fetch("http://localhost:3700/img");
-
-//     if (!res.ok) {
-//       console.log("api>>>>".res);
-//       throw new Error( res.statusText || res.status );
-//     }
-
-//     let data = await res.json();
-//     console.log('api',data);
-
-//     setImg(data.cat[Math.floor(Math.random() * 20)].name)
-
-//   } catch (err) {
-//     console.error(err);
-//     alert('Произошла ошибка...');
-//   }
-// }
