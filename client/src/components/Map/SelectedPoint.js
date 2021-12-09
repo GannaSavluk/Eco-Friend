@@ -86,52 +86,54 @@ const SelectedPoint = ({ selectedMapPoint, setSelectedMapPoint }) => {
           description={selectedMapPoint?.properties.adress}
         />
         <Tooltip title="Thank the author">
-          <img
-            src="/img/rest/like.jpeg"
-            alt=""
-            style={{ width: "50px", opacity: "50%" }}
-            onClick={() => {
-              const userIdInStars = selectedMapPoint.properties?.stars?.find(
-                (star) => star === user.id
-              );
-              if (userIdInStars) {
-                setSelectedMapPoint({
-                  ...selectedMapPoint,
-                  properties: {
-                    ...selectedMapPoint.properties,
-                    stars: selectedMapPoint.properties.stars.filter(
-                      (el) => el !== user.id
-                    ),
-                  },
-                });
-                dispatch(
-                  changeStarPoint(
-                    selectedMapPoint.properties.pointId,
-                    user.id,
-                    "-"
-                  )
+          {user && (
+            <img
+              src="/img/rest/like.jpeg"
+              alt=""
+              style={{ width: "50px", opacity: "50%" }}
+              onClick={() => {
+                const userIdInStars = selectedMapPoint.properties?.stars?.find(
+                  (star) => star === user.id
                 );
-              } else {
-                setSelectedMapPoint({
-                  ...selectedMapPoint,
-                  properties: {
-                    ...selectedMapPoint.properties,
-                    stars: [...selectedMapPoint.properties.stars, user.id],
-                  },
-                });
+                if (userIdInStars) {
+                  setSelectedMapPoint({
+                    ...selectedMapPoint,
+                    properties: {
+                      ...selectedMapPoint.properties,
+                      stars: selectedMapPoint.properties.stars.filter(
+                        (el) => el !== user.id
+                      ),
+                    },
+                  });
+                  dispatch(
+                    changeStarPoint(
+                      selectedMapPoint.properties.pointId,
+                      user.id,
+                      "-"
+                    )
+                  );
+                } else {
+                  setSelectedMapPoint({
+                    ...selectedMapPoint,
+                    properties: {
+                      ...selectedMapPoint.properties,
+                      stars: [...selectedMapPoint.properties.stars, user.id],
+                    },
+                  });
+                  dispatch(
+                    changeStarPoint(
+                      selectedMapPoint.properties.pointId,
+                      user.id,
+                      "+"
+                    )
+                  );
+                }
                 dispatch(
-                  changeStarPoint(
-                    selectedMapPoint.properties.pointId,
-                    user.id,
-                    "+"
-                  )
+                  addStarToMapPointThunk(selectedMapPoint.properties.pointId)
                 );
-              }
-              dispatch(
-                addStarToMapPointThunk(selectedMapPoint.properties.pointId)
-              );
-            }}
-          />
+              }}
+            />
+          )}
         </Tooltip>
       </Card>
     </Popup>

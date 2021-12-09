@@ -59,7 +59,9 @@ const Map = () => {
 
   const user = useSelector((store) => store.auth.user);
   const mapData = useSelector((store) => store?.map?.map);
-  const isOpenWelcomeComponent = useSelector((store)=>store.auth.isOpenWelcomeComponent)
+  const isOpenWelcomeComponent = useSelector(
+    (store) => store.auth.isOpenWelcomeComponent
+  );
 
   const handleViewportChange = useCallback(
     (newViewport) => setViewport(newViewport),
@@ -259,7 +261,7 @@ const Map = () => {
             setSelectedMapPoint={setSelectedMapPoint}
           />
         )}
-        {newMarker && (
+        {user && newMarker && (
           <CreatePoint
             setNewMarker={setNewMarker}
             onSaveMarker={onSaveMarker}
@@ -277,7 +279,7 @@ const Map = () => {
             </Button>
             {isOpenWelcomeComponent && (
               <WelcomeComponent
-                // setIsOpenWelcomeComponent={setIsOpenWelcomeComponent}
+              // setIsOpenWelcomeComponent={setIsOpenWelcomeComponent}
               />
             )}
             <Drawer
