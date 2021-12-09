@@ -285,11 +285,11 @@ const Map = () => {
               title={
                 <div className={classes.Drawer_header}>
                   <p> Run the ECO world</p>
-                  <img
+                  {/* <img
                     src="https://64.media.tumblr.com/a61ce9e8117a908c0f68ff7db7281449/tumblr_n4dyv0dkDU1shalg6o1_640.gifv"
                     alt=""
                     style={{ width: "150px" }}
-                  />
+                  /> */}
                 </div>
               }
               placement="right"

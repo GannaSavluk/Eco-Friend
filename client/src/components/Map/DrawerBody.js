@@ -5,9 +5,7 @@ import { Table, Button } from "antd";
 import { DeleteOutlined, CheckOutlined } from "@ant-design/icons";
 import classes from "./DrawerBody.module.css";
 
-import {
-  confirmPointDataThunk,
-} from "../../store/map/actions";
+import { confirmPointDataThunk } from "../../store/map/actions";
 import DeleteUser from "./DeleteUser";
 
 const DrawerBody = ({ mapData }) => {
@@ -17,17 +15,12 @@ const DrawerBody = ({ mapData }) => {
 
   const columns = [
     {
-      title: "Category",
-      dataIndex: "category",
-      key: "category",
-    },
-    {
       title: "Confirm",
       dataIndex: "_id",
       key: "_id",
       render: (id) => {
         setCurrentUserId(id);
-        console.log("ID", currentUserId);
+        console.log("ID 1", currentUserId,'ID 2', id);
         return (
           <>
             <div className={classes.btns}>
@@ -59,11 +52,28 @@ const DrawerBody = ({ mapData }) => {
       },
     },
     {
+      title: "Picture",
+      dataIndex: "img",
+      key: "img",
+      render: (picture) => {
+        if (picture)
+          return <img src={picture} alt="" style={{ width: "60px" }} />;
+
+        if (!picture) return <p>no attached photo</p>;
+      },
+    },
+    {
+      title: "Category",
+      dataIndex: "category",
+      key: "category",
+    },
+    {
       title: "Address",
       dataIndex: "adress",
       key: "adress",
       render: (adress) => <p>{adress}</p>,
     },
+
     {
       title: "Author",
       dataIndex: "author",
@@ -77,12 +87,6 @@ const DrawerBody = ({ mapData }) => {
           </div>
         );
       },
-    },
-    {
-      title: "Picture",
-      dataIndex: "img",
-      key: "img",
-      render: (picture) => <a href={{ picture }}>{"photo"}</a>,
     },
   ];
   const unconfirmedPoints = mapData.filter((point) => !point.confirmed);

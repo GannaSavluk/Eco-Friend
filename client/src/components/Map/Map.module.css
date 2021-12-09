@@ -1,21 +1,21 @@
 .markerbtn_confirmed {
-  background: #ffffff;
+  background: #a5fdad;
   border: none;
   border-radius: 50%;
   cursor: pointer;
   width: 40px;
   height: 40px;
-  border: 3px solid rgb(20, 231, 20);
+  border: 3px solid rgb(50, 165, 50);
 }
 
 .markerbtn_not_confirmed {
-  background: #ffffff;
+  background: #ffdbdb;
   border: none;
   border-radius: 50%;
   cursor: pointer;
   width: 40px;
   height: 40px;
-  border: 3px solid rgb(231, 115, 20);
+  border: 3px solid rgb(231, 69, 20);
 }
 
 .markerbtn img {
@@ -28,14 +28,14 @@
 }
 
 .cluster {
-  color: rgb(0, 0, 0);
-  background: #ffffff;
+  color: rgb(255, 255, 255);
+  background: #4a5cff;
   border-radius: 50%;
   padding: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 3px solid rgb(255, 174, 0);
+  border: 3px solid rgb(0, 110, 255);
 }
 
 .card {
