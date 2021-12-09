@@ -27,7 +27,9 @@ export const auth = (state = initialState, action) => {
       return { ...state, user: null };
 
     case ACTypes.CURRENT_IMG_USER:
-      return { ...state, currentImg: action.payload.img };
+      return { ...state,
+        user: {...state.user, img: action.payload.img},
+        currentImg: action.payload.img };
 
     case ACTypes.CURRENT_IMG_CLEAR:
       return { ...state, currentImg: null };

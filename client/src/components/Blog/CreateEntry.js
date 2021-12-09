@@ -4,7 +4,7 @@ import { Image } from "cloudinary-react";
 import { Link } from "react-router-dom";
 
 import { Form, CloseButton } from "react-bootstrap";
-import { PlusOutlined, DeleteOutlined, CheckOutlined } from "@ant-design/icons";
+import { PlusOutlined, CheckOutlined, CloseOutlined } from "@ant-design/icons";
 import { Button, Select } from "antd";
 import classes from "./CreateEntry.module.css";
 
@@ -54,12 +54,10 @@ const CreateEntry = () => {
         <div>
           {isOpen && user && (
             <div className={classes.block}>
-
               {!currentImg && (
                 <Image
                   className={classes.imgs}
                   width={200}
-            
                   src="https://storage.googleapis.com/proudcity/elgl/uploads/2018/04/Environmental-11.gif"
                   fallback="public/img/empty/default_photo.png"
                 />
@@ -74,12 +72,14 @@ const CreateEntry = () => {
               )}
               <form onSubmit={createNewPost}>
                 <div>
-                  <label for="upload_img" 
-                  className={classes.custom_file_upload}>
-                    Choose a profile picture:
+                  <label
+                    htmlFor="upload_img"
+                    className={classes.custom_file_upload}
+                  >
+                    Choose a picture
                     <input
                       id="upload_img"
-                      style={{ display: 'none'}}
+                      style={{ display: "none" }}
                       type="file"
                       name="file"
                       onChange={(e) => {
@@ -102,7 +102,7 @@ const CreateEntry = () => {
                   showSearch
                   name="category"
                   style={{ width: 200 }}
-                  placeholder="Select a person"
+                  placeholder="Select a category"
                   optionFilterProp="children"
                   onChange={onInputCategory}
                   filterOption={(input, option) =>
@@ -122,13 +122,12 @@ const CreateEntry = () => {
                       setIsOpen(false);
                     }}
                   >
-                    <DeleteOutlined style={{ color: "red" }} />
+                    <CloseOutlined style={{ color: "red" }} />
                   </Button>
                   <Button variant="primary" htmlType="submit">
                     <CheckOutlined style={{ color: "green" }} />
                   </Button>
                 </div>
-
               </form>
             </div>
           )}

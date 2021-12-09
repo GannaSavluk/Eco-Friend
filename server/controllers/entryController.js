@@ -49,7 +49,7 @@ exports.editEntry = async (req, res) => {
   try {
     const { values, link } = req.body;
     const entryId = req.params.id;
-    const updatedEntry = await Entry.updateOne(
+    await Entry.updateOne(
       { _id: entryId },
       {
         text: values.text,
@@ -57,7 +57,8 @@ exports.editEntry = async (req, res) => {
         img: link,
       }
     );
-    res.json(updatedEntry);
+    const updatedEntry = await Entry.findOne({ _id: entryId });
+    res.json({ updatedEntry });
   } catch (err) {
     console.error("Err message:", err.message);
     console.error("Err code", err);
