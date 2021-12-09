@@ -35,6 +35,12 @@ export const auth = (state = initialState, action) => {
     case ACTypes.SET_IMG:
       return { ...state, user: { ...state.user, img: action.payload.img } };
 
+    case ACTypes.SET_RATING:
+      return {
+        ...state,
+        user: { ...state.user, rating: action.payload.rating },
+      };
+
     case ACTypes.WECLOME_COMPONENT:
       return { ...state, isOpenWelcomeComponent: false };
 

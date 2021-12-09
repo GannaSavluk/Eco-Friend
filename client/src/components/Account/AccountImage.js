@@ -16,6 +16,7 @@ function AccountImage(props) {
   const dispatch = useDispatch();
   const currentImg = useSelector((store) => store.auth.currentImg);
   const img = useSelector((store) => store.auth.user.img);
+  const rating = useSelector((store) => store.auth.user.rating);
 
   const saveProfilePic = () => {
     let link;
@@ -28,7 +29,10 @@ function AccountImage(props) {
   return (
     <Card
       cover={
-        <label htmlFor="upload_profile_img" className={classes.custom_file_upload}>
+        <label
+          htmlFor="upload_profile_img"
+          className={classes.custom_file_upload}
+        >
           {!currentImg && img && (
             <div className={classes.container}>
               <Image
@@ -83,7 +87,7 @@ function AccountImage(props) {
       }
     >
       <h1>{props.user.name}</h1>
-      <p>Reputation: {props.user.reputation}</p>
+      <p>Reputation: {rating}</p>
     </Card>
   );
 }

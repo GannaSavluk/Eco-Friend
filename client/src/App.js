@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { checkUserAuthThunk, getImg } from "./store/auth/actions";
+import { checkUserAuthThunk, getImg, getRating } from "./store/auth/actions";
 import { mapFetchThunk } from "./store/map/actions";
 import { getAllEntriesThunk } from "./store/entry/actions";
 
@@ -27,6 +27,7 @@ function App() {
     dispatch(checkUserAuthThunk());
     dispatch(getAllEntriesThunk());
     dispatch(getImg(userId));
+    dispatch(getRating(userId));
   });
   return (
     <div className="App">
