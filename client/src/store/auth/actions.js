@@ -16,12 +16,18 @@ export const saveCurrentImgUser = (img) => ({
 });
 
 export const clearCurrentImg = () => ({ type: ACTypes.CURRENT_IMG_CLEAR });
-export const closeWelcomeComponent = () => ({ type: ACTypes.WECLOME_COMPONENT });
-
+export const closeWelcomeComponent = () => ({
+  type: ACTypes.WECLOME_COMPONENT,
+});
 
 export const setImg = (img) => ({
   type: ACTypes.SET_IMG,
   payload: { img },
+});
+
+export const setRating = (rating) => ({
+  type: ACTypes.SET_RATING,
+  payload: { rating },
 });
 
 export const getImg = (id) => async (dispatch) => {
@@ -31,9 +37,18 @@ export const getImg = (id) => async (dispatch) => {
     body: JSON.stringify({ _id: id }),
   });
   const img = await response.json();
-  console.log(img);
 
   if (img) dispatch(setImg(img));
+};
+
+export const getRating = (id) => async (dispatch) => {
+  const response = await fetch("/auth/check-rating", {
+    method: "post",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ _id: id }),
+  });
+  const rating = await response.json();
+  dispatch(setRating(rating));
 };
 
 export const logoutThunk = () => async (dispatch) => {
@@ -89,7 +104,7 @@ export const deleteUserThunk = (id, userId) => async (dispatch) => {
   await fetch(`/auth/${id}`, {
     method: "delete",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ userId}),
+    body: JSON.stringify({ userId }),
   });
   // dispatch()//TODO
 };

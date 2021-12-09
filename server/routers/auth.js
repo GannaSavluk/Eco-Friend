@@ -9,6 +9,7 @@ const {
   deleteUser,
   editUserProfilePicture,
   getImg,
+  getRating,
   editUserPassword,
 } = require("../controllers/authController");
 //const { email } = require("../middleware/email");
@@ -20,6 +21,7 @@ router.post("/logout", destroySession);
 router.delete("/:id", deleteUser);
 router.post("/img", editUserProfilePicture);
 router.post("/check-img", getImg);
+router.post("/check-rating", getRating);
 router.put("/password", editUserPassword);
 
 router.get("/check", (req, res) => {

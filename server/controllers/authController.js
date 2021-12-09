@@ -146,6 +146,19 @@ exports.getImg = async (req, res) => {
   res.status(200).end();
 };
 
+exports.getRating = async (req, res) => {
+  try {
+    const { _id } = req.body;
+    const user = await User.findOne({ _id });
+    console.log(user);
+    res.json(user.rating);
+  } catch (err) {
+    console.error("Err message:", err.message);
+    console.error("Err code", err);
+  }
+  res.status(200).end();
+};
+
 exports.editUserPassword = async (req, res) => {
   try {
     const { prev, newpass } = req.body;
