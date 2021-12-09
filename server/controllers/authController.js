@@ -23,6 +23,23 @@ const sendEmail = async (user) => {
   });
 };
 
+const sendLeavingEmail = async (user) => {
+  const transporter = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+      user: "mebelmebel545@gmail.com",
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
+
+  await transporter.sendMail({
+    from: '"EcoFriend" <mebelmebel545@gmail.com>',
+    to: user.email,
+    subject: "EcoFriend",
+    text: `We will miss you, ${user.name}! If you ever decide to come back, we will welcome you warmly.`,
+  });
+};
+
 function failAuth(res) {
   res.json(null);
 }
@@ -98,11 +115,13 @@ exports.destroySession = (req, res, next) => {
 
 exports.deleteUser = async (req, res) => {
   let { userId } = req.body;
+  let { user } = req.session;
   try {
     if (req.session.user.id === req.params.id && req.session.user.role === 1) {
       await Comment.deleteMany({ author: req.params.id });
       await Entry.deleteMany({ author: req.params.id });
       await User.deleteMany({ _id: req.params.id });
+      sendLeavingEmail(user);
     }
     if (req.session.user.role === 0) {
       await Comment.deleteMany({ author: userId });
