@@ -77,6 +77,11 @@ const Signup = () => {
             ]}
             onChange={onInputPassword}
           />
+          <p className='password_req'>
+            Password requirements: minimum eight characters, at least one letter
+            and one number
+          </p>
+
           <Button
             type="primary"
             htmlType="submit"

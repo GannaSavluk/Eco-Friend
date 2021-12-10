@@ -12,9 +12,9 @@ const {
   getRating,
   editUserPassword,
 } = require("../controllers/authController");
-//const { email } = require("../middleware/email");
+const { isValidPassword } = require("../middleware/checkPasswordMiddleware");
 
-router.post("/signup", createUserAndSession);
+router.post("/signup", isValidPassword, createUserAndSession);
 router.post("/signin", checkUserAndCreateSession);
 router.post("/logout", destroySession);
 // router.delete("/admin/:id", deleteUser);
