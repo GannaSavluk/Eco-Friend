@@ -55,7 +55,7 @@ const Leaderboard = () => {
               onChange={(e) => setValue(e.target.value)}
             />
             <div className="colorTextPeople" heigth="25px">
-              <p >
+              <p>
                 We already have: <b className={classes.p}>{quantity}</b> people
               </p>
             </div>
@@ -104,7 +104,9 @@ const Leaderboard = () => {
                   width="300"
                   alt="img"
                 />
-                <p className={classes.leaders_text}> Our leaders! We are poude of them!</p>
+                <p className={classes.leaders_text}>
+                  Our eco-friends! We are proud of them!
+                </p>
               </div>
             </div>
           )}
