@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Card, Col, Container, Form, Row, Button } from "react-bootstrap";
+import React from "react";
+import { Card, Col, Container, Form, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
 const PublicationsProfile = ({ authorId }) => {
@@ -30,7 +30,7 @@ const PublicationsProfile = ({ authorId }) => {
           </Row>
           <Row>
             <Form className="d-flex justify-content-between w-50 mt-1 mb-1">
-              <div className="colorTextProfile">Category: {item.category}</div>
+              {/* <div className="colorTextProfile">Category: {item?.category}</div>//TODO */}
             </Form>
           </Row>
         </Container>

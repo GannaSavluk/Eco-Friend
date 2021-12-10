@@ -2,32 +2,29 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Image } from "cloudinary-react";
 
-import classes from "./EditEntry.module.css";
-import { DeleteOutlined, CheckOutlined } from "@ant-design/icons";
-import { Button } from "antd";
-import { Input } from "antd";
-
 import { editEntryThunk, uploadImgThunk } from "../../store/entry/actions";
 
-const { TextArea } = Input;
+import classes from "./EditEntry.module.css";
+import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
+import { Button, Input, Select  } from "antd";
+
+const { Option } = Select;
 
 const EditEntry = ({ entry, setIsOpenEditEntryForm }) => {
   const dispatch = useDispatch();
   const currentImg = useSelector((store) => store.entry.currentImg);
   const user = useSelector((store) => store.auth.user);
 
-  const [isOpen, setIsOpen] = useState(false);
   const [value, setValue] = useState({ text: "", category: "", file: "" });
 
   const onInputText = ({ target: { value } }) => {
     setValue((prev) => ({ ...prev, text: value }));
   };
-  const onInputCategory = ({ target: { value } }) => {
+
+  const onInputCategory = (value) => {
     setValue((prev) => ({ ...prev, category: value }));
   };
-  const changeState = () => {
-    setIsOpen(!isOpen);
-  };
+
   const updateEntry = (event) => {
     event.preventDefault();
     let link;
@@ -46,25 +43,49 @@ const EditEntry = ({ entry, setIsOpenEditEntryForm }) => {
       <div>
         <div>
           {user && (
-            <div>
-              <img src={entry.img} style={{ width: 200 }} alt="" />
+            <div className={classes.edit_block}>
+              {!currentImg && (
+                <img
+                  src={entry.img}
+                  style={{ width: "auto", height: "200px" }}
+                  alt=""
+                />
+              )}
               {currentImg && (
                 <>
                   <Image
-                    style={{ width: 200 }}
+                    style={{ width: "auto", height: "200px" }}
+                    // style={{ width: 200 }}
                     cloudName="dwvm712y7"
                     publicId={`https://res.cloudinary.com/dwvm712y7/image/upload/v${currentImg.version}/${currentImg.public_id}.${currentImg.format}`}
                   />
                 </>
               )}
-              <form onSubmit={updateEntry}>
-                <input
+              <form onSubmit={updateEntry} className={classes.form}>
+                {/* <input
                   type="file"
                   name="file"
                   onChange={(e) => {
                     dispatch(uploadImgThunk(e.target.files[0]));
                   }}
-                />
+                /> */}
+                <div>
+                  <label
+                    htmlFor="upload_img2"
+                    className={classes.custom_file_upload}
+                  >
+                    Choose a picture
+                    <input
+                      id="upload_img2"
+                      style={{ display: "none" }}
+                      type="file"
+                      name="file"
+                      onChange={(e) => {
+                        dispatch(uploadImgThunk(e.target.files[0]));
+                      }}
+                    />
+                  </label>
+                </div>
                 <Input
                   as="textarea"
                   type="text"
@@ -74,19 +95,27 @@ const EditEntry = ({ entry, setIsOpenEditEntryForm }) => {
                   defaultValue={entry.text}
                   onChange={onInputText}
                 />
-                <select
-                  aria-label="Floating label select example"
+                <Select
+                  showSearch
+                  className={classes.selector}
                   name="category"
+                  style={{ width: 200 }}
+                  placeholder="Select a category"
+                  optionFilterProp="children"
                   onChange={onInputCategory}
+                  filterOption={(input, option) =>
+                    option.children
+                      .toLowerCase()
+                      .indexOf(input.toLowerCase()) >= 0
+                  }
                 >
-                  <option>choose category</option>
-                  <option value="eco-news">eco-news</option>
-                  <option value="sorting">sorting</option>
-                  <option value="events">events</option>
-                </select>
+                  <Option value="eco-news">eco-news</Option>
+                  <Option value="sorting">sorting</Option>
+                  <Option value="events">events</Option>
+                </Select>
                 <div className={classes.btns}>
                   <Button onClick={() => setIsOpenEditEntryForm({ id: "" })}>
-                    <DeleteOutlined style={{ color: "red" }} />
+                    <CloseOutlined style={{ color: "red" }} />
                   </Button>
                   <Button variant="primary" htmlType="submit">
                     <CheckOutlined style={{ color: "green" }} />

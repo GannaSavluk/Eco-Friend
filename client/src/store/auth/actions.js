@@ -1,5 +1,7 @@
 import ACTypes from "../types";
 
+import {changeUserImgInBlog} from '../entry/actions'
+
 export const isAuthCheck = (id) => ({
   type: ACTypes.AUTH,
   payload: { id: id },
@@ -132,4 +134,5 @@ export const changeUserProfilePicThunk = (id, link) => async (dispatch) => {
     body: JSON.stringify({ id, link }),
   });
   dispatch(getImg(id));
+  dispatch(changeUserImgInBlog(id, link))
 };

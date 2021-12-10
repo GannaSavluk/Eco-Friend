@@ -69,7 +69,6 @@ const AllEntries = () => {
   const openEditEntryForm = (entryid) => {
     setIsOpenEditEntryForm({ id: entryid });
   };
-  const onSearch = (value) => console.log(value);
 
   return (
     <div className={classes.AllEntries}>
@@ -78,7 +77,6 @@ const AllEntries = () => {
         className={classes.Search}
         placeholder="input category"
         allowClear
-        // onSearch={onSearch}
         onChange={(e) => {
           setIsOpenCategory(e.target.value);
         }}

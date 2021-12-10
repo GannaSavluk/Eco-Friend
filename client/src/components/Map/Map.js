@@ -1,19 +1,19 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
-import useSupercluster from "use-supercluster";
+import Geocoder from "react-map-gl-geocoder";
 import ReactMapGl, {
   Marker,
   FlyToInterpolator,
   GeolocateControl,
   NavigationControl,
 } from "react-map-gl";
-import Geocoder from "react-map-gl-geocoder";
+
+import useSupercluster from "use-supercluster";
 
 import classes from "./Map.module.css";
 import { Drawer, Button } from "antd";
-import DrawerBody from "./DrawerBody";
 
+import DrawerBody from "./DrawerBody";
 import CreatePoint from "./CreatePoint";
 import SelectedPoint from "./SelectedPoint";
 import WelcomeComponent from "./Welcome/WelcomeComponent";
@@ -42,7 +42,6 @@ const Map = () => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [selectedMapPoint, setSelectedMapPoint] = useState(null);
-  // const [isOpenWelcomeComponent, setIsOpenWelcomeComponent] = useState(true);
   const [newMarker, setNewMarker] = useState(null);
   const [viewport, setViewport] = useState({
     latitude: 45.4211, //!!
@@ -113,7 +112,6 @@ const Map = () => {
   );
 
   const handleGeocoderResult = async (e) => {
-    // console.log(e.result);
     await setNewMarker([
       ...e.result.center,
       e.result.place_name,
@@ -182,12 +180,10 @@ const Map = () => {
           style={geolocateControlStyle}
           positionOptions={{ enableHighAccuracy: true }}
           trackUserLocation={true}
-          //auto
         />
 
         <NavigationControl className={classes.navigation} showCompass={false} />
         {clusters.map((cluster) => {
-          // console.log("points", cluster)
           // every cluster point has coordinates
           const [longitude, latitude] = cluster.geometry.coordinates;
           // the point may be either a cluster or a crime point
@@ -280,21 +276,20 @@ const Map = () => {
             >
               Open Moderator's menu
             </Button>
-            {isOpenWelcomeComponent && (
+            {/* {isOpenWelcomeComponent && (
               <WelcomeComponent
               // setIsOpenWelcomeComponent={setIsOpenWelcomeComponent}
               />
-            )}
+            )} */}
             <Drawer
               title={
                 <div className={classes.Drawer_header}>
                   <p> Run the ECO world</p>
-                  <img
-                    // src="https://thumbs.gfycat.com/HeavySneakyBorer-size_restricted.gif"
+                  {/* <img
                     src="https://64.media.tumblr.com/a61ce9e8117a908c0f68ff7db7281449/tumblr_n4dyv0dkDU1shalg6o1_640.gifv"
                     alt=""
                     style={{ width: "150px" }}
-                  />
+                  /> */}
                 </div>
               }
               placement="right"

@@ -9,6 +9,7 @@ import classes from "./UserProfile.module.css";
 function UserProfile(props) {
   const user = useSelector((store) => store.auth.user);
   return (
+    <div className={classes.account}>
     <Container className={classes.box}>
       <Row gutter={36}>
         <Col className="gutter-row" span={8}>
@@ -19,6 +20,7 @@ function UserProfile(props) {
         </Col>
       </Row>
     </Container>
+    </div>
   );
 }
 

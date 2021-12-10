@@ -1,33 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, {  useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { signinThunk } from "../../../store/auth/actions";
-// import { Modal, Button } from "antd";
 import { Modal, Button, Space } from "antd";
 
 import { closeWelcomeComponent } from "../../../store/auth/actions";
 
-const ReachableContext = React.createContext();
-const UnreachableContext = React.createContext();
-
-// const config = {
-//   title: "Use Hook!",
-//   content: (
-//     <>
-//       <ReachableContext.Consumer>
-//         {(name) => `Reachable: ${name}!`}
-//       </ReachableContext.Consumer>
-//       <br />
-//       <UnreachableContext.Consumer>
-//         {(name) => `Unreachable: ${name}!`}
-//       </UnreachableContext.Consumer>
-//     </>
-//   ),
-// };
-
 const WelcomeComponent = () => {
-  const [modal, contextHolder] = Modal.useModal();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -59,23 +36,5 @@ const WelcomeComponent = () => {
       <Button onClick={info}>Info</Button>
     </Space>
   );
-  // return (
-  //   <div>
-  //     {/* <Modal
-  //       title="Basic Modal"
-  //       visible={true}
-  //       // onOk={setIsOpenWelcomeComponent(false)}
-  //       // onCancel={handleCancel}
-  //     >
-  //       <h3>Welcome</h3>
-  //       <p>
-  //         {" "}
-  //         if you want to comment and add points to the map, please{" "}
-  //         <Link to="/signin"> signin</Link> or
-  //         <Link to="/signup"> signup</Link> right now.
-  //       </p>
-  //     </Modal> */}
-  //   </div>
-  // );
 };
 export default WelcomeComponent;

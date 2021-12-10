@@ -2,7 +2,7 @@ import React from "react";
 import Carousel from "react-bootstrap/Carousel";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import classes from './Carousel.module.css'
 const BootstrapCarousel = () => {
   return (
     <div>
@@ -15,7 +15,9 @@ const BootstrapCarousel = () => {
             height="350px"
           />
           <Carousel.Caption>
-            <h5>You can make the planet a better place</h5>
+            <h1
+            className={classes.p}
+            >You can make the planet a better place</h1>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
@@ -26,10 +28,9 @@ const BootstrapCarousel = () => {
             height="350px"
           />
           <Carousel.Caption>
-            {/* <p>
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-            </p> */}
-            <h5>You can make the planet a better place</h5>
+            <h1
+            className={classes.p}
+            >You can make the planet a better place</h1>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
@@ -40,10 +41,9 @@ const BootstrapCarousel = () => {
             height="350px"
           />
           <Carousel.Caption>
-            {/* <p>
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-            </p> */}
-            <h5>You can make the planet a better place</h5>
+            <h1
+            className={classes.p}
+            >You can make the planet a better place</h1>
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>

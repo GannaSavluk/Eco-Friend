@@ -12,6 +12,10 @@ export const editEntry = (id, author) => ({
   type: ACTypes.EDIT_ENTRY,
   payload: { id, author },
 });
+export const editEntryInfo = (entry) => ({
+  type: ACTypes.EDIT_ENTRY_INFO,
+  payload: { entry },
+});
 export const likeEntry = (id) => ({
   type: ACTypes.LIKE_ENTRY,
   payload: { id },
@@ -40,7 +44,10 @@ export const deleteComment = (id) => ({
   type: ACTypes.DELETE_COMMENT,
   payload: { id },
 });
-
+export const changeUserImgInBlog = (userId, img) => ({
+  type: ACTypes.CHANGE_USER_AVATAR_IN_BLOG,
+  payload: { userId, img },
+});
 export const getAllEntriesThunk = () => async (dispatch) => {
   const response = await fetch("/entry", {
     method: "get",
@@ -70,6 +77,7 @@ export const editEntryThunk = (values, link, id) => async (dispatch) => {
   const entry = await response.json();
 
   dispatch(editEntry(entry));
+  dispatch(editEntryInfo(entry));
 };
 export const deleteEntryThunk = (id) => async (dispatch) => {
   const response = await fetch(`/entry/delete`, {

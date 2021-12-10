@@ -24,7 +24,7 @@ const News = () => {
   const [isOpenComments, setIsOpenComments] = useState({ id: "" });
   const [isOpenEditEntryForm, setIsOpenEditEntryForm] = useState({ id: "" });
   const [isEmptyPrevComment, setIsEmptyPrevComment] = useState(false);
-  const [dotPosition, setDotPosition] = useState("left");
+  // const [dotPosition, setDotPosition] = useState("left");
 
   const entries = useSelector((store) => store.entry.entries);
   const user = useSelector((store) => store.auth.user);
@@ -60,7 +60,7 @@ const News = () => {
         <>
           {entries?.map((entry) => (
             <>
-              {entry.author.role === 0 && (
+              {entry.author?.role === 0 && (
                 <>
                   {isOpenEditEntryForm.id !== entry._id ? (
                     <>

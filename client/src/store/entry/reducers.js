@@ -33,6 +33,23 @@ export const entry = (state = initialState, action) => {
       state.currentEntryId = "";
       return state;
 
+    case ACTypes.EDIT_ENTRY_INFO:
+      const entry = action.payload.entry.updatedEntry;
+      state.entries = state.entries.map((post) => {
+        if (post?._id === entry._id) {
+          return {
+            ...post,
+            text: entry.text,
+            img: entry.img,
+            category: entry.category,
+          };
+        }
+        return post;
+      });
+      state.currentEntryId = "";
+
+      return { ...state, entries: state.entries };
+
     case ACTypes.DELETE_ENTRY:
       state.entries = state.entries.filter(
         (el) => el._id !== action.payload.id
@@ -63,6 +80,26 @@ export const entry = (state = initialState, action) => {
 
     case ACTypes.LOADING_COMMENTS:
       return { ...state, loadingCommentStatus: action.payload.status };
+
+    case ACTypes.CHANGE_USER_AVATAR_IN_BLOG:
+      state.entries = state.entries.map((entry) => {
+        console.log("entry-->", entry);
+        console.log(
+          "entry.author._id-->",
+          entry.author._id,
+          "action.payload.userID",
+          action.payload.userId
+        );
+
+        if (entry.author._id === action.payload.userId) {
+          return {
+            ...entry,
+            author: { ...entry.author, img: action.payload.img },
+          };
+        }
+        return entry;
+      });
+      return { ...state, entries: state.entries };
 
     default:
       return state;
