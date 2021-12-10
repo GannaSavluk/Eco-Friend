@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import React, { useState } from "react";
 
 import { Table, Button } from "antd";
@@ -12,6 +12,7 @@ const DrawerBody = ({ mapData }) => {
   const dispatch = useDispatch();
   const [isOpenDeleteUser, setIsOpenDeleteUser] = useState(false);
   const [currentUserId, setCurrentUserId] = useState("");
+  const [isSubmitBtn, setIsSubmitBtn] = useState({});
 
   const columns = [
     {
@@ -20,18 +21,20 @@ const DrawerBody = ({ mapData }) => {
       key: "_id",
       render: (id) => {
         setCurrentUserId(id);
-        console.log("ID 1", currentUserId,'ID 2', id);
         return (
           <>
             <div className={classes.btns}>
-              <Button
-                variant="primary"
-                onClick={() => {
-                  dispatch(confirmPointDataThunk(id));
-                }}
-              >
-                <CheckOutlined style={{ color: "green" }} />
-              </Button>
+              {!isSubmitBtn[id] && (
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    dispatch(confirmPointDataThunk(id));
+                    setIsSubmitBtn({ ...isSubmitBtn, [id]: "open" });
+                  }}
+                >
+                  <CheckOutlined style={{ color: "green" }} />
+                </Button>
+              )}
               <Button
                 onClick={() => {
                   setIsOpenDeleteUser(true);
@@ -90,6 +93,6 @@ const DrawerBody = ({ mapData }) => {
     },
   ];
   const unconfirmedPoints = mapData.filter((point) => !point.confirmed);
-  return <Table columns={columns} dataSource={unconfirmedPoints} />;
+  return <Table columns={columns} dataSource={unconfirmedPoints}  pagination={false}/>;
 };
 export default DrawerBody;
