@@ -3,6 +3,7 @@
   padding: 1rem;
   display: flex;
   margin-top: 10px;
+  min-width: 800px;
 }
 .cardDescription p {
   margin-bottom: 6px;

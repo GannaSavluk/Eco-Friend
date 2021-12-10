@@ -21,6 +21,7 @@
   flex-direction: column;
   justify-content: center;
   min-width: 500px;
+  margin-left: 10px;
 }
 .custom_file_upload {
   border: 1px solid #ccc;
