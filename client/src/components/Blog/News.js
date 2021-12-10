@@ -60,7 +60,7 @@ const News = () => {
         <>
           {entries?.map((entry) => (
             <>
-              {entry.author.role === 0 && (
+              {entry.author?.role === 0 && (
                 <>
                   {isOpenEditEntryForm.id !== entry._id ? (
                     <>
