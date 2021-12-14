@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Form, FormControl, ListGroup } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { showUsersListThunk } from "../../store/usersList/actions";
+import { showUsersListThunk } from "../../store/user/actions";
 import Carousel from "./Carousel/Carousel";
 import LeaderProfile from "./LeaderProfile/LeaderProfile";
 import PublicationsProfile from "./LeaderProfile/PublicationsProfile/PublicationsProfile";
@@ -10,7 +10,7 @@ import classes from "./Leaderboard.module.css";
 import "./Leaderboard.css";
 
 const Leaderboard = () => {
-  const data = useSelector((store) => store.userList.userList);
+  const data = useSelector((store) => store.auth.userList);
   const [value, setValue] = useState("");
   const [filter, setFilter] = useState([]);
   const [openProfile, setOpenProfile] = useState(false);
@@ -55,7 +55,7 @@ const Leaderboard = () => {
               onChange={(e) => setValue(e.target.value)}
             />
             <div className="colorTextPeople" heigth="25px">
-              <p >
+              <p>
                 We already have: <b className={classes.p}>{quantity}</b> people
               </p>
             </div>
@@ -104,7 +104,10 @@ const Leaderboard = () => {
                   width="300"
                   alt="img"
                 />
-                <p className={classes.leaders_text}> Our leaders! We are poude of them!</p>
+                <p className={classes.leaders_text}>
+                  {" "}
+                  Our eco-friends! We are proude of them!
+                </p>
               </div>
             </div>
           )}

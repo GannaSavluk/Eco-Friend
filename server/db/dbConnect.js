@@ -7,7 +7,6 @@ const {DB_CONNECT} = process.env
 const dbOptions = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    // useCreateIndex: true,
   };
   
   const connectDB = async () => {

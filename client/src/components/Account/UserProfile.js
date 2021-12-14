@@ -6,7 +6,7 @@ import AccountInfo from "./AccountInfo";
 
 import classes from "./UserProfile.module.css";
 
-function UserProfile(props) {
+function UserProfile() {
   const user = useSelector((store) => store.auth.user);
   return (
     <div className={classes.account}>

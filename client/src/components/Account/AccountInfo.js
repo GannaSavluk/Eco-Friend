@@ -1,18 +1,17 @@
-import { Container } from "react-bootstrap";
-
-import { Card, Button } from "antd";
-import { Space, Input, Form } from "antd";
-import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 
 import Modal from "react-modal";
-
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-import { deleteUserThunk } from "../../store/auth/actions";
-
+import { Container } from "react-bootstrap";
+import { Card, Button } from "antd";
+import { Space, Input, Form } from "antd";
+import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import classes from "./UserProfile.module.css";
+
+import { deleteUserThunk } from "../../store/user/actions";
+
 const customStyles = {
   content: {
     top: "50%",
@@ -73,7 +72,6 @@ function AccountInfo(props) {
     });
 
     const result = await response.json();
-    console.log({ result });
     if (result) {
       closePassModal();
     } else setPassError(true);

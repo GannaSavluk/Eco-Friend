@@ -34,6 +34,7 @@ const CreateEntry = () => {
     event.preventDefault();
     let link;
     if (currentImg) {
+      console.log(currentImg)
       link = `https://res.cloudinary.com/dwvm712y7/image/upload/v${currentImg.version}/${currentImg.public_id}.${currentImg.format}`;
       dispatch(createEntryThunk(value, link));
       setValue({ text: "", category: "", file: "" });

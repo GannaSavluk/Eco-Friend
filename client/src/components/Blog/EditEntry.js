@@ -55,20 +55,12 @@ const EditEntry = ({ entry, setIsOpenEditEntryForm }) => {
                 <>
                   <Image
                     style={{ width: "auto", height: "200px" }}
-                    // style={{ width: 200 }}
                     cloudName="dwvm712y7"
                     publicId={`https://res.cloudinary.com/dwvm712y7/image/upload/v${currentImg.version}/${currentImg.public_id}.${currentImg.format}`}
                   />
                 </>
               )}
               <form onSubmit={updateEntry} className={classes.form}>
-                {/* <input
-                  type="file"
-                  name="file"
-                  onChange={(e) => {
-                    dispatch(uploadImgThunk(e.target.files[0]));
-                  }}
-                /> */}
                 <div>
                   <label
                     htmlFor="upload_img2"

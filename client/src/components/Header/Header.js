@@ -1,16 +1,7 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import {
-  Navbar,
-  Nav,
-  NavDropdown,
-  Container,
-  Form,
-  FormControl,
-  Button,
-  Offcanvas,
-} from "react-bootstrap";
+import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import classes from "./Header.module.css";
 
 const Header = () => {

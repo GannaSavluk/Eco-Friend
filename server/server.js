@@ -22,7 +22,7 @@ const pgSessionStore = require("connect-pg-simple")(session);
 // Импортируем routers
 const authRouter = require("./routers/auth");
 const entryRouter = require("./routers/entry");
-const allUsersRouter = require("./routers/allUsers");
+const userRouter = require("./routers/user");
 const mapRouter = require('./routers/map');
 
 
@@ -57,7 +57,7 @@ app.use(methodOverride('_method'));
 
 app.use('/auth', authRouter);
 app.use('/entry', entryRouter);
-app.use("/users", allUsersRouter);
+app.use("/user", userRouter);
 app.use('/map', mapRouter);
 
 // Отлавливаем ошибки:
@@ -79,8 +79,6 @@ app.use((err, req, res, next) => {
   res.locals.message = err.message;
   res.locals.error = error;
   res.status(err.status || 500);
-  // Формируем HTML-текст из шаблона "error.hbs" и отправляем его на клиент в качестве ответа.
-  // res.render('error');
   res.end();
 });
 

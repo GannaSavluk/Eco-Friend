@@ -83,14 +83,6 @@ export const entry = (state = initialState, action) => {
 
     case ACTypes.CHANGE_USER_AVATAR_IN_BLOG:
       state.entries = state.entries.map((entry) => {
-        console.log("entry-->", entry);
-        console.log(
-          "entry.author._id-->",
-          entry.author._id,
-          "action.payload.userID",
-          action.payload.userId
-        );
-
         if (entry.author._id === action.payload.userId) {
           return {
             ...entry,

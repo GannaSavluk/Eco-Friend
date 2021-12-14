@@ -72,7 +72,7 @@ exports.createUserAndSession = async (req, res, next) => {
     console.error("Err code", err.code);
     return failAuth(res);
   }
-  res.json(req.session.user.id); //TODO
+  res.json(req.session.user.id);
   res.status(200).end(); // ответ 200 + отправка cookies в заголовке на сервер
 };
 
@@ -135,48 +135,46 @@ exports.deleteUser = async (req, res) => {
   res.status(200).end();
 };
 
-exports.editUserProfilePicture = async (req, res) => {
-  try {
-    const { id, link } = req.body;
-    const updatedUser = await User.updateOne(
-      { _id: id },
-      {
-        img: link,
-      }
-    );
-    res.json(updatedUser);
-  } catch (err) {
-    console.error("Err message:", err.message);
-    console.error("Err code", err);
-  }
-  res.status(200).end();
-};
+// exports.editUserProfilePicture = async (req, res) => {
+//   try {
+//     const { id, link } = req.body;
+//     const updatedUser = await User.updateOne(
+//       { _id: id },
+//       {
+//         img: link,
+//       }
+//     );
+//     res.json(updatedUser);
+//   } catch (err) {
+//     console.error("Err message:", err.message);
+//     console.error("Err code", err);
+//   }
+//   res.status(200).end();
+// };
 
-exports.getImg = async (req, res) => {
-  try {
-    const { _id } = req.body;
-    const user = await User.findOne({ _id });
-    console.log(user);
-    res.json(user.img);
-  } catch (err) {
-    console.error("Err message:", err.message);
-    console.error("Err code", err);
-  }
-  res.status(200).end();
-};
+// exports.getImg = async (req, res) => {
+//   try {
+//     const { _id } = req.body;
+//     const user = await User.findOne({ _id });
+//     res.json(user.img);
+//   } catch (err) {
+//     console.error("Err message:", err.message);
+//     console.error("Err code", err);
+//   }
+//   res.status(200).end();
+// };
 
-exports.getRating = async (req, res) => {
-  try {
-    const { _id } = req.body;
-    const user = await User.findOne({ _id });
-    console.log(user);
-    res.json(user.rating);
-  } catch (err) {
-    console.error("Err message:", err.message);
-    console.error("Err code", err);
-  }
-  res.status(200).end();
-};
+// exports.getRating = async (req, res) => {
+//   try {
+//     const { _id } = req.body;
+//     const user = await User.findOne({ _id });
+//     res.json(user.rating);
+//   } catch (err) {
+//     console.error("Err message:", err.message);
+//     console.error("Err code", err);
+//   }
+//   res.status(200).end();
+// };
 
 exports.editUserPassword = async (req, res) => {
   try {
@@ -192,8 +190,6 @@ exports.editUserPassword = async (req, res) => {
 
     // Сравниваем хэш в БД с хэшем введённого пароля
     const isValidPassword = await bcrypt.compare(prev, user.password);
-    console.log(isValidPassword);
-    // const isValidPassword = user.password === password;
     if (isValidPassword) {
       await User.updateOne(
         { _id: req.session.user.id },

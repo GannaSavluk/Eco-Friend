@@ -1,16 +1,15 @@
-import ACTypes from "../types";
+// import ACTypes from "../types";
 
-const initialState = {
-  userList: [],
-  // currentNoteId: '',
-};
+// const initialState = {
+//   userList: [],
+// };
 
-export const userList = (state = initialState, action) => {
-  switch (action.type) {
-    case ACTypes.SHOW_USERS_LIST:
-      return { ...state, userList: action.payload.userList };
+// export const userList = (state = initialState, action) => {
+//   switch (action.type) {
+//     case ACTypes.SHOW_USERS_LIST:
+//       return { ...state, userList: action.payload.userList };
 
-    default:
-      return state;
-  }
-};
+//     default:
+//       return state;
+//   }
+// };

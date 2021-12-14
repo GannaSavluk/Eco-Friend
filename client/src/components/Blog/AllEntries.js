@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Card, Avatar, Button, Badge, Tooltip, Input, Space } from "antd";
+import { Card, Avatar, Button, Badge, Tooltip, Input } from "antd";
 import {
   SmileTwoTone,
   CaretDownOutlined,
@@ -19,7 +19,6 @@ import EditEntry from "./EditEntry";
 import EntryComments from "./EntryComments";
 import CreateEntry from "./CreateEntry";
 import EntryText from "./EntryText";
-import UserInfo from "./UserInfo";
 const { Meta } = Card;
 const { Search } = Input;
 
@@ -30,7 +29,6 @@ const AllEntries = () => {
   const [isOpenComments, setIsOpenComments] = useState({ id: "" });
   const [isOpenEditEntryForm, setIsOpenEditEntryForm] = useState({ id: "" });
   const [isEmptyPrevComment, setIsEmptyPrevComment] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [isOpenCategory, setIsOpenCategory] = useState("");
 
   const entries = useSelector((store) => store.entry.entries);
@@ -51,19 +49,6 @@ const AllEntries = () => {
 
   const changeState = () => {
     setIsOpen(!isOpen);
-  };
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
-
-  const showUserInfo = (userId) => {
-    console.log("show user ID", userId);
-    setIsModalVisible(true);
-    console.log("show user ID", isModalVisible);
   };
 
   const openEditEntryForm = (entryid) => {
@@ -119,20 +104,13 @@ const AllEntries = () => {
                       </div>
                     }
                   >
-                    {isModalVisible && (
-                      <UserInfo
-                        visible={isModalVisible}
-                        handleOk={handleOk}
-                        handleCancel={handleCancel}
-                      />
-                    )}
                     <Meta
                       avatar={
                         entry.author?.img ? (
                           <Badge count={entry.author.rating}>
                             <Avatar
                               src={entry.author?.img}
-                              onClick={() => showUserInfo(entry.author?._id)}
+                              
                             />
                           </Badge>
                         ) : (
@@ -268,22 +246,12 @@ const AllEntries = () => {
                           </div>
                         }
                       >
-                        {isModalVisible && (
-                          <UserInfo
-                            visible={isModalVisible}
-                            handleOk={handleOk}
-                            handleCancel={handleCancel}
-                          />
-                        )}
                         <Meta
                           avatar={
                             entry.author?.img ? (
                               <Badge count={entry.author.rating}>
                                 <Avatar
                                   src={entry.author?.img}
-                                  onClick={() =>
-                                    showUserInfo(entry.author?._id)
-                                  }
                                 />
                               </Badge>
                             ) : (

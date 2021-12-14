@@ -1,6 +1,6 @@
 import ACTypes from "../types";
 
-import {changeUserImgInBlog} from '../entry/actions'
+import { changeUserImgInBlog } from "../entry/actions";
 
 export const isAuthCheck = (id) => ({
   type: ACTypes.AUTH,
@@ -10,7 +10,7 @@ export const checkUserRole = (id, role, name, rating, img) => ({
   type: ACTypes.USER_ROLE,
   payload: { id: id, role: role, name: name, rating: rating, img: img },
 });
-export const isLogout = (id) => ({ type: ACTypes.AUTH_LOGOUT });
+export const isLogout = () => ({ type: ACTypes.AUTH_LOGOUT });
 
 export const saveCurrentImgUser = (img) => ({
   type: ACTypes.CURRENT_IMG_USER,
@@ -31,30 +31,12 @@ export const setRating = (rating) => ({
   type: ACTypes.SET_RATING,
   payload: { rating },
 });
-
-export const getImg = (id) => async (dispatch) => {
-  const response = await fetch("/auth/check-img", {
-    method: "post",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ _id: id }),
-  });
-  const img = await response.json();
-
-  if (img) dispatch(setImg(img));
-};
-
-export const getRating = (id) => async (dispatch) => {
-  const response = await fetch("/auth/check-rating", {
-    method: "post",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ _id: id }),
-  });
-  const rating = await response.json();
-  dispatch(setRating(rating));
-};
+export const showUsersListAC = (userList) => ({
+  type: ACTypes.SHOW_USERS_LIST,
+  payload: { userList },
+});
 
 export const logoutThunk = () => async (dispatch) => {
-  console.log("quit");
   await fetch("/auth/logout", {
     method: "post",
   });
@@ -63,7 +45,6 @@ export const logoutThunk = () => async (dispatch) => {
 };
 
 export const signinThunk = (values) => async (dispatch, navigate) => {
-  console.log("________", { values });
   const response = await fetch("/auth/signin", {
     method: "post",
     headers: { "Content-Type": "application/json" },
@@ -83,7 +64,6 @@ export const signupThunk = (values) => async (dispatch, navigate) => {
     body: JSON.stringify(values),
   });
   const userId = await response.json();
-  console.log(userId);
   dispatch(isAuthCheck(userId));
   navigate("/");
 };
@@ -108,7 +88,6 @@ export const deleteUserThunk = (id, userId) => async (dispatch) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ userId }),
   });
-  // dispatch()//TODO
 };
 
 export const uploadUserImgThunk = (imgSelected) => async (dispatch) => {
@@ -128,11 +107,46 @@ export const uploadUserImgThunk = (imgSelected) => async (dispatch) => {
 };
 
 export const changeUserProfilePicThunk = (id, link) => async (dispatch) => {
-  const response = await fetch("/auth/img", {
+  await fetch("/user/img", {
     method: "post",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ id, link }),
   });
   dispatch(getImg(id));
-  dispatch(changeUserImgInBlog(id, link))
+  dispatch(changeUserImgInBlog(id, link));
+};
+
+export const getImg = (id) => async (dispatch) => {
+  const response = await fetch("/user/check-img", {
+    method: "post",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ _id: id }),
+  });
+  const img = await response.json();
+
+  if (img) dispatch(setImg(img));
+};
+
+export const getRating = (id) => async (dispatch) => {
+  const response = await fetch("/user/check-rating", {
+    method: "post",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ _id: id }),
+  });
+  const rating = await response.json();
+  dispatch(setRating(rating));
+};
+
+export const showUsersListThunk = () => async (dispatch) => {
+  try {
+    const res = await fetch(" http://localhost:3700/user");
+    if (!res.ok) {
+      throw new Error(res.statusText || res.status);
+    }
+    const userList = await res.json();
+    dispatch(showUsersListAC(userList));
+  } catch (err) {
+    console.error(err);
+    alert("Произошла ошибка...");
+  }
 };

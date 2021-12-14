@@ -5,10 +5,9 @@ import {
   changeUserProfilePicThunk,
   uploadUserImgThunk,
   clearCurrentImg,
-} from "../../store/auth/actions";
+} from "../../store/user/actions";
 
-import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux"
 
 import classes from "./UserProfile.module.css";
 
@@ -38,7 +37,6 @@ function AccountImage(props) {
               <Image
                 className={classes.imgs}
                 src={img}
-                //fallback="https://mir-s3-cdn-cf.behance.net/project_modules/disp/35771931234507.564a1d2403b3a.gif"
               />
               <div className={classes.middle}>
                 <div className={classes.text}>Change Photo</div>

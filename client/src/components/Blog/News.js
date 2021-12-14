@@ -24,7 +24,6 @@ const News = () => {
   const [isOpenComments, setIsOpenComments] = useState({ id: "" });
   const [isOpenEditEntryForm, setIsOpenEditEntryForm] = useState({ id: "" });
   const [isEmptyPrevComment, setIsEmptyPrevComment] = useState(false);
-  // const [dotPosition, setDotPosition] = useState("left");
 
   const entries = useSelector((store) => store.entry.entries);
   const user = useSelector((store) => store.auth.user);

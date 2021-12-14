@@ -4,7 +4,7 @@ import React from "react";
 import {
   deletePointThunk,
 } from "../../store/map/actions";
-import { deleteUserThunk } from "../../store/auth/actions";
+import { deleteUserThunk } from "../../store/user/actions";
 
 import { Modal } from "antd";
 

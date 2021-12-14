@@ -2,17 +2,13 @@ import { createStore, applyMiddleware, combineReducers } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 
-// import { user } from "./user/reducers";
-import { auth } from "./auth/reducers";
+import { auth } from "./user/reducers";
 import { entry } from "./entry/reducers";
-import { userList } from "./usersList/reducers"
 import { map } from "./map/reducers";
 
 const reducers = combineReducers({
-  // user,
   auth,
   entry,
-  userList,
   map,
 });
 
