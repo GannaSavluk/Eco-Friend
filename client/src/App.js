@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { checkUserAuthThunk, getImg, getRating } from "./store/auth/actions";
+import { checkUserAuthThunk, getImg, getRating } from "./store/user/actions";
 import { mapFetchThunk } from "./store/map/actions";
 import { getAllEntriesThunk } from "./store/entry/actions";
 

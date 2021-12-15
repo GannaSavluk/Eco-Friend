@@ -16,7 +16,6 @@ import { Drawer, Button } from "antd";
 import DrawerBody from "./DrawerBody";
 import CreatePoint from "./CreatePoint";
 import SelectedPoint from "./SelectedPoint";
-import WelcomeComponent from "./Welcome/WelcomeComponent";
 
 import { createMarkerThunk } from "../../store/map/actions";
 
@@ -44,8 +43,8 @@ const Map = () => {
   const [selectedMapPoint, setSelectedMapPoint] = useState(null);
   const [newMarker, setNewMarker] = useState(null);
   const [viewport, setViewport] = useState({
-    latitude: 45.4211, //!!
-    longitude: -75.6903, //!!
+    latitude: 45.4211, 
+    longitude: -75.6903, 
     width: "100vw",
     height: "100vh",
     zoom: 10,
@@ -58,9 +57,6 @@ const Map = () => {
 
   const user = useSelector((store) => store.auth.user);
   const mapData = useSelector((store) => store?.map?.map);
-  const isOpenWelcomeComponent = useSelector(
-    (store) => store.auth.isOpenWelcomeComponent
-  );
 
   const handleViewportChange = useCallback(
     (newViewport) => setViewport(newViewport),
@@ -159,8 +155,6 @@ const Map = () => {
         {...viewport}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
         mapStyle={process.env.REACT_APP_MAPBOX_STYLE}
-        // mapboxApiAccessToken={"pk.eyJ1IjoiZWxicnVzLXBvamVjdCIsImEiOiJja3d1YjNxOWYxbzZlMzJxb3BtM2hsMnh6In0.T4UaFSWGmZMvx6MmDiTM1w"}
-        // mapStyle={"mapbox://styles/elbrus-poject/ckwuq7vpm230h14n21m6orax1"}
         onViewportChange={(viewport) => {
           setViewport(viewport);
         }}
@@ -172,7 +166,6 @@ const Map = () => {
           onViewportChange={handleGeocoderViewportChange}
           onResult={handleGeocoderResult}
           mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-          // mapboxApiAccessToken={"pk.eyJ1IjoiZWxicnVzLXBvamVjdCIsImEiOiJja3d1YjNxOWYxbzZlMzJxb3BtM2hsMnh6In0.T4UaFSWGmZMvx6MmDiTM1w"}
           position="top-left"
           ref={geoRef}
         />
@@ -276,20 +269,10 @@ const Map = () => {
             >
               Open Moderator's menu
             </Button>
-            {/* {isOpenWelcomeComponent && (
-              <WelcomeComponent
-              // setIsOpenWelcomeComponent={setIsOpenWelcomeComponent}
-              />
-            )} */}
             <Drawer
               title={
                 <div className={classes.Drawer_header}>
                   <p> Run the ECO world</p>
-                  {/* <img
-                    src="https://64.media.tumblr.com/a61ce9e8117a908c0f68ff7db7281449/tumblr_n4dyv0dkDU1shalg6o1_640.gifv"
-                    alt=""
-                    style={{ width: "150px" }}
-                  /> */}
                 </div>
               }
               placement="right"

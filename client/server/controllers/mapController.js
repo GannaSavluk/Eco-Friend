@@ -14,7 +14,6 @@ exports.getMap = async (req, res) => {
 };
 
 exports.setNewMarker = async (req, res) => {
-  console.log(req.body);
   try {
     await Map.create(req.body);
     res.status(200).end();
@@ -29,7 +28,6 @@ exports.editMapPoint = async (req, res) => {
   try {
     const { values, link } = req.body;
     const id = req.params.id;
-    console.log("id------>>>>>", id);
     await Map.updateOne(
       { _id: id },
       {
@@ -37,7 +35,6 @@ exports.editMapPoint = async (req, res) => {
       }
     );
     const updatedPoint = await Map.findOne({ _id: id }).populate("author");
-    console.log("updatedPoint", updatedPoint);
     res.json(updatedPoint);
   } catch (err) {
     console.error("Err message:", err.message);
@@ -61,7 +58,6 @@ exports.deletePoint = async (req, res) => {
 exports.addStar = async (req, res) => {
   const pointId = req.params.id;
   const currentUserId = req.session.user.id;
-  console.log(111111, currentUserId, "pointId", pointId);
   let authorOfPoint;
   let updatedRating;
 

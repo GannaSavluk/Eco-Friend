@@ -1,5 +1,5 @@
 import ACTypes from "../types";
-import { getRating } from "../auth/actions";
+import { getRating } from "../user/actions";
 
 export const getMap = (map) => ({
   type: ACTypes.MAP,
@@ -34,7 +34,6 @@ export const mapFetchThunk = () => async (dispatch) => {
     headers: { "Content-Type": "application/json" },
   });
   const map = await response.json();
-  // console.log("mapFetchThunk map---->", map);
   dispatch(getMap(map));
 };
 
@@ -72,13 +71,10 @@ export const createMarkerThunk = (marker) => async (dispatch) => {
 };
 
 export const confirmPointDataThunk = (id) => async (dispatch) => {
-  console.log("point", id);
-
   const response = await fetch(`/map/${id}`, {
     method: "put",
   });
   const point = await response.json();
-  console.log("confirmPointDataThunk ---- point", point);
   dispatch(confirmPoint(point));
 };
 
@@ -86,7 +82,7 @@ export const deletePointThunk = (id) => async (dispatch) => {
   const response = await fetch(`/map/${id}`, {
     method: "delete",
   });
-  const result = await response.json();
+  await response.json();
 
   dispatch(deletePoint(id));
 };
@@ -97,7 +93,5 @@ export const addStarToMapPointThunk = (pointId) => async (dispatch) => {
     headers: { "Content-Type": "application/json" },
   });
   const result = await response.json();
-  console.log("response addStarToMapPointThunk", result);
-  //dispatch(addStarPoint(id));
   dispatch(getRating(result.authorOfPoint));
 };

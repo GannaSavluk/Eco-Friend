@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { signinThunk } from "../../store/auth/actions";
+import { signinThunk } from "../../store/user/actions";
 import { Input, Button } from "antd";
 import "./Auth.css";
 

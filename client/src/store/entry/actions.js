@@ -85,7 +85,7 @@ export const deleteEntryThunk = (id) => async (dispatch) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ id }),
   });
-  const result = await response.json();
+  await response.json();
 
   dispatch(deleteEntry(id));
 };
@@ -95,7 +95,7 @@ export const likeEntryThunk = (id, author) => async (dispatch) => {
     method: "put",
     headers: { "Content-Type": "application/json" },
   });
-  const entry = await response.json();
+  await response.json();
   dispatch(editEntry(id, author));
 };
 
@@ -144,8 +144,7 @@ export const deleteCommentThunk = (id) => async (dispatch) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ id }),
   });
-  const result = await response.json();
+  await response.json();
 
   dispatch(deleteComment(id));
 };
-

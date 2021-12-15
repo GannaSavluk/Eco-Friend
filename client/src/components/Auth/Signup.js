@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { signupThunk } from "../../store/auth/actions";
+import { signupThunk } from "../../store/user/actions";
 import { Input, Button } from "antd";
 import "./Auth.css";
 
@@ -77,6 +77,11 @@ const Signup = () => {
             ]}
             onChange={onInputPassword}
           />
+          <p className='password_req'>
+            Password requirements: minimum eight characters, at least one letter
+            and one number
+          </p>
+
           <Button
             type="primary"
             htmlType="submit"
