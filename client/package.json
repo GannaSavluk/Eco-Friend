@@ -5,6 +5,7 @@
   "proxy": "http://localhost:3700",
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
+    "@mapbox/mapbox-gl-supported": "^2.0.1",
     "@testing-library/jest-dom": "^5.15.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
