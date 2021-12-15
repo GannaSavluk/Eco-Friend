@@ -105,8 +105,8 @@ const Leaderboard = () => {
                   alt="img"
                 />
                 <p className={classes.leaders_text}>
-                  {" "}
-                  Our eco-friends! We are proude of them!
+
+                  Our eco-friends! We are proud of them!
                 </p>
               </div>
             </div>
